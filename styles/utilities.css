@@ -1,0 +1,97 @@
+@layer utilities {
+  /* ==========================================
+     Layout
+  ========================================== */
+
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
+  }
+
+  .container-content {
+    @apply mx-auto max-w-4xl;
+  }
+
+  .section {
+    @apply py-20 md:py-28;
+  }
+
+  .section-sm {
+    @apply py-12 md:py-16;
+  }
+
+  /* ==========================================
+     Typography
+  ========================================== */
+
+  .display {
+    @apply text-5xl font-bold tracking-[-0.04em] md:text-7xl;
+  }
+
+  .heading-1 {
+    @apply text-4xl font-bold tracking-[-0.03em] md:text-6xl;
+  }
+
+  .heading-2 {
+    @apply text-3xl font-semibold tracking-[-0.03em] md:text-5xl;
+  }
+
+  .heading-3 {
+    @apply text-2xl font-semibold tracking-[-0.02em];
+  }
+
+  .body-lg {
+    @apply text-lg leading-8 text-muted-foreground;
+  }
+
+  .body {
+    @apply text-base leading-7 text-muted-foreground;
+  }
+
+  .caption {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* ==========================================
+     Glass
+  ========================================== */
+
+  .glass {
+    @apply border border-border/60 bg-white/70 backdrop-blur-xl;
+  }
+
+  .dark .glass {
+    background: rgba(23, 25, 24, 0.7);
+  }
+
+  /* ==========================================
+     Card
+  ========================================== */
+
+  .card-modern {
+    @apply rounded-3xl border border-border bg-surface shadow-sm;
+  }
+
+  /* ==========================================
+     Image
+  ========================================== */
+
+  .image-rounded {
+    @apply overflow-hidden rounded-[28px];
+  }
+
+  /* ==========================================
+     Focus
+  ========================================== */
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+
+  /* ==========================================
+     Text Balance
+  ========================================== */
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
