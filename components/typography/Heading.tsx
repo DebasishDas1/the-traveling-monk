@@ -1,17 +1,34 @@
+import * as React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-interface HeadingProps {
-  title: string
-  subtitle?: string
-  className?: string
+const headingVariants = cva(
+  'font-sans tracking-tight text-foreground text-balance',
+  {
+    variants: {
+      level: {
+        display: 'text-display font-medium leading-[1.1]',
+        h1: 'text-h1 font-medium leading-[1.1]',
+        h2: 'text-h2 font-medium leading-[1.2]',
+        h3: 'text-h3 font-medium leading-[1.2]',
+      },
+    },
+    defaultVariants: {
+      level: 'h2',
+    },
+  }
+)
+
+export interface HeadingProps
+  extends React.HTMLAttributes<HTMLHeadingElement>,
+    VariantProps<typeof headingVariants> {
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
-export function Heading({ title, subtitle, className }: HeadingProps) {
+export function Heading({ className, level, as, ...props }: HeadingProps) {
+  const Comp = as || (level === 'display' ? 'h1' : level || 'h2')
+  
   return (
-    <div className={cn('space-y-4', className)}>
-      <h2 className="heading-2 text-balance">{title}</h2>
-
-      {subtitle && <p className="body max-w-2xl">{subtitle}</p>}
-    </div>
+    <Comp className={cn(headingVariants({ level, className }))} {...props} />
   )
 }

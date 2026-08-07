@@ -1,80 +1,74 @@
 export type ExperienceCategory = 'trek' | 'homestay' | 'international'
 
-export type ItineraryDayType = {
+export type ExperienceDifficulty = 'easy' | 'moderate' | 'challenging'
+
+export type ExperienceSeason = 'spring' | 'summer' | 'autumn' | 'winter'
+
+export interface ExperienceImage {
+  id: string
+  src: string
+  alt: string
+}
+
+export interface ExperienceHighlight {
+  icon: string
+  title: string
+  description: string
+}
+
+export interface ExperienceTimelineItem {
   day: number
   title: string
-  from: string
-  to: string
-  altitude?: string
-  duration?: string
   description: string
-  imageUrl?: string
 }
 
-export type TestimonialType = {
-  name: string
-  city: string
-  quote: string
-  image: string
-  rating: number
+export interface ExperienceDuration {
+  days: number
+  nights?: number
 }
 
-export type TrekAvailableDateType = {
-  date: string
-  spots: number
+export interface ExperienceAltitude {
+  metres: number
 }
 
-export type TrekDifficultyType =
-  | 'Easy'
-  | 'Easy to Moderate'
-  | 'Moderate'
-  | 'Moderate to Difficult'
-  | 'Difficult'
-
-export type TrekTierType = 'Beginner' | 'Intermediate' | 'Advanced' | 'All'
+export interface ExperiencePricing {
+  amount: number
+  currency: 'INR'
+  originalAmount?: number
+}
 
 export interface Experience {
   id: string
   slug: string
 
+  title: string
+  subtitle: string
+
   category: ExperienceCategory
 
-  featured: boolean
-  active: boolean
-
-  title: string
-  subtitle?: string
-
   location: string
-  country?: string
 
-  duration: string
+  duration: ExperienceDuration
 
-  priceFrom: number
+  difficulty?: ExperienceDifficulty
 
-  maxGroupSize: number
+  altitude?: ExperienceAltitude
 
-  gallery: string[]
+  season: ExperienceSeason[]
+
+  coverImage: ExperienceImage
+
+  gallery: ExperienceImage[]
+
+  highlights: ExperienceHighlight[]
+
+  timeline: ExperienceTimelineItem[]
+
+  pricing: ExperiencePricing
+
+  shortDescription: string
 
   description: string
 
-  highlights: string[]
-
-  itinerary: ItineraryDayType[]
-
-  testimonials: TestimonialType[]
-
-  availableDates: TrekAvailableDateType[]
-
-  inclusions: string[]
-  exclusions: string[]
-
-  metadata: {
-    difficulty?: TrekDifficultyType
-    altitude?: string
-    tier?: TrekTierType
-    visaRequired?: boolean
-    pickup?: string
-    bestSeason?: string
-  }
+  featured: boolean
 }

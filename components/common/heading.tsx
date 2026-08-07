@@ -18,23 +18,39 @@ export function Heading({
   return (
     <div
       className={cn(
-        'max-w-3xl space-y-4',
-        align === 'center' && 'mx-auto text-center',
+        'w-full',
+        align === 'center'
+          ? 'mx-auto flex max-w-4xl flex-col items-center text-center'
+          : 'flex max-w-3xl flex-col items-start text-left',
         className
       )}
     >
       {eyebrow && (
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
+        <span className="mb-4 text-xs font-medium uppercase tracking-[0.35em] text-primary">
           {eyebrow}
-        </p>
+        </span>
       )}
 
-      <h2 className="text-balance text-4xl font-bold tracking-[-0.04em] md:text-6xl">
+      <h2
+        className={cn(
+          'text-balance font-semibold tracking-[-0.06em] text-foreground',
+          'text-5xl leading-[0.95]',
+          'md:text-6xl',
+          'lg:text-7xl'
+        )}
+      >
         {title}
       </h2>
 
       {description && (
-        <p className="text-lg leading-8 text-muted-foreground">{description}</p>
+        <p
+          className={cn(
+            'mt-8 text-lg leading-8 text-muted-foreground md:text-xl',
+            align === 'center' ? 'max-w-2xl' : 'max-w-xl'
+          )}
+        >
+          {description}
+        </p>
       )}
     </div>
   )
