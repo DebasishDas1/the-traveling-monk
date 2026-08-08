@@ -1,18 +1,20 @@
 import { Container } from '@/components/common/Container'
 import { Section } from '@/components/common/Section'
-import { Heading } from '@/components/common/Heading'
+import { Media, MediaHeading } from '@/components/common'
 
 export function Stories() {
   return (
     <Section>
       <Container>
-        <Heading
+        <MediaHeading
           eyebrow="Stories"
           title="Some journeys stay with you."
           description="Real moments shared by our community."
+          imagePosition="left"
+          image={
+            <Media src="/illustrations/stay-with-you.png" alt="Group around a campfire" />
+          }
         />
-
-        <div className="mt-16 h-96 rounded-[40px] border border-dashed" />
       </Container>
     </Section>
   )
