@@ -2,7 +2,7 @@ import { Container } from '@/components/common/Container'
 import { Section } from '@/components/common/Section'
 import { Heading } from '@/components/common/Heading'
 
-import { ExperienceCard } from '@/components/experience/ExperienceCard'
+import { ExperienceCard } from '@/components/experience/TrekCard'
 import { Experience } from '@/types/experience'
 
 const mockExperiences: Experience[] = [

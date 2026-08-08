@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import { Container } from '@/components/common/Container'
 import { Section } from '@/components/common/Section'
 import { Heading } from '@/components/common/Heading'
-import { ExperienceCard } from '@/components/experience/ExperienceCard'
+import { TrekCard } from '@/components/experience/TrekCard'
 import { Media, MediaHeading } from '@/components/common'
 import { Reset } from '@/features/home/Reset'
 
 import { trekData } from '@/lib/data/treks'
+import { isTrek } from '@/types/experience'
 
 import Link from 'next/link'
 
@@ -47,6 +48,7 @@ const categories = [
 
 export default function ExperiencesPage() {
   const featuredExperiences = trekData
+    .filter(isTrek)
     .filter((experience) => experience.featured)
     .slice(0, 3)
 
@@ -131,7 +133,7 @@ export default function ExperiencesPage() {
 
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {featuredExperiences.map((experience) => (
-                  <ExperienceCard key={experience.id} experience={experience} />
+                  <TrekCard key={experience.id} experience={experience} />
                 ))}
               </div>
             </div>
