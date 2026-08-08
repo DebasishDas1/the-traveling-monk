@@ -15,7 +15,7 @@ export function ModernLife() {
             <Media
               src="/illustrations/modern-life.png"
               alt="Traveller watching sunrise"
-              ratio="3/2"
+              ratio="1/1"
             />
           }
         />

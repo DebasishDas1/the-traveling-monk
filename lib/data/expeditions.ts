@@ -1,4 +1,4 @@
-import type { ExpeditionType } from "../type";
+import type { ExpeditionType } from "@/types/experience";
 
 export const expeditionsData: ExpeditionType[] = [
   {
@@ -8,7 +8,7 @@ export const expeditionsData: ExpeditionType[] = [
     country: "Bhutan",
     location: "Paro, Thimphu, and Punakha Valleys",
     tagline: "A curated cultural pilgrimage into the heart of Bhutan.",
-    tier: "Premium",
+    tier: "Easy",
     duration: "7D/6N",
     visaRequired: true, // Required for most foreigners (SDF and entry permits apply for SAARC/Indian citizens)
     bestSeason: "September to May",

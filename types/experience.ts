@@ -1,6 +1,14 @@
 export type ExperienceCategory = 'trek' | 'homestay' | 'international'
+export type OfferingType = 'experience' | 'escape' | 'expedition' | 'trek'
 
-export type ExperienceDifficulty = 'easy' | 'moderate' | 'challenging'
+export type ExperienceDifficulty =
+  | 'Easy'
+  | 'Moderate'
+  | 'Challenging'
+  | 'Difficult'
+  | 'Expert'
+  | 'Easy to Moderate'
+  | 'Moderate to Difficult'
 
 export type ExperienceSeason = 'spring' | 'summer' | 'autumn' | 'winter'
 
@@ -11,15 +19,20 @@ export interface ExperienceImage {
 }
 
 export interface ExperienceHighlight {
-  icon: string
+  icon?: string
   title: string
-  description: string
+  description?: string
 }
 
 export interface ExperienceTimelineItem {
   day: number
   title: string
   description: string
+  from?: string
+  to?: string
+  altitude?: string
+  duration?: string
+  imageUrl?: string
 }
 
 export interface ExperienceDuration {
@@ -27,48 +40,103 @@ export interface ExperienceDuration {
   nights?: number
 }
 
-export interface ExperienceAltitude {
-  metres: number
-}
+export type ExperienceAltitude = { metres: number } | string
 
 export interface ExperiencePricing {
-  amount: number
-  currency: 'INR'
+  amount?: number
+  currency?: 'INR'
   originalAmount?: number
+  [key: string]: number | string | undefined // For flexible pricing like {double: 7999, triple: 8999}
+}
+
+export interface AvailableDateSlot {
+  date: string
+  spots: number
+}
+
+export interface Testimonial {
+  name: string
+  city: string
+  quote: string
+  image?: string
+  rating: number
 }
 
 export interface Experience {
-  id: string
+  id: string | number
   slug: string
 
-  title: string
-  subtitle: string
+  title?: string
+  name?: string // For escapes/expeditions
+  subtitle?: string
+  tagline?: string // For expeditions
 
-  category: ExperienceCategory
+  type?: OfferingType // experience, escape, expedition
 
-  location: string
+  category?: ExperienceCategory
 
-  duration: ExperienceDuration
+  // Expedition specific
+  country?: string
+  tier?:
+    | 'Easy'
+    | 'Moderate'
+    | 'Premium'
+    | 'Luxury'
+    | 'Beginner'
+    | 'Intermediate'
+    | 'Advanced'
+  visaRequired?: boolean
+  bestSeason?: string
+
+  // Escape & Trek specific
+  pickup?: string
+  pickupDrop?: string
+  maxGroupSize?: number
+  availableDates?: AvailableDateSlot[]
+  spotsLeft?: number
+
+  // Trek specific
+  active?: boolean
+  region?: string
+  nextDate?: string
+  minAge?: number
+  trekAltitude?: number
+
+  location?: string
+
+  duration: string | ExperienceDuration
 
   difficulty?: ExperienceDifficulty
 
   altitude?: ExperienceAltitude
 
-  season: ExperienceSeason[]
+  season?: ExperienceSeason[]
 
-  coverImage: ExperienceImage
+  coverImage?: ExperienceImage
 
-  gallery: ExperienceImage[]
+  gallery: (string | ExperienceImage)[]
 
-  highlights: ExperienceHighlight[]
+  highlights: (string | ExperienceHighlight)[]
 
-  timeline: ExperienceTimelineItem[]
+  itinerary?: ExperienceTimelineItem[]
 
-  pricing: ExperiencePricing
+  pricing?: ExperiencePricing
+  price?: ExperiencePricing
+  priceFrom?: number
 
-  shortDescription: string
+  shortDescription?: string
 
   description: string
 
-  featured: boolean
+  featured?: boolean
+
+  // Additional fields for escapes/expeditions
+  inclusions?: string[]
+  exclusions?: string[]
+  testimonials?: Testimonial[]
 }
+
+// Specific type aliases for clarity
+export type TrekType = Experience
+export type EscapeType = Experience
+export type ExpeditionType = Experience

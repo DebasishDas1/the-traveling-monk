@@ -1,12 +1,32 @@
 export const siteConfig = {
   name: 'The Traveling Monk',
+
   description: 'Travel with old friends. Return renewed.',
+
   url: 'https://thetravelingmonk.com',
 
   navLinks: [
     {
       label: 'Experiences',
       href: '/experiences',
+      children: [
+        {
+          label: 'All Experiences',
+          href: '/experiences',
+        },
+        {
+          label: 'Treks',
+          href: '/treks',
+        },
+        {
+          label: 'Homestays',
+          href: '/homestays',
+        },
+        {
+          label: 'International Trips',
+          href: '/international',
+        },
+      ],
     },
     {
       label: 'Stories',
@@ -21,7 +41,12 @@ export const siteConfig = {
       href: '/contact',
     },
   ],
-}
+
+  cta: {
+    label: 'Begin Your Reset',
+    href: '/experiences',
+  },
+} as const
 
 // whatsapp
 export const whatsappNumber = '7003564123'

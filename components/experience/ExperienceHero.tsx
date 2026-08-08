@@ -15,10 +15,10 @@ export function ExperienceHero({ experience }: ExperienceHeroProps) {
       <Container>
         <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
           <div className="space-y-8">
-            <ExperienceBadge category={experience.category} />
+            {experience.category && <ExperienceBadge category={experience.category} />}
 
             <Heading
-              title={experience.title}
+              title={experience.title || experience.name || ''}
               description={experience.subtitle}
             />
 
@@ -26,12 +26,14 @@ export function ExperienceHero({ experience }: ExperienceHeroProps) {
           </div>
 
           <div className="relative aspect-4/5 overflow-hidden rounded-3xl">
-            <Media
-              src={experience.coverImage.src}
-              alt={experience.coverImage.alt}
-              priority
-              className="object-cover"
-            />
+            {experience.coverImage && (
+              <Media
+                src={experience.coverImage.src}
+                alt={experience.coverImage.alt}
+                priority
+                className="object-cover"
+              />
+            )}
           </div>
         </div>
       </Container>

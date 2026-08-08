@@ -11,14 +11,21 @@ export function ExperienceGallery({ images }: ExperienceGalleryProps) {
     <Section>
       <Container>
         <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-          {images.map((image) => (
-            <div
-              key={image.id}
-              className="relative aspect-square overflow-hidden rounded-2xl"
-            >
-              <Media src={image.src} alt={image.alt} className="object-cover" />
-            </div>
-          ))}
+          {images.map((image, i) => {
+            const isString = typeof image === 'string'
+            const src = isString ? image : image.src
+            const alt = isString ? 'Experience Image' : image.alt
+            const id = isString ? i : image.id
+
+            return (
+              <div
+                key={id}
+                className="relative aspect-square overflow-hidden rounded-2xl"
+              >
+                <Media src={src} alt={alt} className="object-cover" />
+              </div>
+            )
+          })}
         </div>
       </Container>
     </Section>

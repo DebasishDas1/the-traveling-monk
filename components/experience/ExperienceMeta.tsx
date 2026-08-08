@@ -16,13 +16,21 @@ export function ExperienceMeta({ experience }: ExperienceMetaProps) {
 
       <div className="flex items-center gap-2">
         <CalendarDays className="size-4" />
-        <span>{experience.duration.days} Days</span>
+        <span>
+          {typeof experience.duration === 'string'
+            ? experience.duration
+            : `${experience.duration.days} Days`}
+        </span>
       </div>
 
       {experience.altitude && (
         <div className="flex items-center gap-2">
           <Mountain className="size-4" />
-          <span>{experience.altitude.metres.toLocaleString()} m</span>
+          <span>
+            {typeof experience.altitude === 'string'
+              ? experience.altitude
+              : `${experience.altitude.metres.toLocaleString()} m`}
+          </span>
         </div>
       )}
     </div>

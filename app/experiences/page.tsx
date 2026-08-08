@@ -1,0 +1,163 @@
+import type { Metadata } from 'next'
+import { Container } from '@/components/common/Container'
+import { Section } from '@/components/common/Section'
+import { Heading } from '@/components/common/Heading'
+import { ExperienceCard } from '@/components/experience/ExperienceCard'
+import { Media, MediaHeading } from '@/components/common'
+import { Reset } from '@/features/home/Reset'
+
+import { trekData } from '@/lib/data/treks'
+
+import Link from 'next/link'
+
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+
+export const metadata: Metadata = {
+  title: 'Experiences | The Traveling Monk',
+  description:
+    'Treks, homestays, and international journeys designed to help you slow down, reconnect, and return renewed.',
+}
+
+const categories = [
+  {
+    label: 'Treks',
+    description: 'Walk a little farther from the noise.',
+    href: '/treks',
+    image: '/illustrations/trek.png',
+  },
+  {
+    label: 'Homestays',
+    description: 'Stay somewhere that feels like nowhere else.',
+    href: '/homestays',
+    image: '/illustrations/home-stay.png',
+  },
+  {
+    label: 'International Trips',
+    description: 'Go somewhere unfamiliar. Come back different.',
+    href: '/international',
+    image: '/illustrations/Around the world-amico.png',
+  },
+]
+
+export default function ExperiencesPage() {
+  const featuredExperiences = trekData
+    .filter((experience) => experience.featured)
+    .slice(0, 3)
+
+  return (
+    <main>
+      {/* Hero */}
+      <Section>
+        <Container>
+          <MediaHeading
+            eyebrow="Experiences"
+            title="Choose your way out of the ordinary."
+            description="Treks, stays, and journeys designed to slow you down, bring you closer to people, and leave you feeling renewed."
+            size="display"
+            image={
+              <Media
+                src="/illustrations/choose.png"
+                alt="Person sitting by the sea"
+                ratio="1/1"
+              />
+            }
+          />
+        </Container>
+      </Section>
+
+      {/* Categories */}
+      <Section>
+        <Container>
+          <div className="space-y-12">
+            <Heading
+              eyebrow="Find your reset"
+              title="Where do you want to go?"
+              size="h2"
+            />
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {categories.map((category, i) => (
+                <Link
+                  key={i}
+                  href={category.href}
+                  className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <Card className="h-full transition-colors group-hover:bg-muted/50 text-center bg-white">
+                    <CardHeader>
+                      <CardTitle className="text-3xl! font-bold">
+                        {category.label}
+                      </CardTitle>
+                      <CardDescription>{category.description}</CardDescription>
+                    </CardHeader>
+                    <Media
+                      src={category.image}
+                      alt={category.label}
+                      ratio="1/1"
+                    />
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Featured */}
+      {featuredExperiences.length > 0 && (
+        <Section>
+          <Container>
+            <div className="space-y-12">
+              <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <Heading
+                  eyebrow="Featured"
+                  title="Start somewhere beautiful."
+                  description="A few journeys we'd choose first."
+                  size="h2"
+                />
+
+                <Link
+                  href="/treks"
+                  className="shrink-0 text-sm font-medium text-foreground underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
+                >
+                  Explore all experiences
+                </Link>
+              </div>
+
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {featuredExperiences.map((experience) => (
+                  <ExperienceCard key={experience.id} experience={experience} />
+                ))}
+              </div>
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      <Reset />
+
+      {/* CTA */}
+      <Section>
+        <Container>
+          <Heading
+            align="center"
+            eyebrow="Ready?"
+            title="Begin your reset."
+            description="The mountains are closer than you think."
+            size="h2"
+          />
+          <div className="flex justify-center pt-6">
+            <Link href="/treks">
+              <Button>Explore experiences</Button>
+            </Link>
+          </div>
+        </Container>
+      </Section>
+    </main>
+  )
+}

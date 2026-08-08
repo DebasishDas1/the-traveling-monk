@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 import { ArrowRight } from 'lucide-react'
@@ -30,19 +32,23 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
         transition={{ duration: 0.25 }}
         className="overflow-hidden rounded-3xl border bg-background"
       >
-        <Media
-          src={experience.coverImage.src}
-          alt={experience.coverImage.alt}
-          priority
-          className="transition-transform duration-300 group-hover:scale-[1.04]"
-        />
+        {experience.coverImage && (
+          <Media
+            src={experience.coverImage.src}
+            alt={experience.coverImage.alt}
+            priority
+            className="transition-transform duration-300 group-hover:scale-[1.04]"
+          />
+        )}
 
         <div className="space-y-6 p-6">
-          <ExperienceBadge category={experience.category} />
+          {experience.category && (
+            <ExperienceBadge category={experience.category} />
+          )}
 
           <div className="space-y-3">
             <h3 className="text-2xl font-semibold tracking-tight">
-              {experience.title}
+              {experience.title || experience.name}
             </h3>
 
             <p className="line-clamp-2 text-muted-foreground">
@@ -53,9 +59,11 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
           <ExperienceMeta experience={experience} />
 
           <div className="flex items-center justify-between">
-            <ExperiencePricing pricing={experience.pricing} />
+            {experience.pricing && (
+              <ExperiencePricing pricing={experience.pricing} />
+            )}
 
-            <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
+            {/* <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" /> */}
           </div>
         </div>
       </MotionCard>

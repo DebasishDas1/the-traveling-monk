@@ -5,6 +5,8 @@ interface ExperiencePricingProps {
 }
 
 export function ExperiencePricing({ pricing }: ExperiencePricingProps) {
+  if (!pricing.amount) return null
+
   return (
     <div className="space-y-1">
       <p className="text-sm text-muted-foreground">Starting from</p>
