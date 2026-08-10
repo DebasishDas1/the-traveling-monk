@@ -1,0 +1,88 @@
+import { Media } from '@/components/common'
+import { cn } from '@/lib/utils'
+
+interface TrekGalleryProps {
+  images: Array<
+    | {
+        url: string
+        alt?: string
+      }
+    | string
+  >
+  title: string
+}
+
+function normalizeImage(
+  image: TrekGalleryProps['images'][number],
+  fallbackAlt: string
+) {
+  if (typeof image === 'string') {
+    return {
+      src: image,
+      alt: fallbackAlt,
+    }
+  }
+
+  return {
+    src: image.url,
+    alt: image.alt || fallbackAlt,
+  }
+}
+
+export function TrekGallery({ images, title }: TrekGalleryProps) {
+  const gallery = images
+    .slice(0, 6)
+    .map((image) => normalizeImage(image, title))
+    .filter((image) => image.src)
+
+  if (!gallery.length) return null
+
+  return (
+    <section className="py-20 md:py-32">
+      <div className="mx-auto px-4 md:px-6">
+        <div className="mb-10 md:mb-14">
+          <p className="text-[10px] font-medium uppercase text-primary">
+            From the trail
+          </p>
+
+          <h2 className="mt-4 text-4xl font-semibold tracking-tighter md:text-5xl">
+            A few moments from the journey.
+          </h2>
+        </div>
+
+        <div
+          className={cn(
+            'grid gap-3',
+            'grid-cols-2',
+            'md:grid-cols-4',
+            'md:grid-rows-2'
+          )}
+        >
+          {gallery.map((image, index) => (
+            <div
+              key={`${image.src}-${index}`}
+              className={cn(
+                'group relative overflow-hidden rounded-[24px]',
+                index === 0 && 'col-span-2 row-span-2 md:min-h-145',
+                index === 3 && 'md:col-span-2'
+              )}
+            >
+              <Media
+                src={image.src}
+                alt={image.alt}
+                className="
+                  h-full
+                  w-full
+                  object-cover
+                  transition-transform
+                  duration-700
+                  group-hover:scale-[1.025]
+                "
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

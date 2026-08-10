@@ -29,6 +29,18 @@ export const siteConfig = {
       ],
     },
     {
+      label: 'Treks',
+      href: '/treks',
+    },
+    {
+      label: 'Homestays',
+      href: '/home-stays',
+    },
+    {
+      label: 'International Trips',
+      href: '/international',
+    },
+    {
       label: 'Stories',
       href: '/stories',
     },
