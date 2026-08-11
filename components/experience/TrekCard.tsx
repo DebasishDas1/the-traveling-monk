@@ -17,10 +17,10 @@ export const TrekCard = ({ experience }: ExperienceCardProps) => {
       : (experience.gallery[0]?.url ?? '')
 
   return (
-    <Card className="bg-white shadow-xl p-0">
+    <Card className="bg-white shadow-xl pt-0">
       <Link href={`/treks/${experience.slug}`}>
         <Media src={imageSrc} alt={experience.title} />
-        <CardContent className="mt-4">
+        <CardContent className="mt-4 px-6">
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
             <MapPin className="size-3.5 shrink-0" strokeWidth={1.75} />
             <span>{experience.location}</span>
@@ -51,7 +51,7 @@ export const TrekCard = ({ experience }: ExperienceCardProps) => {
           </div>
         </CardContent>
 
-        <CardFooter className="mt-6 flex items-end justify-between border-0">
+        <CardFooter className="mt-6 flex items-end justify-between border-0 px-6">
           <div>
             <p className="mt-1 text-2xl font-semibold tracking-[-0.02em] text-foreground">
               {formatPrice(experience.priceFrom)}

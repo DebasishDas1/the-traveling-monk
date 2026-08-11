@@ -114,6 +114,7 @@ export const trekData: Trek[] = [
     ],
     minAge: 8,
     pickupDrop: 'Barshaini',
+    geoLocation: '',
   },
 
   // ── TRIUND TREK ─────────────────────────────────────────────────────────────────
@@ -225,6 +226,7 @@ export const trekData: Trek[] = [
     ],
     minAge: 8,
     pickupDrop: 'McLeod Ganj',
+    geoLocation: '',
   },
 
   // ── HAMPTA PASS ─────────────────────────────────────────────────────────────────
@@ -368,6 +370,7 @@ export const trekData: Trek[] = [
     ],
     minAge: 12,
     pickupDrop: 'Manali',
+    geoLocation: '',
   },
 
   // ── BALI PASS ─────────────────────────────────────────────────────────────────
@@ -553,12 +556,14 @@ export const trekData: Trek[] = [
     ],
     minAge: 16,
     pickupDrop: 'Dehradun',
+    geoLocation: '',
   },
 
   // ── SAR PASS ─────────────────────────────────────────────────────────────────
   {
     id: 5,
     type: OfferingType.TREK,
+    geoLocation: '',
     slug: 'sar-pass',
     title: 'Sar Pass Trek',
     featured: true,
@@ -712,6 +717,7 @@ export const trekData: Trek[] = [
   {
     id: 6,
     type: OfferingType.TREK,
+    geoLocation: "",
     slug: 'buran-ghati',
     title: 'Buran Ghati Trek',
     featured: false,
@@ -885,6 +891,7 @@ export const trekData: Trek[] = [
   {
     id: 7,
     type: OfferingType.TREK,
+    geoLocation: "",
     slug: 'bhrigu-lake',
     title: 'Bhrigu Lake Trek',
     featured: false,
@@ -1017,6 +1024,7 @@ export const trekData: Trek[] = [
   {
     id: 8,
     type: OfferingType.TREK,
+    geoLocation: "",
     slug: 'beas-kund',
     title: 'Beas Kund Trek',
     featured: false,
@@ -1145,6 +1153,7 @@ export const trekData: Trek[] = [
   {
     id: 9,
     type: OfferingType.TREK,
+    geoLocation: "",
     slug: 'har-ki-dun-trek',
     featured: false,
     active: true,
@@ -1314,6 +1323,7 @@ export const trekData: Trek[] = [
   {
     id: 10,
     type: OfferingType.TREK,
+    geoLocation: "",
     slug: 'indrahar-pass-trek',
     featured: false,
     active: true,
@@ -1472,6 +1482,7 @@ export const trekData: Trek[] = [
   {
     id: 11,
     type: OfferingType.TREK,
+    geoLocation: "",
     slug: 'buni-buni-kheerganga-trek',
     title: 'Buni Buni + Kheerganga Trek',
     tagline: 'Two camps. One unforgettable Parvati Valley journey.',
@@ -1601,6 +1612,7 @@ export const trekData: Trek[] = [
   {
     id: 12,
     type: OfferingType.TREK,
+    geoLocation: "",
     slug: 'kashmir-great-lakes-trek',
     title: 'Kashmir Great Lakes Trek',
     featured: false,
@@ -1776,6 +1788,7 @@ export const trekData: Trek[] = [
   {
     id: 13,
     type: OfferingType.TREK,
+    geoLocation: "https://maps.app.goo.gl/HFasQTTuvsGefYnv8",
     slug: 'gaumukh-tapovan-trek',
     featured: false,
     active: true,

@@ -146,6 +146,7 @@ export interface Trek extends BaseExperience {
   availableDates: AvailableDateSlot[]
   itinerary?: TrekTimelineItem[]
   active: boolean
+  geoLocation?: string
 }
 
 // ──────────────────────────────────────────────────────────────────

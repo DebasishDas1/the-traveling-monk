@@ -13,9 +13,9 @@ import { ItineraryCard } from '@/components/experience/ItineraryCard'
 import { TrekGallery } from '@/components/experience/TrekGallery'
 import { TrekInclusions } from '@/components/experience/TrekInclusions'
 import { TrekTestimonials } from '@/components/experience/TrekTestimonials'
-import { TrekBooking } from '@/components/experience/TrekBooking'
 import { RelatedTreks } from '@/components/experience/RelatedTreks'
-
+import { LocationMap } from '@/components/experience/LocationMap'
+import { TrekBookingBar } from '@/components/experience/TrekBookingBar'
 import { Card, CardDescription, CardHeader } from '@/components/ui/card'
 
 interface TrekPageProps {
@@ -58,6 +58,15 @@ function getImage(
   }
 }
 
+function getRelatedTreks(currentTrek: Trek) {
+  return trekData.filter(
+    (experience): experience is Trek =>
+      experience.type === OfferingType.TREK &&
+      experience.active &&
+      experience.slug !== currentTrek.slug
+  )
+}
+
 /* ─────────────────────────────────────────────
    SEO
 ───────────────────────────────────────────── */
@@ -66,7 +75,6 @@ export async function generateMetadata({
   params,
 }: TrekPageProps): Promise<Metadata> {
   const { slug } = await params
-
   const trek = getTrek(slug)
 
   if (!trek) {
@@ -75,14 +83,16 @@ export async function generateMetadata({
 
   const image = getImage(trek.gallery[0], trek.title)
 
-  return {
-    title: `${trek.title} | The Traveling Monk`,
+  const title = `${trek.title} | The Traveling Monk`
 
+  return {
+    title,
     description: trek.description,
 
     openGraph: {
-      title: `${trek.title} | The Traveling Monk`,
+      title,
       description: trek.description,
+      type: 'article',
 
       images: image
         ? [
@@ -92,6 +102,14 @@ export async function generateMetadata({
             },
           ]
         : undefined,
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: trek.description,
+
+      images: image ? [image.src] : undefined,
     },
   }
 }
@@ -108,6 +126,8 @@ export default async function TrekPage({ params }: TrekPageProps) {
   if (!trek) {
     notFound()
   }
+
+  const itinerary = trek.itinerary ?? []
 
   const facts = [
     {
@@ -132,7 +152,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
     },
   ]
 
-  const itinerary = trek.itinerary ?? []
+  const relatedTreks = getRelatedTreks(trek)
 
   const images = trek.gallery
     .slice(0, 3)
@@ -140,14 +160,22 @@ export default async function TrekPage({ params }: TrekPageProps) {
     .filter((image): image is NonNullable<typeof image> => Boolean(image))
 
   return (
-    <main className="overflow-hidden">
-      <section className="pt-4 md:pt-6">
-        <TrekGalleryHero
-          images={images}
-          title={trek.title}
-          length={trek.gallery.length}
-        />
-      </section>
+    <>
+    <main>
+      {/* ─────────────────────────────────────
+          HERO
+      ───────────────────────────────────── */}
+
+      <TrekGalleryHero
+        images={images}
+        title={trek.title}
+        length={trek.gallery.length}
+      />
+
+      {/* ─────────────────────────────────────
+          FACTS
+      ───────────────────────────────────── */}
+
       <Container>
         <div className="grid grid-cols-2 md:grid-cols-4 py-4 gap-4">
           {facts.map((fact) => (
@@ -156,46 +184,35 @@ export default async function TrekPage({ params }: TrekPageProps) {
         </div>
       </Container>
 
+      {/* ─────────────────────────────────────
+          INTRO
+      ───────────────────────────────────── */}
+
       <Section>
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-            {/* Left */}
             <div className="lg:sticky lg:top-32 lg:self-start">
               <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
                 The experience
               </p>
 
-              <h2
-                className="
-                  mt-5
-                  text-4xl
-                  font-semibold
-                  leading-[0.98]
-                  md:text-5xl
-                "
-              >
+              <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
                 Come for the mountains.
-                <div className="text-muted-foreground">
+                <span className="block text-muted-foreground">
                   Stay for what they leave behind.
-                </div>
+                </span>
               </h2>
             </div>
 
-            {/* Right */}
-            <div>
-              <Card className="bg-white">
-                <CardHeader>
-                  <CardDescription className="font-normal leading-relaxed text-lg">
-                    {trek.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </div>
+            <Card className="bg-white">
+              <CardHeader>
+                <CardDescription className="text-lg font-normal leading-relaxed">
+                  {trek.description}
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </div>
         </Container>
-        {/* <Container>
-          <Media src="/illustrations/Sunny-day-cuate.png" alt="" ratio="1/1" />
-        </Container> */}
       </Section>
 
       {/* ─────────────────────────────────────
@@ -205,40 +222,30 @@ export default async function TrekPage({ params }: TrekPageProps) {
       {trek.highlights.length > 0 && (
         <section className="bg-muted/40">
           <Container>
-            <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-              {/* Intro */}
+            <div className="grid gap-12 py-20 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
               <div>
                 <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
                   Along the way
                 </p>
 
-                <h2
-                  className="
-                    mt-5
-                    max-w-sm
-                    text-4xl
-                    font-semibold
-                    leading-none
-                    tracking-tighter
-                    md:text-5xl
-                  "
-                >
+                <h2 className="mt-5 max-w-sm text-4xl font-semibold leading-none tracking-tighter md:text-5xl">
                   The moments you&apos;ll remember.
                 </h2>
               </div>
-              {/* Highlight list */}
+
               <div className="divide-y divide-border/70">
-                {trek.highlights.map((highlight, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex items-center gap-4 text-2xl py-4"
-                    >
-                      <span className="text-primary">{index + 1}</span>
-                      {highlight}
-                    </div>
-                  )
-                })}
+                {trek.highlights.map((highlight, index) => (
+                  <div
+                    key={`${highlight}-${index}`}
+                    className="flex items-center gap-4 py-4 text-2xl"
+                  >
+                    <span className="text-primary">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+
+                    <span>{highlight}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </Container>
@@ -253,33 +260,16 @@ export default async function TrekPage({ params }: TrekPageProps) {
         <Section>
           <Container>
             <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-              {/* Sticky intro */}
               <div className="lg:sticky lg:top-32 lg:self-start">
                 <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
                   The journey
                 </p>
 
-                <h2
-                  className="
-                    mt-5
-                    text-4xl
-                    font-semibold
-                    leading-[0.98]
-                    tracking-tighter
-                    md:text-5xl
-                  "
-                >
+                <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
                   Take it one day at a time.
                 </h2>
 
-                <p
-                  className="
-                    mt-5
-                    text-base
-                    leading-7
-                    text-muted-foreground
-                  "
-                >
+                <p className="mt-5 text-base leading-7 text-muted-foreground">
                   No rushing. No checklist. Just a trail, a few good people, and
                   enough time to notice where you are.
                 </p>
@@ -289,8 +279,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
                 </div>
               </div>
 
-              {/* Cards */}
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {itinerary.map((item, index) => (
                   <ItineraryCard
                     key={`${item.day}-${item.title}-${index}`}
@@ -306,28 +295,77 @@ export default async function TrekPage({ params }: TrekPageProps) {
                 ))}
               </div>
             </div>
-
-            <TrekGallery images={trek.gallery} title={trek.title} />
-
-            <TrekInclusions
-              inclusions={trek.inclusions}
-              exclusions={trek.exclusions}
-            />
-
-            <TrekTestimonials testimonials={trek.testimonials} />
-
-            <TrekBooking trek={trek} />
-
-            <RelatedTreks
-              currentTrek={trek}
-              treks={trekData.filter(
-                (experience): experience is Trek =>
-                  experience.type === OfferingType.TREK
-              )}
-            />
           </Container>
         </Section>
       )}
+
+      {/* ─────────────────────────────────────
+          GALLERY
+      ───────────────────────────────────── */}
+
+      {trek.gallery.length > 0 && (
+        <Section>
+          <Container>
+            <TrekGallery images={trek.gallery} title={trek.title} />
+          </Container>
+        </Section>
+      )}
+
+      {/* ─────────────────────────────────────
+          INCLUSIONS
+      ───────────────────────────────────── */}
+
+      <Section>
+        <Container>
+          <TrekInclusions
+            inclusions={trek.inclusions}
+            exclusions={trek.exclusions}
+          />
+        </Container>
+      </Section>
+
+      {/* ─────────────────────────────────────
+          TESTIMONIALS
+      ───────────────────────────────────── */}
+
+      {trek.testimonials && (
+        <Section>
+          <Container>
+            <TrekTestimonials testimonials={trek.testimonials} />
+          </Container>
+        </Section>
+      )}
+
+      {/* ─────────────────────────────────────
+          LOCATION
+      ───────────────────────────────────── */}
+
+      {trek.geoLocation && (
+        <Section>
+          <Container>
+            <LocationMap geoLocation={trek.geoLocation} name={trek.title} />
+          </Container>
+        </Section>
+      )}
+
+      {/* ─────────────────────────────────────
+          RELATED TREKS
+      ───────────────────────────────────── */}
+
+      {relatedTreks.length > 0 && (
+        <Section>
+          <Container>
+            <RelatedTreks currentTrek={trek} treks={relatedTreks} />
+          </Container>
+        </Section>
+      )}
+
+      {/* ─────────────────────────────────────
+          BOOKING
+      ───────────────────────────────────── */}
+
     </main>
+      <TrekBookingBar trek={trek} />
+    </>
   )
 }

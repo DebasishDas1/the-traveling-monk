@@ -41,6 +41,7 @@ export function ItineraryCard({
         'transition-all duration-500',
         'hover:-translate-y-1 hover:border-border',
         'bg-white',
+        'shadow-md',
         className
       )}
     >
