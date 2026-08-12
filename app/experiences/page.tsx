@@ -1,23 +1,25 @@
 import type { Metadata } from 'next'
-import { Container } from '@/components/common/Container'
-import { Section } from '@/components/common/Section'
-import { Heading } from '@/components/common/Heading'
-import { TrekCard } from '@/components/experience/TrekCard'
-import { Media, MediaHeading } from '@/components/common'
-import { Reset } from '@/features/home/Reset'
-
-import { trekData } from '@/lib/data/treks'
-import { isTrek } from '@/types/experience'
-
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
+import {
+  Container,
+  Heading,
+  Media,
+  MediaHeading,
+  Section,
+} from '@/components/common'
+import { TrekCard } from '@/components/experience/TrekCard'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+
+import { trekData } from '@/lib/data/treks'
+import { isTrek } from '@/types/experience'
 
 export const metadata: Metadata = {
   title: 'Experiences | The Traveling Monk',
@@ -44,16 +46,16 @@ const categories = [
     href: '/international',
     image: '/illustrations/Around the world-amico.png',
   },
-]
+] as const
 
 export default function ExperiencesPage() {
   const featuredExperiences = trekData
     .filter(isTrek)
-    .filter((experience) => experience.featured)
+    .filter(({ featured }) => featured)
     .slice(0, 3)
 
   return (
-    <main>
+    <main className="overflow-hidden">
       {/* Hero */}
       <Section>
         <Container>
@@ -84,26 +86,11 @@ export default function ExperiencesPage() {
             />
 
             <div className="grid gap-6 md:grid-cols-3">
-              {categories.map((category, i) => (
-                <Link
-                  key={i}
-                  href={category.href}
-                  className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <Card className="h-full transition-colors group-hover:bg-muted/50 text-center bg-white">
-                    <CardHeader>
-                      <CardTitle className="text-3xl! font-bold">
-                        {category.label}
-                      </CardTitle>
-                      <CardDescription>{category.description}</CardDescription>
-                    </CardHeader>
-                    <Media
-                      src={category.image}
-                      alt={category.label}
-                      ratio="1/1"
-                    />
-                  </Card>
-                </Link>
+              {categories.map((category) => (
+                <CategoryCard
+                  key={category.href}
+                  {...category}
+                />
               ))}
             </div>
           </div>
@@ -125,15 +112,28 @@ export default function ExperiencesPage() {
 
                 <Link
                   href="/treks"
-                  className="shrink-0 text-sm font-medium text-foreground underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
+                  className="
+                    inline-flex shrink-0 items-center gap-2
+                    text-sm font-medium
+                    underline decoration-border underline-offset-8
+                    transition-colors
+                    hover:decoration-foreground
+                  "
                 >
                   Explore all experiences
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                  />
                 </Link>
               </div>
 
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {featuredExperiences.map((experience) => (
-                  <TrekCard key={experience.id} experience={experience} />
+                  <TrekCard
+                    key={experience.id}
+                    experience={experience}
+                  />
                 ))}
               </div>
             </div>
@@ -141,7 +141,24 @@ export default function ExperiencesPage() {
         </Section>
       )}
 
-      <Reset />
+      {/* The Reset */}
+      <Section className="bg-muted/30">
+        <Container className="max-w-5xl">
+          <MediaHeading
+            eyebrow="The Reset"
+            title="You don't need another vacation."
+            description="You need a reset."
+            imagePosition="left"
+            image={
+              <Media
+                src="/illustrations/not-vacation.png"
+                alt="Traveller taking a quiet moment"
+                ratio="1/1"
+              />
+            }
+          />
+        </Container>
+      </Section>
 
       {/* CTA */}
       <Section>
@@ -153,13 +170,72 @@ export default function ExperiencesPage() {
             description="The mountains are closer than you think."
             size="h2"
           />
+
           <div className="flex justify-center pt-6">
-            <Link href="/treks">
-              <Button>Explore experiences</Button>
-            </Link>
+            <Button asChild>
+              <Link href="/treks">
+                Explore experiences
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
           </div>
         </Container>
       </Section>
     </main>
+  )
+}
+
+interface CategoryCardProps {
+  label: string
+  description: string
+  href: string
+  image: string
+}
+
+function CategoryCard({
+  label,
+  description,
+  href,
+  image,
+}: CategoryCardProps) {
+  return (
+    <Link
+      href={href}
+      className="
+        group block rounded-xl
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-ring
+        focus-visible:ring-offset-2
+      "
+    >
+      <Card
+        className="
+          h-full overflow-hidden
+          bg-card text-center
+          transition-all duration-300
+          group-hover:-translate-y-1
+          group-hover:shadow-lg
+        "
+      >
+        <CardHeader>
+          <CardTitle className="text-3xl! font-bold">
+            {label}
+          </CardTitle>
+
+          <CardDescription>
+            {description}
+          </CardDescription>
+        </CardHeader>
+
+        <Media
+          src={image}
+          alt=""
+          aria-hidden="true"
+          ratio="1/1"
+          className="transition-transform duration-700 group-hover:scale-[1.03]"
+        />
+      </Card>
+    </Link>
   )
 }

@@ -39,7 +39,6 @@ export function TrekGallery({ images, title }: TrekGalleryProps) {
 
   return (
     <section className="py-20 md:py-32">
-      {/* <div className="mx-auto px-4 md:px-6"> */}
       <div className="mb-10 md:mb-14">
         <p className="text-[10px] font-medium uppercase text-primary">
           From the trail
@@ -75,7 +74,6 @@ export function TrekGallery({ images, title }: TrekGalleryProps) {
           />
         ))}
       </div>
-      {/* </div> */}
     </section>
   )
 }

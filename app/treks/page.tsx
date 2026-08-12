@@ -1,12 +1,19 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
-import { Container } from '@/components/common/Container'
-import { Section } from '@/components/common/Section'
-import { Heading } from '@/components/common/Heading'
+import {
+  Container,
+  CtaSection,
+  Heading,
+  Media,
+  MediaHeading,
+  Section,
+} from '@/components/common'
 
-import { trekData } from '@/lib/data/treks'
-import { Media, MediaHeading } from '@/components/common'
 import { TrekGrid } from '@/components/experience/TrekGrid'
+import { trekData } from '@/lib/data/treks'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Himalayan Treks | The Traveling Monk',
@@ -16,7 +23,8 @@ export const metadata: Metadata = {
 
 export default function TreksPage() {
   return (
-    <main>
+    <main className="overflow-hidden">
+      {/* Hero */}
       <Section>
         <Container>
           <MediaHeading
@@ -27,7 +35,7 @@ export default function TreksPage() {
             image={
               <Media
                 src="/illustrations/mountain-journey.png"
-                alt="Person sitting by the sea"
+                alt="Traveller beginning a journey through the mountains"
                 ratio="1/1"
               />
             }
@@ -35,14 +43,14 @@ export default function TreksPage() {
         </Container>
       </Section>
 
-      <Container>
-        <TrekGrid treks={trekData} />
-      </Container>
+      {/* Treks */}
+      <Section>
+        <Container>
+          <TrekGrid treks={trekData} />
+        </Container>
+      </Section>
 
-      {/* ─────────────────────────────
-          PHILOSOPHY
-      ───────────────────────────── */}
-
+      {/* Philosophy */}
       <Section>
         <Container>
           <Heading
@@ -52,36 +60,25 @@ export default function TreksPage() {
             description="Journeys that take you away from the noise and closer to what matters."
             size="h2"
           />
-          <Media
-            src="/illustrations/on-the-way.png"
-            alt="Person sitting by the sea"
-            ratio="1/1"
-          />
-        </Container>
-      </Section>
 
-      <Section>
-        <Container>
-          <div className="text-center">
-            <Heading
-              eyebrow="Ready?"
-              title="Begin your reset."
-              description="Your next story might be waiting in the mountains."
-              size="h2"
-              align="center"
+          <div className="mt-12 md:mt-16">
+            <Media
+              src="/illustrations/on-the-way.png"
+              alt="Traveller walking through the mountains"
+              ratio="1/1"
             />
-
-            <div className="mt-10">
-              <a
-                href="/experiences"
-                className="inline-flex h-12 items-center rounded-full bg-primary px-7 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-              >
-                Explore experiences
-              </a>
-            </div>
           </div>
         </Container>
       </Section>
+
+      {/* CTA */}
+      <CtaSection
+        eyebrow="Ready?"
+        title="Begin your reset."
+        description="Your next story might be waiting in the mountains."
+        buttonText="Explore experiences"
+        link="/experiences"
+      />
     </main>
   )
 }

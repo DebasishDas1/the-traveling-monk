@@ -114,7 +114,7 @@ export const trekData: Trek[] = [
     ],
     minAge: 8,
     pickupDrop: 'Barshaini',
-    geoLocation: '',
+    geoLocation: 'https://maps.app.goo.gl/tVaKdegYEgcFuduo6',
   },
 
   // ── TRIUND TREK ─────────────────────────────────────────────────────────────────
@@ -226,7 +226,7 @@ export const trekData: Trek[] = [
     ],
     minAge: 8,
     pickupDrop: 'McLeod Ganj',
-    geoLocation: '',
+    geoLocation: 'https://maps.app.goo.gl/UwWGt1veMS1wbdwk9',
   },
 
   // ── HAMPTA PASS ─────────────────────────────────────────────────────────────────
@@ -370,7 +370,7 @@ export const trekData: Trek[] = [
     ],
     minAge: 12,
     pickupDrop: 'Manali',
-    geoLocation: '',
+    geoLocation: 'https://maps.app.goo.gl/UCz1AouuSw2Yi3UJA',
   },
 
   // ── BALI PASS ─────────────────────────────────────────────────────────────────
@@ -556,14 +556,14 @@ export const trekData: Trek[] = [
     ],
     minAge: 16,
     pickupDrop: 'Dehradun',
-    geoLocation: '',
+    geoLocation: 'https://maps.app.goo.gl/NwH7x89Fae3TgZ387',
   },
 
   // ── SAR PASS ─────────────────────────────────────────────────────────────────
   {
     id: 5,
     type: OfferingType.TREK,
-    geoLocation: '',
+    geoLocation: 'https://maps.app.goo.gl/Hfn2eyDmn8EVJ6457',
     slug: 'sar-pass',
     title: 'Sar Pass Trek',
     featured: true,
@@ -717,7 +717,7 @@ export const trekData: Trek[] = [
   {
     id: 6,
     type: OfferingType.TREK,
-    geoLocation: "",
+    geoLocation: "https://maps.app.goo.gl/EoFhATe9koCCTU5s5",
     slug: 'buran-ghati',
     title: 'Buran Ghati Trek',
     featured: false,
@@ -891,7 +891,7 @@ export const trekData: Trek[] = [
   {
     id: 7,
     type: OfferingType.TREK,
-    geoLocation: "",
+    geoLocation: "https://maps.app.goo.gl/xF5QyjL7ASWeWogk7",
     slug: 'bhrigu-lake',
     title: 'Bhrigu Lake Trek',
     featured: false,
@@ -1024,7 +1024,7 @@ export const trekData: Trek[] = [
   {
     id: 8,
     type: OfferingType.TREK,
-    geoLocation: "",
+    geoLocation: "https://maps.app.goo.gl/dDwUnyJ2S6De5L2w6",
     slug: 'beas-kund',
     title: 'Beas Kund Trek',
     featured: false,
@@ -1153,7 +1153,7 @@ export const trekData: Trek[] = [
   {
     id: 9,
     type: OfferingType.TREK,
-    geoLocation: "",
+    geoLocation: "https://maps.app.goo.gl/XWQcgdBSSAP1LHhC6",
     slug: 'har-ki-dun-trek',
     featured: false,
     active: true,
@@ -1323,7 +1323,7 @@ export const trekData: Trek[] = [
   {
     id: 10,
     type: OfferingType.TREK,
-    geoLocation: "",
+    geoLocation: "https://maps.app.goo.gl/3nVGTuPmm3VkegUYA",
     slug: 'indrahar-pass-trek',
     featured: false,
     active: true,
@@ -1612,7 +1612,7 @@ export const trekData: Trek[] = [
   {
     id: 12,
     type: OfferingType.TREK,
-    geoLocation: "",
+    geoLocation: "https://maps.app.goo.gl/ejM9XUyjT3ev2DxG8",
     slug: 'kashmir-great-lakes-trek',
     title: 'Kashmir Great Lakes Trek',
     featured: false,

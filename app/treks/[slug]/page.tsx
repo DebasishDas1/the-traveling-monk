@@ -17,6 +17,7 @@ import { RelatedTreks } from '@/components/experience/RelatedTreks'
 import { LocationMap } from '@/components/experience/LocationMap'
 import { TrekBookingBar } from '@/components/experience/TrekBookingBar'
 import { Card, CardDescription, CardHeader } from '@/components/ui/card'
+import { getImage } from '@/lib/utils'
 
 interface TrekPageProps {
   params: Promise<{
@@ -35,27 +36,6 @@ function getTrek(slug: string): Trek | undefined {
       experience.slug === slug &&
       experience.active
   )
-}
-
-function getImage(
-  image: Trek['gallery'][number] | undefined,
-  fallbackAlt: string
-) {
-  if (!image) return null
-
-  if (typeof image === 'string') {
-    return {
-      src: image,
-      alt: fallbackAlt,
-    }
-  }
-
-  if (!image.url) return null
-
-  return {
-    src: image.url,
-    alt: image.alt || fallbackAlt,
-  }
 }
 
 function getRelatedTreks(currentTrek: Trek) {
@@ -343,7 +323,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
       {trek.geoLocation && (
         <Section>
           <Container>
-            <LocationMap geoLocation={trek.geoLocation} name={trek.title} />
+            <LocationMap geoLocation={trek.geoLocation} name={trek.title + ' | Location'} mapTop={true} />
           </Container>
         </Section>
       )}

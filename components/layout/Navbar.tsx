@@ -108,7 +108,7 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="text-3xl font-medium"
+                    className="text-2xl font-medium"
                   >
                     {link.label}
                   </Link>

@@ -1,7 +1,7 @@
 import { ElementType } from 'react'
 import { cn } from '@/lib/utils'
 
-type HeadingSize = 'display' | 'h1' | 'h2' | 'h3'
+export type HeadingSize = 'display' | 'h1' | 'h2' | 'h3'
 type HeadingAlign = 'left' | 'center' | 'right'
 
 interface HeadingProps {

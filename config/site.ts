@@ -9,24 +9,6 @@ export const siteConfig = {
     {
       label: 'Experiences',
       href: '/experiences',
-      children: [
-        {
-          label: 'All Experiences',
-          href: '/experiences',
-        },
-        {
-          label: 'Treks',
-          href: '/treks',
-        },
-        {
-          label: 'Homestays',
-          href: '/homestays',
-        },
-        {
-          label: 'International Trips',
-          href: '/international',
-        },
-      ],
     },
     {
       label: 'Treks',
@@ -37,7 +19,7 @@ export const siteConfig = {
       href: '/home-stays',
     },
     {
-      label: 'International Trips',
+      label: 'International',
       href: '/international',
     },
     {
