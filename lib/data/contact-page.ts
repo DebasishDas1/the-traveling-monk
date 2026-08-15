@@ -5,6 +5,12 @@ import {
   YouTubeIcon,
   MailIcon,
 } from '@/components/myIcons'
+import {
+  facebookLink,
+  instagramLink,
+  whatsappLink,
+  youtubeLink,
+} from '../social-links'
 
 export const contactOptions = [
   {
@@ -12,7 +18,7 @@ export const contactOptions = [
     title: 'WhatsApp',
     description: 'The quickest way to reach us.',
     action: 'Start a conversation',
-    href: 'https://wa.me/919999999999',
+    href: whatsappLink,
   },
   {
     icon: MailIcon,
@@ -26,21 +32,21 @@ export const contactOptions = [
     title: 'Instagram',
     description: 'Follow us on Instagram for travel inspiration',
     action: 'Follow us',
-    href: 'https://www.instagram.com/thetravelingmonk/',
+    href: instagramLink,
   },
   {
     icon: FacebookIcon,
     title: 'Facebook',
     description: 'Follow us on Facebook for travel inspiration',
     action: 'Follow us',
-    href: 'https://www.facebook.com/thetravelingmonk/',
+    href: facebookLink,
   },
   {
     icon: YouTubeIcon,
     title: 'YouTube',
     description: 'Follow us on YouTube for travel inspiration',
     action: 'Follow us',
-    href: 'https://www.youtube.com/thetravelingmonk/',
+    href: youtubeLink,
   },
 ]
 
