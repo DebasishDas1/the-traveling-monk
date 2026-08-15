@@ -114,10 +114,6 @@ export function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-
-                <Button size="lg" className="mt-8 h-14 rounded-full">
-                  Begin Your Reset
-                </Button>
               </div>
             </SheetContent>
           </Sheet>
