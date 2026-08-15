@@ -16,7 +16,7 @@ export const siteConfig = {
     },
     {
       label: 'Homestays',
-      href: '/home-stays',
+      href: '/homestays',
     },
     {
       label: 'International',

@@ -11,15 +11,10 @@ import {
 } from '@/components/common'
 import { TrekCard } from '@/components/experience/TrekCard'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 
 import { trekData } from '@/lib/data/treks'
 import { isTrek } from '@/types/experience'
+import { CategoryCard } from '@/components/experience/CategoryCard'
 
 export const metadata: Metadata = {
   title: 'Experiences | The Traveling Monk',
@@ -87,10 +82,7 @@ export default function ExperiencesPage() {
 
             <div className="grid gap-6 md:grid-cols-3">
               {categories.map((category) => (
-                <CategoryCard
-                  key={category.href}
-                  {...category}
-                />
+                <CategoryCard key={category.href} {...category} />
               ))}
             </div>
           </div>
@@ -130,10 +122,7 @@ export default function ExperiencesPage() {
 
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {featuredExperiences.map((experience) => (
-                  <TrekCard
-                    key={experience.id}
-                    experience={experience}
-                  />
+                  <TrekCard key={experience.id} experience={experience} />
                 ))}
               </div>
             </div>
@@ -182,60 +171,5 @@ export default function ExperiencesPage() {
         </Container>
       </Section>
     </main>
-  )
-}
-
-interface CategoryCardProps {
-  label: string
-  description: string
-  href: string
-  image: string
-}
-
-function CategoryCard({
-  label,
-  description,
-  href,
-  image,
-}: CategoryCardProps) {
-  return (
-    <Link
-      href={href}
-      className="
-        group block rounded-xl
-        focus-visible:outline-none
-        focus-visible:ring-2
-        focus-visible:ring-ring
-        focus-visible:ring-offset-2
-      "
-    >
-      <Card
-        className="
-          h-full overflow-hidden
-          bg-card text-center
-          transition-all duration-300
-          group-hover:-translate-y-1
-          group-hover:shadow-lg
-        "
-      >
-        <CardHeader>
-          <CardTitle className="text-3xl! font-bold">
-            {label}
-          </CardTitle>
-
-          <CardDescription>
-            {description}
-          </CardDescription>
-        </CardHeader>
-
-        <Media
-          src={image}
-          alt=""
-          aria-hidden="true"
-          ratio="1/1"
-          className="transition-transform duration-700 group-hover:scale-[1.03]"
-        />
-      </Card>
-    </Link>
   )
 }

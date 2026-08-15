@@ -10,6 +10,7 @@ interface LocationMapProps {
   description?: string
   size?: HeadingSize
   mapTop?: boolean
+  className?: string
 }
 
 interface Coordinates {
@@ -111,6 +112,7 @@ export function LocationMap({
   description,
   size = 'h2',
   mapTop = false,
+  className,
 }: LocationMapProps) {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null)
   const [loading, setLoading] = useState(true)
@@ -192,14 +194,16 @@ export function LocationMap({
     return () => controller.abort()
   }, [geoLocation])
 
-const mapSrc = coordinates
-  ? `https://www.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&z=7&t=p&output=embed`
-  : null
+  const mapSrc = coordinates
+    ? `https://www.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&z=7&t=p&output=embed`
+    : null
 
-  const heading = <Heading title={name} size={size} />
+  const heading = (
+    <Heading title={name} size={size} className={className ?? ''} />
+  )
 
   return (
-    <section className="space-y-3">
+    <section className={`space-y-3 ${className}`}>
       {mapTop && heading}
 
       <div className="mt-2 overflow-hidden rounded-lg border">
@@ -214,7 +218,7 @@ const mapSrc = coordinates
           />
         ) : (
           <div className="flex h-87.5 items-center justify-center">
-            <div className="flex items-center gap-2 text-muted-foreground">
+            <div className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />
               {loading ? 'Loading location...' : 'Location unavailable'}
             </div>
@@ -224,9 +228,7 @@ const mapSrc = coordinates
 
       {!mapTop && heading}
 
-      {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
-      )}
+      {description && <p className="text-sm">{description}</p>}
 
       <a
         href={geoLocation}

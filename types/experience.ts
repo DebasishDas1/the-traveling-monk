@@ -1,17 +1,23 @@
 /**
- * Experience Types - Optimized with Discriminated Unions
- * Provides type safety for Trek, Escape, and Expedition offerings
+ * Experience Types
+ *
+ * Unified experience model for:
+ * - Himalayan Treks
+ * - Homestays
+ * - International Trips
+ *
+ * Uses discriminated unions so category-specific
+ * fields remain type-safe while sharing one platform model.
  */
 
-// ──────────────────────────────────────────────────────────────────
-// ENUMS & CONSTANTS
-// ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
 
 export enum OfferingType {
   TREK = 'trek',
-  ESCAPE = 'escape',
-  EXPEDITION = 'expedition',
-  EXPERIENCE = 'experience',
+  HOMESTAY = 'homestay',
+  INTERNATIONAL = 'international',
 }
 
 export enum DifficultyLevel {
@@ -41,9 +47,9 @@ export enum Season {
   WINTER = 'winter',
 }
 
-// ──────────────────────────────────────────────────────────────────
-// COMMON TYPES
-// ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// MEDIA
+// ─────────────────────────────────────────────
 
 export interface MediaUrl {
   url: string
@@ -51,13 +57,23 @@ export interface MediaUrl {
 }
 
 export interface GoogleDriveImage extends MediaUrl {
-  fileId: string // Extracted from the Google Drive link
+  fileId: string
 }
+
+export type ExperienceMedia = string | MediaUrl
+
+// ─────────────────────────────────────────────
+// BOOKING
+// ─────────────────────────────────────────────
 
 export interface AvailableDateSlot {
   date: string
   spots: number
 }
+
+// ─────────────────────────────────────────────
+// SOCIAL PROOF
+// ─────────────────────────────────────────────
 
 export interface Testimonial {
   name: string
@@ -66,6 +82,10 @@ export interface Testimonial {
   image?: string
   rating: 1 | 2 | 3 | 4 | 5
 }
+
+// ─────────────────────────────────────────────
+// TIMELINE
+// ─────────────────────────────────────────────
 
 export interface TimelineItem {
   day: number
@@ -81,123 +101,184 @@ export interface TrekTimelineItem extends TimelineItem {
   duration: string
 }
 
-export interface ExpeditionTimelineItem extends TimelineItem {
+export interface InternationalTimelineItem extends TimelineItem {
   from: string
   to: string
-  altitude: string
   duration: string
 }
 
-// ──────────────────────────────────────────────────────────────────
-// PRICING TYPES - Type-safe per offering
-// ──────────────────────────────────────────────────────────────────
-
-export interface EscapePricing {
-  double: number
-  triple?: number
-  currency?: 'INR'
-}
-
-export interface ExpeditionPricing {
-  twin: number
-  single?: number
-  currency?: 'INR'
-}
+// ─────────────────────────────────────────────
+// PRICING
+// ─────────────────────────────────────────────
 
 export interface TrekPricing {
   perPerson: number
-  currency?: 'INR'
+  currency: 'INR'
 }
 
-// ──────────────────────────────────────────────────────────────────
-// BASE INTERFACE (Common fields for all offerings)
-// ──────────────────────────────────────────────────────────────────
+export interface HomestayPricing {
+  perNight: number
+  currency: 'INR'
+}
+
+export interface InternationalPricing {
+  perPerson: number
+  currency: 'INR'
+}
+
+// ─────────────────────────────────────────────
+// COMMON EXPERIENCE
+// ─────────────────────────────────────────────
 
 export interface BaseExperience {
-  id: string | number
+  id: string
   slug: string
-  gallery: (string | MediaUrl)[]
+
+  gallery: ExperienceMedia[]
+
   highlights: string[]
+
   description: string
+
   testimonials?: Testimonial[]
+
   inclusions?: string[]
+
   exclusions?: string[]
+
   featured?: boolean
+
+  active: boolean
 }
 
-// ──────────────────────────────────────────────────────────────────
-// TREK TYPE
-// ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// TREK
+// ─────────────────────────────────────────────
 
 export interface Trek extends BaseExperience {
   type: OfferingType.TREK
+
   title: string
   tagline: string
+
   location: string
+  region?: string
+
   duration: string
+
   difficulty: DifficultyLevel
+
   priceFrom: number
+
+  pricing?: TrekPricing
+
   maxGroupSize: number
+
   altitude: number
+
   nextDate: string
+
   spotsLeft: number
+
   minAge?: number
+
   pickupDrop?: string
+
   availableDates: AvailableDateSlot[]
+
   itinerary?: TrekTimelineItem[]
-  active: boolean
+
+  season?: Season[]
+
   geoLocation?: string
 }
 
-// ──────────────────────────────────────────────────────────────────
-// ESCAPE TYPE
-// ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// HOMESTAY
+// ─────────────────────────────────────────────
 
-export interface Escape extends BaseExperience {
-  type: OfferingType.ESCAPE
+export interface Homestay extends BaseExperience {
+  type: OfferingType.HOMESTAY
+
   name: string
+  tagline: string
+
   location: string
+  region?: string
+
   duration: string
-  pickup: string
-  maxGroupSize: number
-  price: EscapePricing
-  spotsLeft: number
+
+  maxGuests: number
+
+  priceFrom: number
+
+  pricing?: HomestayPricing
+
+  roomDescription: string
+
+  foodDescription: string
+
+  experienceDescription: string
+
+  meals: string
+
   availableDates: AvailableDateSlot[]
-  itinerary?: TimelineItem[]
+
+  amenities?: string[]
+
+  thingsToDo?: string[]
 }
 
-// ──────────────────────────────────────────────────────────────────
-// EXPEDITION TYPE
-// ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// INTERNATIONAL
+// ─────────────────────────────────────────────
 
-export interface Expedition extends BaseExperience {
-  type: OfferingType.EXPEDITION
+export interface International extends BaseExperience {
+  type: OfferingType.INTERNATIONAL
+
   name: string
+  tagline: string
+
   country: string
   location: string
-  tagline: string
-  tier: TierLevel
+
   duration: string
-  visaRequired: boolean
-  bestSeason: string
+
+  tier: TierLevel
+
   priceFrom: number
+
+  pricing?: InternationalPricing
+
   maxGroupSize: number
+
   spotsLeft: number
-  price: ExpeditionPricing
+
+  visaRequired: boolean
+
+  bestSeason: string
+
   availableDates: AvailableDateSlot[]
-  itinerary?: ExpeditionTimelineItem[]
+
+  itinerary?: InternationalTimelineItem[]
 }
 
-// ──────────────────────────────────────────────────────────────────
-// UNION TYPE
-// ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// UNION
+// ─────────────────────────────────────────────
 
-export type Experience = Trek | Escape | Expedition
+export type Experience = Trek | Homestay | International
 
-// Type guards for discriminating between experience types
-export const isTrek = (exp: Experience): exp is Trek =>
-  exp.type === OfferingType.TREK
-export const isEscape = (exp: Experience): exp is Escape =>
-  exp.type === OfferingType.ESCAPE
-export const isExpedition = (exp: Experience): exp is Expedition =>
-  exp.type === OfferingType.EXPEDITION
+// ─────────────────────────────────────────────
+// TYPE GUARDS
+// ─────────────────────────────────────────────
+
+export const isTrek = (experience: Experience): experience is Trek =>
+  experience.type === OfferingType.TREK
+
+export const isHomestay = (experience: Experience): experience is Homestay =>
+  experience.type === OfferingType.HOMESTAY
+
+export const isInternational = (
+  experience: Experience
+): experience is International => experience.type === OfferingType.INTERNATIONAL
