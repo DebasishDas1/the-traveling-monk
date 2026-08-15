@@ -1,6 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import {
   Container,
@@ -13,7 +11,6 @@ import {
 
 import { TrekGrid } from '@/components/experience/TrekGrid'
 import { trekData } from '@/lib/data/treks'
-import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Himalayan Treks | The Traveling Monk',

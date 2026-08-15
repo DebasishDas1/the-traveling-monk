@@ -113,10 +113,6 @@ export default function StoriesPage() {
         </Container>
       </Section>
 
-      {/* =====================================================
-          FINAL CTA
-      ====================================================== */}
-
       {/* CTA */}
       <CtaSection
         eyebrow="Your story could be next"

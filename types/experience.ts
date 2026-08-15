@@ -131,7 +131,7 @@ export interface InternationalPricing {
 // ─────────────────────────────────────────────
 
 export interface BaseExperience {
-  id: string
+  id: number
   slug: string
 
   gallery: ExperienceMedia[]

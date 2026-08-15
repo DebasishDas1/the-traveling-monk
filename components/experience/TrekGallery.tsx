@@ -1,79 +1,38 @@
-import { Media } from '@/components/common'
-import { cn } from '@/lib/utils'
+import { Container, Heading, Media, Section } from '@/components/common'
+import { getImage } from '@/lib/utils'
 
 interface TrekGalleryProps {
-  images: Array<
-    | {
-        url: string
-        alt?: string
-      }
-    | string
-  >
+  images: Array<string | { url: string; alt?: string }>
   title: string
 }
 
-function normalizeImage(
-  image: TrekGalleryProps['images'][number],
-  fallbackAlt: string
-) {
-  if (typeof image === 'string') {
-    return {
-      src: image,
-      alt: fallbackAlt,
-    }
-  }
-
-  return {
-    src: image.url,
-    alt: image.alt || fallbackAlt,
-  }
-}
-
 export function TrekGallery({ images, title }: TrekGalleryProps) {
-  const gallery = images
-    .slice(0, 6)
-    .map((image) => normalizeImage(image, title))
-    .filter((image) => image.src)
-
-  if (!gallery.length) return null
-
   return (
-    <section className="py-20 md:py-32">
-      <div className="mb-10 md:mb-14">
-        <p className="text-[10px] font-medium uppercase text-primary">
-          From the trail
-        </p>
+    <Section className="overflow-hidden">
+      <Container>
+        <Heading align="center" eyebrow="A glimpse" size="h2" title={title} />
 
-        <h2 className="mt-4 text-4xl font-semibold tracking-tighter md:text-5xl">
-          A few moments from the journey.
-        </h2>
-      </div>
+        <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3">
+          {images.map((image, index) => {
+            const item = getImage(image, `${title} photo ${index + 1}`)
 
-      <div
-        className={cn(
-          'grid gap-3',
-          'grid-cols-2',
-          'md:grid-cols-3',
-          'md:grid-rows-2'
-        )}
-      >
-        {gallery.map((image, index) => (
-          <Media
-            key={index}
-            src={image.src}
-            alt={image.alt}
-            className="
-                  h-full
-                  w-full
-                  object-cover
-                  transition-transform
-                  duration-700
-                  group-hover:scale-[1.025]
-                "
-            radius="sm"
-          />
-        ))}
-      </div>
-    </section>
+            if (!item) return null
+
+            return (
+              <div
+                key={index}
+                className="mb-4 break-inside-avoid overflow-hidden rounded-2xl"
+              >
+                <Media
+                  src={item.src}
+                  alt={item.alt}
+                  ratio={index % 3 === 0 ? '4/5' : '4/3'}
+                />
+              </div>
+            )
+          })}
+        </div>
+      </Container>
+    </Section>
   )
 }

@@ -9,7 +9,7 @@ import {
 import { Container, Heading, Media } from '@/components/common'
 import Link from 'next/link'
 
-interface TrekGalleryHeroProps {
+interface GalleryHeroProps {
   images: {
     src: string
     alt: string
@@ -18,11 +18,7 @@ interface TrekGalleryHeroProps {
   length: number
 }
 
-export const TrekGalleryHero = ({
-  images,
-  title,
-  length,
-}: TrekGalleryHeroProps) => {
+export const GalleryHero = ({ images, title, length }: GalleryHeroProps) => {
   const [heroImage, secondaryImage, tertiaryImage] = images
   return (
     <div className="pt-20 md:pt-28">

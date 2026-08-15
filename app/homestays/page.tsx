@@ -10,6 +10,8 @@ import {
 
 import { feelings, destinations, gallery } from '@/lib/data/home-stays-page'
 import { LocationMap } from '@/components/experience/LocationMap'
+import { homestaysData } from '@/lib/data/homestays-data'
+import { HomestayCard } from '@/components/experience/HomestayCard'
 
 export const metadata: Metadata = {
   title: 'Himalayan Homestays | The Traveling Monk',
@@ -42,6 +44,12 @@ export default function HomeStaysPage() {
           />
         </Container>
       </Section>
+
+      <Container>
+        {homestaysData.map((homestay) => (
+          <HomestayCard key={homestay.id} experience={homestay} />
+        ))}
+      </Container>
 
       {/* =====================================================
           PHILOSOPHY

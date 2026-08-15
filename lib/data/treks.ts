@@ -94,7 +94,16 @@ export const trekData: Trek[] = [
         rating: 5,
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Pick-up & drop from Barshaini',
       'All meals during the trek',
@@ -206,7 +215,16 @@ export const trekData: Trek[] = [
         image: '',
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Pick-up & drop from McLeod Ganj',
       'All meals during the trek',
@@ -351,7 +369,16 @@ export const trekData: Trek[] = [
         image: '',
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Manali to Manali transport (Jobra, Chatru & Chandratal)',
       'All meals during the trek',
@@ -537,7 +564,16 @@ export const trekData: Trek[] = [
         image: '',
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Dehradun to Dehradun transport',
       'All meals during the trek',
@@ -691,7 +727,16 @@ export const trekData: Trek[] = [
         image: '',
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Pick-up & drop from Kasol',
       'All meals during the trek',
@@ -717,7 +762,7 @@ export const trekData: Trek[] = [
   {
     id: 6,
     type: OfferingType.TREK,
-    geoLocation: "https://maps.app.goo.gl/EoFhATe9koCCTU5s5",
+    geoLocation: 'https://maps.app.goo.gl/EoFhATe9koCCTU5s5',
     slug: 'buran-ghati',
     title: 'Buran Ghati Trek',
     featured: false,
@@ -865,7 +910,16 @@ export const trekData: Trek[] = [
         image: '',
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Shimla to Shimla transport',
       'All meals during the trek',
@@ -891,7 +945,7 @@ export const trekData: Trek[] = [
   {
     id: 7,
     type: OfferingType.TREK,
-    geoLocation: "https://maps.app.goo.gl/xF5QyjL7ASWeWogk7",
+    geoLocation: 'https://maps.app.goo.gl/xF5QyjL7ASWeWogk7',
     slug: 'bhrigu-lake',
     title: 'Bhrigu Lake Trek',
     featured: false,
@@ -999,7 +1053,16 @@ export const trekData: Trek[] = [
         image: '',
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Manali to Manali transport',
       'All meals during the trek',
@@ -1024,7 +1087,7 @@ export const trekData: Trek[] = [
   {
     id: 8,
     type: OfferingType.TREK,
-    geoLocation: "https://maps.app.goo.gl/dDwUnyJ2S6De5L2w6",
+    geoLocation: 'https://maps.app.goo.gl/dDwUnyJ2S6De5L2w6',
     slug: 'beas-kund',
     title: 'Beas Kund Trek',
     featured: false,
@@ -1128,7 +1191,16 @@ export const trekData: Trek[] = [
         image: '',
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Manali to Manali transport',
       'All meals during the trek',
@@ -1153,7 +1225,7 @@ export const trekData: Trek[] = [
   {
     id: 9,
     type: OfferingType.TREK,
-    geoLocation: "https://maps.app.goo.gl/XWQcgdBSSAP1LHhC6",
+    geoLocation: 'https://maps.app.goo.gl/XWQcgdBSSAP1LHhC6',
     slug: 'har-ki-dun-trek',
     featured: false,
     active: true,
@@ -1323,7 +1395,7 @@ export const trekData: Trek[] = [
   {
     id: 10,
     type: OfferingType.TREK,
-    geoLocation: "https://maps.app.goo.gl/3nVGTuPmm3VkegUYA",
+    geoLocation: 'https://maps.app.goo.gl/3nVGTuPmm3VkegUYA',
     slug: 'indrahar-pass-trek',
     featured: false,
     active: true,
@@ -1482,7 +1554,7 @@ export const trekData: Trek[] = [
   {
     id: 11,
     type: OfferingType.TREK,
-    geoLocation: "",
+    geoLocation: '',
     slug: 'buni-buni-kheerganga-trek',
     title: 'Buni Buni + Kheerganga Trek',
     tagline: 'Two camps. One unforgettable Parvati Valley journey.',
@@ -1585,7 +1657,16 @@ export const trekData: Trek[] = [
         rating: 5,
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 20 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       '2 Nights stay (Bunbuni & Kheerganga)',
       '2 Breakfasts, 2 Dinners, 1 Lunch',
@@ -1612,7 +1693,7 @@ export const trekData: Trek[] = [
   {
     id: 12,
     type: OfferingType.TREK,
-    geoLocation: "https://maps.app.goo.gl/ejM9XUyjT3ev2DxG8",
+    geoLocation: 'https://maps.app.goo.gl/ejM9XUyjT3ev2DxG8',
     slug: 'kashmir-great-lakes-trek',
     title: 'Kashmir Great Lakes Trek',
     featured: false,
@@ -1760,7 +1841,16 @@ export const trekData: Trek[] = [
         rating: 4,
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 30 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Pick-up & drop from Srinagar',
       'All meals during trek',
@@ -1788,7 +1878,7 @@ export const trekData: Trek[] = [
   {
     id: 13,
     type: OfferingType.TREK,
-    geoLocation: "https://maps.app.goo.gl/HFasQTTuvsGefYnv8",
+    geoLocation: 'https://maps.app.goo.gl/HFasQTTuvsGefYnv8',
     slug: 'gaumukh-tapovan-trek',
     featured: false,
     active: true,
@@ -1913,7 +2003,16 @@ export const trekData: Trek[] = [
         rating: 5,
       },
     ],
-    availableDates: [{ date: 'Flexible', spots: 15 }],
+    availableDates: [
+      {
+        date: 'Oct 18, 2026',
+        spots: 12,
+      },
+      {
+        date: 'Nov 07, 2026',
+        spots: 8,
+      },
+    ],
     inclusions: [
       'Camping accommodation in Gangotri National Park (twin sharing tents)',
       'All meals during the trek',

@@ -12,11 +12,11 @@ interface Testimonial {
 
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 
-interface TrekTestimonialsProps {
+interface TestimonialsProps {
   testimonials?: Testimonial[]
 }
 
-export function TrekTestimonials({ testimonials = [] }: TrekTestimonialsProps) {
+export function Testimonials({ testimonials = [] }: TestimonialsProps) {
   if (!testimonials.length) {
     return null
   }

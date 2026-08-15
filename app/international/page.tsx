@@ -7,11 +7,9 @@ import { FaqSection } from '@/components/common/FaqSection'
 import { CtaSection } from '@/components/common/CtaSection'
 import { Button } from '@/components/ui/button'
 
-import { expeditionsData } from '@/lib/data/expeditions'
+import { internationalData } from '@/lib/data/international-data'
 import { faqs, reasons, travelStyles } from '@/lib/data/international-page'
-
-import type { Expedition } from '@/types/experience'
-import { getImage } from '@/lib/utils'
+import { InternationalTripCard } from '@/components/experience/InternationalTripCard'
 
 export const metadata: Metadata = {
   title: 'International Journeys | The Traveling Monk',
@@ -20,12 +18,12 @@ export const metadata: Metadata = {
 }
 
 export default function InternationalPage() {
-  const featuredTrips = expeditionsData.filter((trip) => trip.featured)
+  const featuredTrips = internationalData.filter((trip) => trip.featured)
 
   const trips =
     featuredTrips.length > 0
       ? featuredTrips.slice(0, 3)
-      : expeditionsData.slice(0, 3)
+      : internationalData.slice(0, 3)
 
   return (
     <main className="overflow-hidden">
@@ -66,6 +64,15 @@ export default function InternationalPage() {
         </Container>
       </Section>
 
+      {/* Journeys */}
+      <Section>
+        <Container>
+          {trips.map((trip) => (
+            <InternationalTripCard key={trip.id} experience={trip} />
+          ))}
+        </Container>
+      </Section>
+
       {/* Philosophy */}
       <Section>
         <Container>
@@ -88,24 +95,6 @@ export default function InternationalPage() {
           <p className="mx-auto mt-10 text-center text-lg leading-8 text-muted-foreground">
             The places matter. But the feeling you bring home matters more.
           </p>
-        </Container>
-      </Section>
-
-      {/* Destinations */}
-      <Section>
-        <Container>
-          <Heading
-            eyebrow="Where we're going"
-            title="Different places. Different rhythms."
-            description="Our destinations change. The feeling we're looking for doesn't."
-            size="h2"
-          />
-
-          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {trips.map((trip) => (
-              <DestinationCard key={trip.id} trip={trip} />
-            ))}
-          </div>
         </Container>
       </Section>
 
@@ -243,51 +232,5 @@ export default function InternationalPage() {
         link="/journeys"
       />
     </main>
-  )
-}
-
-/* ============================================================
-   COMPONENTS
-============================================================ */
-
-function DestinationCard({ trip }: { trip: Expedition }) {
-  const image = getImage(trip.gallery[0], trip.name)
-
-  return (
-    <Link href={`/international/${trip.slug}`} className="group">
-      <div className="overflow-hidden rounded-[1.75rem]">
-        {image ? (
-          <Media
-            src={image.src}
-            alt={image.alt}
-            ratio="4/5"
-            className="transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          />
-        ) : (
-          <div aria-hidden="true" className="aspect-4/5 bg-muted" />
-        )}
-      </div>
-
-      <div className="mt-5">
-        <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-          {trip.country}
-        </p>
-
-        <div className="mt-2 flex items-center justify-between gap-4">
-          <h3 className="text-xl font-medium tracking-[-0.03em]">
-            {trip.name}
-          </h3>
-
-          <ArrowRight
-            aria-hidden="true"
-            className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
-          />
-        </div>
-
-        <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
-          {trip.tagline}
-        </p>
-      </div>
-    </Link>
   )
 }

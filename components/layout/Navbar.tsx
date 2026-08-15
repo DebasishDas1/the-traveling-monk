@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 import { siteConfig } from '@/config/site'
+import Image from 'next/image'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -49,7 +50,7 @@ export function Navbar() {
         {/* Logo */}
 
         <Link href="/" className="text-2xl font-semibold tracking-tight">
-          The Traveling Monk
+          <Image src="/dark-logo.png" alt="Logo" width={80} height={80} />
         </Link>
 
         {/* Desktop Navigation */}
