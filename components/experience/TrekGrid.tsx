@@ -1,66 +1,44 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { useState } from 'react'
 
-import { cn } from '@/lib/utils'
 import { TrekCard } from './TrekCard'
-
 import { Button } from '@/components/ui/button'
-
 import { DifficultyLevel, type Trek } from '@/types/experience'
+import { cn } from '@/lib/utils'
 
 interface TrekGridProps {
   treks: Trek[]
 }
 
 const FILTERS = [
-  {
-    label: 'All',
-    value: 'all',
-  },
-  {
-    label: 'Easy',
-    value: DifficultyLevel.EASY,
-  },
-  {
-    label: 'Easy to Moderate',
-    value: DifficultyLevel.EASY_MODERATE,
-  },
-  {
-    label: 'Moderate',
-    value: DifficultyLevel.MODERATE,
-  },
+  { label: 'All', value: 'all' },
+  { label: 'Easy', value: DifficultyLevel.EASY },
+  { label: 'Easy to Moderate', value: DifficultyLevel.EASY_MODERATE },
+  { label: 'Moderate', value: DifficultyLevel.MODERATE },
   {
     label: 'Moderate to Difficult',
     value: DifficultyLevel.MODERATE_DIFFICULT,
   },
-  {
-    label: 'Difficult',
-    value: DifficultyLevel.DIFFICULT,
-  },
+  { label: 'Difficult', value: DifficultyLevel.DIFFICULT },
 ] as const
 
 export function TrekGrid({ treks }: TrekGridProps) {
   const [activeFilter, setActiveFilter] = useState<string>('all')
 
-  const filteredTreks = useMemo(() => {
-    if (activeFilter === 'all') {
-      return treks
-    }
-
-    return treks.filter((trek) => trek.difficulty === activeFilter)
-  }, [treks, activeFilter])
+  const filteredTreks =
+    activeFilter === 'all'
+      ? treks
+      : treks.filter((trek) => trek.difficulty === activeFilter)
 
   return (
-    <section className="w-full">
-      <div className="mb-10">
+    <section aria-label="Himalayan treks">
+      {/* Filters */}
+      <div className="mb-8">
         <div
-          className={cn(
-            'flex w-full gap-2 overflow-x-auto flex-wrap',
-            'pb-2 scrollbar-none',
-            'md:flex-wrap md:overflow-visible'
-          )}
+          className="flex gap-2 overflow-x-auto pb-1 scrollbar-none flex-wrap md:overflow-visible"
+          role="group"
+          aria-label="Filter treks by difficulty"
         >
           {FILTERS.map((filter) => {
             const isActive = activeFilter === filter.value
@@ -70,16 +48,13 @@ export function TrekGrid({ treks }: TrekGridProps) {
                 key={filter.value}
                 type="button"
                 size="sm"
+                variant={isActive ? 'primary' : 'outline'}
                 onClick={() => setActiveFilter(filter.value)}
-                className={cn(
-                  'shrink-0 rounded-full',
-                  'px-4 md:px-5',
-                  'text-xs font-bold',
-                  'transition-all duration-200',
-                  isActive &&
-                    'bg-foreground text-background hover:bg-foreground/90'
-                )}
                 aria-pressed={isActive}
+                className={cn(
+                  'shrink-0 rounded-full px-4 text-xs',
+                  isActive && 'bg-foreground text-background'
+                )}
               >
                 {filter.label}
               </Button>
@@ -88,8 +63,8 @@ export function TrekGrid({ treks }: TrekGridProps) {
         </div>
 
         {/* Result count */}
-        <div className="mt-5 flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
+        <div className="mt-4 flex min-h-5 items-center justify-between">
+          <p className="text-sm text-muted-foreground" aria-live="polite">
             {filteredTreks.length}{' '}
             {filteredTreks.length === 1 ? 'trek' : 'treks'}
           </p>
@@ -100,53 +75,26 @@ export function TrekGrid({ treks }: TrekGridProps) {
               onClick={() => setActiveFilter('all')}
               className="text-sm text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
             >
-              Clear filter
+              Clear
             </button>
           )}
         </div>
       </div>
 
-      <AnimatePresence mode="popLayout" initial={false}>
-        {filteredTreks.length > 0 ? (
-          <motion.div
-            layout
-            className="grid grid-cols-1 gap-x-12 gap-y-20 md:grid-cols-2"
-          >
-            {filteredTreks.map((trek) => (
-              <motion.div
-                key={trek.id}
-                layout
-                initial={{
-                  opacity: 0,
-                  y: 16,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 16,
-                }}
-                transition={{
-                  duration: 0.25,
-                  ease: 'easeOut',
-                }}
-              >
-                <TrekCard experience={trek} />
-              </motion.div>
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div>
-            <section className="flex items-center justify-center h-[3₹0vh] md:h-[50vh]">
-              <h1 className="font-display  text-6xl md:text-8xl text-monk-brown-deep">
-                Coming Soon ...
-              </h1>
-            </section>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Grid */}
+      {filteredTreks.length > 0 ? (
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-2 lg:gap-10">
+          {filteredTreks.map((trek) => (
+            <TrekCard key={trek.id} experience={trek} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex min-h-[30vh] items-center justify-center md:min-h-[40vh]">
+          <p className="text-4xl font-semibold tracking-tight text-muted-foreground md:text-6xl">
+            Coming soon
+          </p>
+        </div>
+      )}
     </section>
   )
 }

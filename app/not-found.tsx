@@ -9,7 +9,7 @@ export default function NotFound() {
       <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-saffron/5 rounded-full blur-[100px]" />
       <div className="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-forest/5 rounded-full blur-[100px]" />
 
-      <div className="max-w-2xl w-full text-center space-y-12 relative z-10">
+      <div className="w-full text-center space-y-12 relative z-10">
         <div className="space-y-4">
           <div className="flex justify-center mb-8">
             <div className="w-20 h-20 rounded-full border border-forest/10 flex items-center justify-center animate-pulse">
@@ -20,7 +20,7 @@ export default function NotFound() {
             The path is not outside. <br />
             <span className="text-saffron">It never was.</span>
           </h1>
-          <p className="text-xl text-forest/60 font-sans font-light max-w-lg mx-auto">
+          <p className="text-xl text-forest/60 font-sans font-light mx-auto">
             You&apos;ve reached a trail that doesn&apos;t exist yet. Perhaps the
             journey you&apos;re looking for is elsewhere.
           </p>

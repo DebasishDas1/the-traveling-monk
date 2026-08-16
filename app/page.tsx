@@ -1,4 +1,4 @@
-import { Hero } from '@/features/home/Hero/Hero'
+import { HomepageHero } from '@/components/experience/HomepageHero'
 
 import {
   Container,
@@ -17,7 +17,7 @@ import { faqItems } from '@/lib/data/home-page'
 export default function HomePage() {
   return (
     <Page>
-      <Hero />
+      <HomepageHero />
 
       {/* Modern Life */}
       <Section className="py-24 md:py-32">
@@ -68,18 +68,6 @@ export default function HomePage() {
               label: 'View all',
               href: '/experiences',
             }}
-          />
-        </Container>
-      </Section>
-
-      {/* Why We Travel */}
-      <Section className="bg-muted/20">
-        <Container className="max-w-4xl">
-          <Heading
-            eyebrow="Why We Travel"
-            title="Travel changes more than your location."
-            description="The mountains don't fix us. They remind us who we've always been."
-            align="center"
           />
         </Container>
       </Section>

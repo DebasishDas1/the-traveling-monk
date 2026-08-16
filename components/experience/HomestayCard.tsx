@@ -1,19 +1,11 @@
 import Link from 'next/link'
-import {
-  ArrowUpRight,
-  BedDouble,
-  Clock,
-  MapPin,
-  Utensils,
-  Users,
-} from 'lucide-react'
+import { BedDouble, Clock, MapPin, Utensils, Users } from 'lucide-react'
 
 import type { Homestay } from '@/types/experience'
-
 import { Media } from '@/components/common'
 import { formatPrice } from '@/lib/utils'
 
-interface HomestayCardProps {
+interface HomeStayCardProps {
   experience: Homestay
 }
 
@@ -30,16 +22,17 @@ function getImage(
     }
   }
 
-  return image.url
-    ? {
-        src: image.url,
-        alt: image.alt ?? fallbackAlt,
-      }
-    : null
+  if (!image.url) return null
+
+  return {
+    src: image.url,
+    alt: image.alt || fallbackAlt,
+  }
 }
 
-export function HomestayCard({ experience }: HomestayCardProps) {
-  const image = getImage(experience.gallery[0], experience.name)
+export function HomeStayCard({ experience }: HomeStayCardProps) {
+  const image = getImage(experience.gallery?.[0], experience.name)
+
   const price = experience.pricing?.perNight ?? experience.priceFrom
 
   return (
@@ -47,100 +40,159 @@ export function HomestayCard({ experience }: HomestayCardProps) {
       <Link
         href={`/homestays/${experience.slug}`}
         aria-label={`View ${experience.name}`}
-        className="group block rounded-[2rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+        className="
+          group block
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-primary
+          focus-visible:ring-offset-4
+        "
       >
         {/* Image */}
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-muted md:rounded-[2rem]">
-          {image ? (
-            <Media
-              src={image.src}
-              alt={image.alt}
-              ratio="4/3"
-              className="w-full"
-            />
-          ) : (
-            <div className="aspect-4/3 w-full bg-muted" aria-hidden="true" />
-          )}
-
-          <div className="absolute left-4 top-4 md:left-5 md:top-5">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3 py-1.5 text-xs font-medium text-foreground shadow-sm backdrop-blur-md">
-              <MapPin
-                className="size-3.5 shrink-0"
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
-              {experience.location}
-            </span>
-          </div>
-        </div>
+        {image ? (
+          <Media
+            src={image.src}
+            alt={image.alt}
+            ratio="4/3"
+            sizes="
+                (max-width: 640px) 100vw,
+                (max-width: 1024px) 50vw,
+                50vw
+              "
+            className="
+                transition-transform
+                duration-500
+                ease-out
+                group-hover:scale-[1.015]
+              "
+          />
+        ) : (
+          <div className="aspect-4/3 w-full bg-muted" aria-hidden="true" />
+        )}
 
         {/* Content */}
-        <div className="pt-5 md:pt-6">
-          <div className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.16em] text-primary">
+        <div className="pt-4 sm:pt-5">
+          {/* Type */}
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground sm:text-sm">
             <BedDouble
-              className="size-3.5"
+              className="size-3.5 shrink-0"
               strokeWidth={1.75}
               aria-hidden="true"
             />
-            <span>Homestay</span>
+            Homestay
           </div>
 
-          <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground sm:text-sm">
+            <MapPin
+              className="size-3.5 shrink-0"
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
+
+            <span className="truncate">{experience.location}</span>
+          </div>
+
+          {/* Title */}
+          <h3
+            className="
+              mt-1.5
+              text-xl
+              font-semibold
+              leading-tight
+              tracking-[-0.035em]
+              text-foreground
+              sm:text-2xl
+              lg:text-[1.65rem]
+            "
+          >
             {experience.name}
           </h3>
 
-          <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground md:text-base">
-            {experience.tagline}
-          </p>
+          {/* Tagline */}
+          {experience.tagline && (
+            <p
+              className="
+                mt-1
+                text-sm
+                text-muted-foreground
+              "
+            >
+              {experience.tagline}
+            </p>
+          )}
 
-          <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
-              <Clock
-                className="size-3.5 shrink-0"
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
-              {experience.duration}
-            </span>
+          {/* Facts */}
+          <div
+            className="
+              mt-4
+              grid
+              grid-cols-2
+              gap-x-4
+              gap-y-2
+              text-xs
+              text-muted-foreground
+              sm:flex
+              sm:flex-wrap
+              sm:gap-x-5
+              sm:text-sm
+            "
+          >
+            {experience.duration && (
+              <span className="inline-flex min-w-0 items-center gap-1.5">
+                <Clock
+                  className="size-3.5 shrink-0"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                <span className="truncate">{experience.duration}</span>
+              </span>
+            )}
 
-            <span className="inline-flex items-center gap-1.5">
-              <Users
-                className="size-3.5 shrink-0"
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
-              Up to {experience.maxGuests}
-            </span>
+            {experience.maxGuests && (
+              <span className="inline-flex min-w-0 items-center gap-1.5">
+                <Users
+                  className="size-3.5 shrink-0"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                <span className="truncate">Up to {experience.maxGuests}</span>
+              </span>
+            )}
 
-            <span className="inline-flex items-center gap-1.5">
-              <Utensils
-                className="size-3.5 shrink-0"
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
-              {experience.meals}
-            </span>
+            {experience.meals && (
+              <span className="inline-flex min-w-0 items-center gap-1.5">
+                <Utensils
+                  className="size-3.5 shrink-0"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                <span className="truncate">{experience.meals}</span>
+              </span>
+            )}
           </div>
 
           {/* Price */}
-          <div className="mt-6 flex items-end justify-between">
-            <div>
-              <p className="text-2xl font-semibold tracking-[-0.02em] text-foreground">
-                {formatPrice(price)}
-                <span className="ml-1.5 text-sm font-normal text-muted-foreground">
-                  / night
+          <div className="mt-4 flex items-end justify-between">
+            <div className="min-w-0">
+              <div className="flex items-baseline gap-1.5">
+                <span
+                  className="
+                    text-xl
+                    font-semibold
+                    tracking-tight
+                    sm:text-2xl
+                  "
+                >
+                  {formatPrice(price)}
                 </span>
+
+                <span className="text-xs text-muted-foreground">/ night</span>
+              </div>
+
+              <p className="mt-0.5 text-[11px] text-muted-foreground">
+                Per room
               </p>
-
-              <p className="mt-1 text-xs text-muted-foreground">Per stay</p>
             </div>
-
-            <span
-              className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground"
-              aria-hidden="true"
-            >
-              <ArrowUpRight className="size-4" strokeWidth={1.75} />
-            </span>
           </div>
         </div>
       </Link>

@@ -62,7 +62,6 @@ export const internationalData: International[] = [
       'Walk across the historic Punakha Suspension Bridge',
       'Experience traditional Bhutanese food and local culture',
     ],
-
     itinerary: [
       {
         day: 1,

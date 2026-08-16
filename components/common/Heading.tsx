@@ -1,16 +1,28 @@
-import { ElementType } from 'react'
+import type { ElementType } from 'react'
 import { cn } from '@/lib/utils'
 
 export type HeadingSize = 'display' | 'h1' | 'h2' | 'h3'
-type HeadingAlign = 'left' | 'center' | 'right'
+export type HeadingAlign = 'left' | 'center' | 'right'
+export type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4'
 
 interface HeadingProps {
-  as?: ElementType
-  eyebrow?: string
   title: string
   description?: string
+  eyebrow?: string
 
+  /**
+   * Visual size of the heading.
+   */
   size?: HeadingSize
+
+  /**
+   * Semantic HTML heading level.
+   *
+   * Defaults to h1 for display and h2 for other sizes.
+   * Override this when the visual size doesn't match the document hierarchy.
+   */
+  as?: HeadingElement
+
   align?: HeadingAlign
 
   className?: string
@@ -29,28 +41,29 @@ const titleVariants: Record<HeadingSize, string> = {
   h3: 'text-3xl font-semibold tracking-[-0.04em] leading-tight md:text-4xl',
 }
 
+const alignVariants: Record<HeadingAlign, string> = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+}
+
 export function Heading({
-  as,
-  eyebrow,
   title,
   description,
+  eyebrow,
   size = 'display',
+  as,
   align = 'left',
   className,
   titleClassName,
   descriptionClassName,
 }: HeadingProps) {
-  const Component = as ?? (size === 'display' ? 'h1' : 'h2')
+  const Component: ElementType = as ?? (size === 'display' ? 'h1' : 'h2')
 
   return (
-    <div
-      className={cn(
-        align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left',
-        className
-      )}
-    >
+    <div className={cn(alignVariants[align], className)}>
       {eyebrow && (
-        <p className="mb-4 text-xs font-medium uppercase tracking-[0.32em] text-primary">
+        <p className="mb-3 text-xs font-medium uppercase tracking-[0.32em] text-primary">
           {eyebrow}
         </p>
       )}
@@ -68,7 +81,7 @@ export function Heading({
       {description && (
         <p
           className={cn(
-            'mt-8 text-lg leading-8 text-muted-foreground md:text-xl',
+            'mt-6 text-base leading-7 text-muted-foreground md:text-lg md:leading-8',
             descriptionClassName
           )}
         >

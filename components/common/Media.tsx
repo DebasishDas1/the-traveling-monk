@@ -2,7 +2,6 @@ import Image, { type ImageProps } from 'next/image'
 import { cn } from '@/lib/utils'
 
 type AspectRatio = '1/1' | '3/2' | '4/3' | '4/5' | '16/9'
-
 type MediaRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl'
 
 const ratios: Record<AspectRatio, string> = {
@@ -21,48 +20,35 @@ const radii: Record<MediaRadius, string> = {
   xl: 'rounded-3xl',
 }
 
-interface MediaProps
-  extends Omit<ImageProps, 'fill' | 'width' | 'height' | 'alt'> {
+interface MediaProps extends Omit<
+  ImageProps,
+  'fill' | 'width' | 'height' | 'alt'
+> {
   src: ImageProps['src']
   alt: string
-
-  /**
-   * Controls the aspect ratio of the media container.
-   */
   ratio?: AspectRatio
-
-  /**
-   * Controls the border radius of the media container.
-   */
   radius?: MediaRadius
-
-  /**
-   * Controls how the image is positioned inside its crop.
-   * Useful for art-directed photography.
-   */
   objectPosition?: string
-
-  /**
-   * Classes applied to the outer media wrapper.
-   */
   wrapperClassName?: string
+  priority?: boolean
 }
 
 export function Media({
   src,
   alt,
   ratio = '3/2',
-  radius = 'xl',
+  radius = 'md',
   objectPosition = 'center',
   className,
   wrapperClassName,
-  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  priority = false,
+  sizes = '100vw',
   ...props
 }: MediaProps) {
   return (
     <div
       className={cn(
-        'relative isolate overflow-hidden',
+        'relative overflow-hidden',
         ratios[ratio],
         radii[radius],
         wrapperClassName
@@ -70,18 +56,13 @@ export function Media({
     >
       <Image
         {...props}
-        fill
         src={src}
         alt={alt}
+        fill
         sizes={sizes}
-        className={cn(
-          'object-cover',
-          'transition-transform duration-500 ease-out',
-          className
-        )}
-        style={{
-          objectPosition,
-        }}
+        priority={priority}
+        className={cn('object-cover', className)}
+        style={{ objectPosition }}
       />
     </div>
   )

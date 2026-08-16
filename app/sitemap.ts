@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-import { trekData } from '@/lib/data/treks'
+import { trekData } from '@/lib/data/trek-data'
 import { homestaysData } from '@/lib/data/homestays-data'
 import { internationalData } from '@/lib/data/international-data'
 

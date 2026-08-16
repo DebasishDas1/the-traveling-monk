@@ -9,17 +9,36 @@ import {
   MediaHeading,
   Section,
 } from '@/components/common'
+
 import { TrekCard } from '@/components/experience/TrekCard'
+import { HomeStayCard } from '@/components/experience/HomeStayCard'
+import { InternationalTripCard } from '@/components/experience/InternationalTripCard'
+import { CategoryCard } from '@/components/experience/CategoryCard'
 import { Button } from '@/components/ui/button'
 
-import { trekData } from '@/lib/data/treks'
+import { trekData } from '@/lib/data/trek-data'
+import { homestaysData } from '@/lib/data/homestays-data'
+import { internationalData } from '@/lib/data/international-data'
 import { isTrek } from '@/types/experience'
-import { CategoryCard } from '@/components/experience/CategoryCard'
 
 export const metadata: Metadata = {
   title: 'Experiences | The Traveling Monk',
   description:
-    'Treks, homestays, and international journeys designed to help you slow down, reconnect, and return renewed.',
+    'Explore treks, homestays, and international journeys designed to help you slow down, reconnect, and return renewed.',
+  alternates: {
+    canonical: '/experiences',
+  },
+  openGraph: {
+    title: 'Experiences | The Traveling Monk',
+    description:
+      'Explore treks, homestays, and international journeys designed to help you slow down, reconnect, and return renewed.',
+    type: 'website',
+    url: '/experiences',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 const categories = [
@@ -43,15 +62,26 @@ const categories = [
   },
 ] as const
 
-export default function ExperiencesPage() {
-  const featuredExperiences = trekData
-    .filter(isTrek)
-    .filter(({ featured }) => featured)
-    .slice(0, 3)
+const featuredTreks = trekData
+  .filter(isTrek)
+  .filter((experience) => experience.featured)
+  .slice(0, 2)
 
+const featuredHomestays = homestaysData
+  .filter((experience) => experience.featured)
+  .slice(0, 2)
+
+const featuredInternational = internationalData
+  .filter((experience) => experience.featured)
+  .slice(0, 2)
+
+export default function ExperiencesPage() {
   return (
     <main className="overflow-hidden">
-      {/* Hero */}
+      {/* =====================================================
+          HERO
+      ====================================================== */}
+
       <Section>
         <Container>
           <MediaHeading
@@ -62,25 +92,29 @@ export default function ExperiencesPage() {
             image={
               <Media
                 src="/illustrations/choose.png"
-                alt="Person sitting by the sea"
+                alt="Traveller sitting beside the sea"
                 ratio="1/1"
+                priority
               />
             }
           />
         </Container>
       </Section>
 
-      {/* Categories */}
-      <Section>
+      {/* =====================================================
+          CATEGORIES
+      ====================================================== */}
+
+      <Section aria-labelledby="experience-categories">
         <Container>
-          <div className="space-y-12">
+          <div className="space-y-10">
             <Heading
               eyebrow="Find your reset"
               title="Where do you want to go?"
               size="h2"
             />
 
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-3">
               {categories.map((category) => (
                 <CategoryCard key={category.href} {...category} />
               ))}
@@ -89,30 +123,27 @@ export default function ExperiencesPage() {
         </Container>
       </Section>
 
-      {/* Featured */}
-      {featuredExperiences.length > 0 && (
-        <Section>
+      {/* =====================================================
+          FEATURED TREKS
+      ====================================================== */}
+
+      {featuredTreks.length > 0 && (
+        <Section aria-labelledby="featured-treks">
           <Container>
-            <div className="space-y-12">
-              <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="space-y-10">
+              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
                 <Heading
-                  eyebrow="Featured"
+                  eyebrow="Treks"
                   title="Start somewhere beautiful."
-                  description="A few journeys we'd choose first."
+                  description="Walk deeper into the mountains and a little farther from the noise."
                   size="h2"
                 />
 
                 <Link
                   href="/treks"
-                  className="
-                    inline-flex shrink-0 items-center gap-2
-                    text-sm font-medium
-                    underline decoration-border underline-offset-8
-                    transition-colors
-                    hover:decoration-foreground
-                  "
+                  className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
                 >
-                  Explore all experiences
+                  Explore treks
                   <ArrowRight
                     aria-hidden="true"
                     className="size-4 transition-transform group-hover:translate-x-1"
@@ -120,8 +151,8 @@ export default function ExperiencesPage() {
                 </Link>
               </div>
 
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {featuredExperiences.map((experience) => (
+              <div className="grid gap-6 md:grid-cols-2">
+                {featuredTreks.map((experience) => (
                   <TrekCard key={experience.id} experience={experience} />
                 ))}
               </div>
@@ -130,7 +161,89 @@ export default function ExperiencesPage() {
         </Section>
       )}
 
-      {/* The Reset */}
+      {/* =====================================================
+          FEATURED HOMESTAYS
+      ====================================================== */}
+
+      {featuredHomestays.length > 0 && (
+        <Section aria-labelledby="featured-homestays">
+          <Container>
+            <div className="space-y-10">
+              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+                <Heading
+                  eyebrow="Homestays"
+                  title="Stay somewhere that feels lived in."
+                  description="Slow down, share a meal, and experience a place through the people who call it home."
+                  size="h2"
+                />
+
+                <Link
+                  href="/homestays"
+                  className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
+                >
+                  Explore homestays
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
+              </div>
+
+              <div className="grid gap-8 md:grid-cols-2">
+                {featuredHomestays.map((experience) => (
+                  <HomeStayCard key={experience.id} experience={experience} />
+                ))}
+              </div>
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* =====================================================
+          INTERNATIONAL
+      ====================================================== */}
+
+      {featuredInternational.length > 0 && (
+        <Section aria-labelledby="featured-international">
+          <Container>
+            <div className="space-y-10">
+              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+                <Heading
+                  eyebrow="International"
+                  title="Go somewhere unfamiliar."
+                  description="Curated journeys beyond the familiar, designed to give you a different perspective."
+                  size="h2"
+                />
+
+                <Link
+                  href="/international"
+                  className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
+                >
+                  Explore international
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
+              </div>
+
+              <div className="grid gap-8 md:grid-cols-2">
+                {featuredInternational.map((experience) => (
+                  <InternationalTripCard
+                    key={experience.id}
+                    experience={experience}
+                  />
+                ))}
+              </div>
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* =====================================================
+          THE RESET
+      ====================================================== */}
+
       <Section className="bg-muted/30">
         <Container className="max-w-5xl">
           <MediaHeading
@@ -149,24 +262,29 @@ export default function ExperiencesPage() {
         </Container>
       </Section>
 
-      {/* CTA */}
+      {/* =====================================================
+          CTA
+      ====================================================== */}
+
       <Section>
         <Container>
-          <Heading
-            align="center"
-            eyebrow="Ready?"
-            title="Begin your reset."
-            description="The mountains are closer than you think."
-            size="h2"
-          />
+          <div className="text-center">
+            <Heading
+              align="center"
+              eyebrow="Ready?"
+              title="Begin your reset."
+              description="The mountains, quiet homes, and unfamiliar places are closer than you think."
+              size="h2"
+            />
 
-          <div className="flex justify-center pt-6">
-            <Button asChild>
-              <Link href="/treks">
-                Explore experiences
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
+            <div className="flex justify-center pt-6">
+              <Button asChild>
+                <Link href="/experiences">
+                  Explore experiences
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </Container>
       </Section>

@@ -14,24 +14,33 @@ import { InternationalTripCard } from '@/components/experience/InternationalTrip
 export const metadata: Metadata = {
   title: 'International Journeys | The Traveling Monk',
   description:
-    'Curated international journeys for curious travellers. Go somewhere new, experience it deeply, and return renewed.',
+    'Curated international journeys for curious travellers. Discover new places, local experiences, meaningful connections, and journeys designed to leave you renewed.',
+  alternates: {
+    canonical: '/international',
+  },
+  openGraph: {
+    title: 'International Journeys | The Traveling Monk',
+    description:
+      'Curated international journeys for curious travellers. Discover new places, local experiences, and meaningful connections.',
+    type: 'website',
+  },
 }
 
 export default function InternationalPage() {
-  const featuredTrips = internationalData.filter((trip) => trip.featured)
+  const featuredTrips = internationalData
+    .filter((trip) => trip.featured)
+    .slice(0, 3)
 
   const trips =
-    featuredTrips.length > 0
-      ? featuredTrips.slice(0, 3)
-      : internationalData.slice(0, 3)
+    featuredTrips.length > 0 ? featuredTrips : internationalData.slice(0, 3)
 
   return (
     <main className="overflow-hidden">
       {/* Hero */}
       <Section className="pt-8 md:pt-12 lg:pt-16">
         <Container>
-          <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-6 lg:pb-16">
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-6">
               <Heading
                 eyebrow="International Journeys"
                 title="Go somewhere that changes your perspective."
@@ -39,11 +48,11 @@ export default function InternationalPage() {
                 size="display"
               />
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-7 flex flex-wrap gap-3">
                 <Button asChild>
-                  <Link href="/journeys">
+                  <Link href="/experiences">
                     Explore journeys
-                    <ArrowRight className="size-4" />
+                    <ArrowRight aria-hidden="true" className="size-4" />
                   </Link>
                 </Button>
 
@@ -56,22 +65,51 @@ export default function InternationalPage() {
             <div className="lg:col-span-6">
               <Media
                 src="/illustrations/Globalization-pana.png"
-                alt="Travellers exploring a new destination"
+                alt="Travellers exploring an international destination"
                 ratio="4/5"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Journeys */}
-      <Section>
+      {/* Featured journeys */}
+      {trips.length > 0 && (
         <Container>
-          {trips.map((trip) => (
-            <InternationalTripCard key={trip.id} experience={trip} />
-          ))}
+          <div className="mb-8 flex items-end justify-between gap-6">
+            <Heading
+              eyebrow="Featured journeys"
+              title="Go a little farther."
+              size="h2"
+            />
+
+            <Link
+              href="/experiences"
+              className="hidden shrink-0 items-center gap-2 text-sm font-medium md:inline-flex"
+            >
+              View all
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:gap-10">
+            {trips.map((trip) => (
+              <InternationalTripCard key={trip.id} experience={trip} />
+            ))}
+          </div>
+
+          <div className="mt-8 md:hidden">
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/experiences">
+                View all journeys
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
+            </Button>
+          </div>
         </Container>
-      </Section>
+      )}
 
       {/* Philosophy */}
       <Section>
@@ -81,18 +119,19 @@ export default function InternationalPage() {
             eyebrow="Beyond the checklist"
             title="The world is bigger than its landmarks."
             description="We travel to notice things. The smell of a morning market. A conversation with someone we've just met. A road we didn't plan to take."
-            size="display"
+            size="h2"
           />
 
-          <div className="mx-auto mt-16 md:mt-24">
+          <div className="mx-auto mt-12 max-w-5xl md:mt-16">
             <Media
               src="/illustrations/children-playing-in-the-pool.png"
-              alt="Travellers walking through a local street"
-              ratio="1/1"
+              alt="Travellers enjoying a local experience"
+              ratio="16/9"
+              sizes="(max-width: 1024px) 100vw, 1024px"
             />
           </div>
 
-          <p className="mx-auto mt-10 text-center text-lg leading-8 text-muted-foreground">
+          <p className="mx-auto mt-8 text-center text-base leading-7 text-muted-foreground md:text-lg">
             The places matter. But the feeling you bring home matters more.
           </p>
         </Container>
@@ -108,24 +147,27 @@ export default function InternationalPage() {
             size="h2"
           />
 
-          <div className="mt-16 grid overflow-hidden rounded-[2rem] border bg-border gap-px lg:mt-24 lg:grid-cols-4">
+          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
             {reasons.map((reason) => (
-              <div
+              <article
                 key={reason.title}
-                className="flex flex-col bg-primary-hover p-7 text-center text-white"
+                className="flex min-h-56 flex-col bg-primary-hover p-6 text-center text-white md:min-h-64 md:p-7"
               >
-                <span className="text-7xl font-black md:text-8xl">
+                <span
+                  aria-hidden="true"
+                  className="text-6xl font-black tracking-tight md:text-7xl"
+                >
                   {reason.number}
                 </span>
 
-                <h3 className="mt-8 text-xl font-medium tracking-[-0.03em]">
+                <h3 className="mt-6 text-lg font-medium tracking-tight">
                   {reason.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-6 text-white/80">
+                <p className="mt-2 text-sm leading-6 text-white/75">
                   {reason.description}
                 </p>
-              </div>
+              </article>
             ))}
           </div>
         </Container>
@@ -134,7 +176,7 @@ export default function InternationalPage() {
       {/* How we travel */}
       <Section>
         <Container>
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-24">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-5">
               <Heading
                 eyebrow="How we travel"
@@ -144,33 +186,32 @@ export default function InternationalPage() {
               />
             </div>
 
-            <div className="lg:col-span-7 divide-y">
+            <div className="divide-y lg:col-span-7">
               {travelStyles.map((style) => {
                 const Icon = style.icon
 
                 return (
-                  <div
+                  <article
                     key={style.title}
-                    className="grid gap-5 py-8 md:grid-cols-[auto_1fr] md:gap-8"
+                    className="grid gap-4 py-6 md:grid-cols-[auto_1fr] md:gap-6"
                   >
-                    <div className="flex size-10 items-center justify-center rounded-full border">
-                      <Icon
-                        aria-hidden="true"
-                        className="size-4 text-primary"
-                        strokeWidth={1.5}
-                      />
+                    <div
+                      className="flex size-9 items-center justify-center rounded-full border"
+                      aria-hidden="true"
+                    >
+                      <Icon className="size-4 text-primary" strokeWidth={1.5} />
                     </div>
 
                     <div>
-                      <h3 className="text-xl font-medium tracking-[-0.03em]">
+                      <h3 className="text-lg font-medium tracking-tight">
                         {style.title}
                       </h3>
 
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
                         {style.description}
                       </p>
                     </div>
-                  </div>
+                  </article>
                 )
               })}
             </div>
@@ -181,37 +222,37 @@ export default function InternationalPage() {
       {/* Story */}
       <Section>
         <Container>
-          <div className="grid overflow-hidden rounded-[2rem] bg-muted md:grid-cols-2">
+          <article className="grid overflow-hidden rounded-2xl bg-muted md:grid-cols-2">
             <Media
               src="/illustrations/no-plan.png"
               alt="Friends sharing a moment while travelling"
               ratio="1/1"
-              className="h-full"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
 
-            <div className="flex items-center p-8 md:p-12 lg:p-20">
+            <div className="flex items-center p-7 md:p-10 lg:p-14">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                   From the road
                 </p>
 
-                <blockquote className="mt-8 text-3xl font-medium leading-tight tracking-[-0.04em] md:text-4xl">
+                <blockquote className="mt-6 text-2xl font-medium leading-tight tracking-tight md:text-3xl">
                   “We stopped planning for a day and somehow found the best day
                   of the entire trip.”
                 </blockquote>
 
-                <p className="mt-8 text-sm font-medium">Ananya · Mumbai</p>
+                <p className="mt-6 text-sm font-medium">Ananya · Mumbai</p>
 
                 <Link
                   href="/stories"
-                  className="mt-8 inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-60"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-60"
                 >
                   Read the story
-                  <ArrowRight className="size-4" />
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </div>
             </div>
-          </div>
+          </article>
         </Container>
       </Section>
 
@@ -228,8 +269,8 @@ export default function InternationalPage() {
         eyebrow="Your next chapter"
         title="Go somewhere you've never been. Come back a little different."
         description="The world is waiting. You don't need to see all of it. Just start somewhere."
-        buttonText="Begin Your Reset"
-        link="/journeys"
+        buttonText="Begin your reset"
+        link="/experiences"
       />
     </main>
   )

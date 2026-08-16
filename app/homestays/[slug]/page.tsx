@@ -26,7 +26,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Testimonials } from '@/components/experience/Testimonials'
-import { TrekGallery } from '@/components/experience/TrekGallery'
+import { PageGallery } from '@/components/experience/PageGallery'
 import { TrekInclusions } from '@/components/experience/TrekInclusions'
 
 interface HomestayPageProps {
@@ -414,7 +414,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
       ───────────────────────────────────── */}
 
       {hasGallery && (
-        <TrekGallery images={homestay.gallery} title={homestay.name} />
+        <PageGallery images={homestay.gallery} title={homestay.name} />
       )}
 
       {/* ─────────────────────────────────────

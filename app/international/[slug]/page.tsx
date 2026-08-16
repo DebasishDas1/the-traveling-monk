@@ -27,7 +27,7 @@ import { GalleryHero } from '@/components/experience/GalleryHero'
 import { ItineraryCard } from '@/components/experience/ItineraryCard'
 
 import { getImage } from '@/lib/utils'
-import { TrekGallery } from '@/components/experience/TrekGallery'
+import { PageGallery } from '@/components/experience/PageGallery'
 import { TrekInclusions } from '@/components/experience/TrekInclusions'
 import { Testimonials } from '@/components/experience/Testimonials'
 
@@ -300,7 +300,7 @@ export default async function InternationalPage({
       {trip.gallery.length > 0 && (
         <Section>
           <Container>
-            <TrekGallery images={trip.gallery} title={trip.name} />
+            <PageGallery images={trip.gallery} title={trip.name} />
           </Container>
         </Section>
       )}

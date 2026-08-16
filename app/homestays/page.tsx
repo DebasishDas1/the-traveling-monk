@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 
 import {
   Container,
@@ -9,19 +10,58 @@ import {
 } from '@/components/common'
 
 import { feelings, destinations, gallery } from '@/lib/data/home-stays-page'
-import { LocationMap } from '@/components/experience/LocationMap'
+
 import { homestaysData } from '@/lib/data/homestays-data'
-import { HomestayCard } from '@/components/experience/HomestayCard'
+import { HomeStayCard } from '@/components/experience/HomeStayCard'
+
+/**
+ * Maps are not part of the critical rendering path.
+ * Load them separately so their JavaScript doesn't affect
+ * the initial page load.
+ */
+const LocationMap = dynamic(
+  () =>
+    import('@/components/experience/LocationMap').then(
+      (module) => module.LocationMap
+    ),
+  {
+    loading: () => (
+      <div
+        className="aspect-4/3 w-full animate-pulse rounded-xl bg-muted"
+        aria-hidden="true"
+      />
+    ),
+  }
+)
 
 export const metadata: Metadata = {
   title: 'Himalayan Homestays | The Traveling Monk',
   description:
-    'Himalayan homestays for adventure, stillness, friendship, and a reset from modern life.',
+    'Stay with local hosts in the Himalayas. Discover peaceful homestays, local food, mountain culture, and slower journeys with The Traveling Monk.',
+
+  alternates: {
+    canonical: '/homestays',
+  },
+
+  openGraph: {
+    title: 'Himalayan Homestays | The Traveling Monk',
+    description:
+      'Stay with local hosts in the Himalayas and experience the mountains at a slower pace.',
+    type: 'website',
+    url: '/homestays',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Himalayan Homestays | The Traveling Monk',
+    description:
+      'Stay with local hosts in the Himalayas and experience the mountains at a slower pace.',
+  },
 }
 
 export default function HomeStaysPage() {
   return (
-    <main className="overflow-hidden">
+    <main>
       {/* =====================================================
           HERO
       ====================================================== */}
@@ -29,7 +69,7 @@ export default function HomeStaysPage() {
       <Section>
         <Container>
           <MediaHeading
-            eyebrow="Homestays"
+            eyebrow="Himalayan Homestays"
             title="Stay somewhere that feels lived in."
             description="Slower journeys that connect you to the landscape, the food, and the people."
             size="display"
@@ -37,19 +77,29 @@ export default function HomeStaysPage() {
             image={
               <Media
                 src="/illustrations/Alone-cuate.png"
-                alt="Person sitting by the sea"
+                alt="Traveller enjoying a quiet moment during a Himalayan homestay"
                 ratio="1/1"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             }
           />
         </Container>
       </Section>
 
-      <Container>
-        {homestaysData.map((homestay) => (
-          <HomestayCard key={homestay.id} experience={homestay} />
-        ))}
-      </Container>
+      {/* =====================================================
+          HOMESTAYS
+      ====================================================== */}
+
+      <Section>
+        <Container>
+          <div className="grid gap-8 md:grid-cols-2 grid-cols-1">
+            {homestaysData.map((homestay) => (
+              <HomeStayCard key={homestay.id} experience={homestay} />
+            ))}
+          </div>
+        </Container>
+      </Section>
 
       {/* =====================================================
           PHILOSOPHY
@@ -57,21 +107,20 @@ export default function HomeStaysPage() {
 
       <Section>
         <Container>
-          <div className="mx-auto max-w-5xl">
-            <Heading
-              align="center"
-              eyebrow="The difference"
-              title="Don't just visit a place. Live in it for a while."
-              description="The best travel memories rarely come from checking something off a list. They're found over tea, around a shared table, and in the quiet moments between plans."
-              size="h2"
-            />
-          </div>
+          <Heading
+            align="center"
+            eyebrow="The difference"
+            title="Don't just visit a place. Live in it for a while."
+            description="The best travel memories rarely come from checking something off a list. They're found over tea, around a shared table, and in the quiet moments between plans."
+            size="h2"
+          />
 
           <Media
             src="/illustrations/Sunny-day-cuate.png"
-            alt="Person sitting quietly by the sea"
+            alt="Traveller relaxing during a peaceful mountain stay"
             ratio="16/9"
-            className="mt-14 rounded-[2rem] md:mt-20"
+            className="mt-12 md:mt-16"
+            sizes="(max-width: 768px) 100vw, 90vw"
           />
         </Container>
       </Section>
@@ -80,7 +129,7 @@ export default function HomeStaysPage() {
           STAY FOR THE FEELING
       ====================================================== */}
 
-      <Section className="py-24 md:py-32 lg:py-40">
+      <Section>
         <Container>
           <Heading
             align="center"
@@ -90,7 +139,7 @@ export default function HomeStaysPage() {
             size="h2"
           />
 
-          <div className="mt-16 grid overflow-hidden rounded-[1.75rem] bg-border gap-px md:grid-cols-2 lg:mt-24 lg:grid-cols-4">
+          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl bg-border md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
             {feelings.map((item) => {
               const Icon = item.icon
 
@@ -98,27 +147,18 @@ export default function HomeStaysPage() {
                 <div
                   key={item.title}
                   className="
-                    flex
-                    min-h-64
-                    flex-col
-                    items-center
-                    justify-center
-                    bg-primary-hover
-                    p-7
-                    text-center
-                    text-white
-                    md:min-h-72
-                    md:p-8
-                    lg:p-9
+                    flex min-h-60 flex-col items-center justify-center
+                    bg-primary-hover p-7 text-center text-white
+                    md:min-h-64
                   "
                 >
-                  <Icon aria-hidden="true" className="size-20 md:size-24" />
+                  <Icon aria-hidden="true" className="size-16 md:size-20" />
 
-                  <h3 className="mt-8 text-xl font-medium tracking-[-0.03em]">
+                  <h3 className="mt-6 text-xl font-medium tracking-tight">
                     {item.title}
                   </h3>
 
-                  <p className="mt-3 text-sm leading-6 text-white/80">
+                  <p className="mt-2 text-sm leading-6 text-white/80">
                     {item.description}
                   </p>
                 </div>
@@ -141,7 +181,7 @@ export default function HomeStaysPage() {
             size="h2"
           />
 
-          <div className="mt-14 grid gap-5 md:grid-cols-3">
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
             {destinations.map((destination) => (
               <LocationMap
                 key={destination.name}
@@ -161,12 +201,12 @@ export default function HomeStaysPage() {
 
       <Section>
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-24">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Media
               src="/illustrations/women-talking.png"
-              alt="A homestay host welcoming guests"
+              alt="Homestay host welcoming travellers"
               ratio="3/2"
-              className="rounded-[1.75rem]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
 
             <div>
@@ -177,12 +217,12 @@ export default function HomeStaysPage() {
                 size="h2"
               />
 
-              <blockquote className="mt-10 border-l border-primary/30 pl-5 text-lg leading-8 text-muted-foreground">
+              <blockquote className="mt-8 border-l border-primary/30 pl-5 text-lg leading-8 text-muted-foreground">
                 &quot;We&apos;ve lived here all our lives. Now we get to show
                 people why we never wanted to leave.&quot;
               </blockquote>
 
-              <p className="mt-4 text-sm font-medium">
+              <p className="mt-3 text-sm font-medium">
                 A host from the Himalayas
               </p>
             </div>
@@ -203,48 +243,39 @@ export default function HomeStaysPage() {
             size="h2"
           />
 
-          <div
-            className="
-              mt-14
-              grid
-              gap-4
-              md:h-170
-              md:grid-cols-12
-              md:grid-rows-2
-            "
-          >
-            {/* Large image */}
-
+          <div className="mt-12 grid gap-3 md:h-168 md:grid-cols-12 md:grid-rows-2">
+            {/* Large */}
             <div className="md:col-span-5 md:row-span-2">
               <Media
                 src={gallery[0].src}
                 alt={gallery[0].alt}
                 ratio="4/5"
-                className="h-full rounded-[1.75rem]"
+                className="h-full"
+                sizes="(max-width: 768px) 100vw, 42vw"
               />
             </div>
 
-            {/* Wide image */}
-
-            <div className="md:col-span-7 md:row-span-1">
+            {/* Wide */}
+            <div className="md:col-span-7">
               <Media
                 src={gallery[1].src}
                 alt={gallery[1].alt}
                 ratio="16/9"
-                className="h-full rounded-[1.75rem]"
+                className="h-full"
+                sizes="(max-width: 768px) 100vw, 58vw"
               />
             </div>
 
-            {/* Two smaller images */}
-
-            <div className="grid grid-cols-2 gap-4 md:col-span-7">
+            {/* Small */}
+            <div className="grid grid-cols-2 gap-3 md:col-span-7">
               {gallery.slice(2, 4).map((image) => (
                 <Media
                   key={image.src}
                   src={image.src}
                   alt={image.alt}
                   ratio="1/1"
-                  className="h-full rounded-[1.75rem]"
+                  className="h-full"
+                  sizes="(max-width: 768px) 50vw, 29vw"
                 />
               ))}
             </div>

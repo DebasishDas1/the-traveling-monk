@@ -1,16 +1,16 @@
 import { Container, Heading, Media, Section } from '@/components/common'
 import { getImage } from '@/lib/utils'
 
-interface TrekGalleryProps {
+interface PageGalleryProps {
   images: Array<string | { url: string; alt?: string }>
   title: string
 }
 
-export function TrekGallery({ images, title }: TrekGalleryProps) {
+export function PageGallery({ images, title }: PageGalleryProps) {
   return (
     <Section className="overflow-hidden">
       <Container>
-        <Heading align="center" eyebrow="A glimpse" size="h2" title={title} />
+        <Heading align="center" eyebrow="A glimpse" size="h1" title={title} />
 
         <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3">
           {images.map((image, index) => {

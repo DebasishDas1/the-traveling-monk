@@ -1,10 +1,9 @@
 import Link from 'next/link'
-import { Clock, Globe2, Users } from 'lucide-react'
+import { Clock, MapPin, Users } from 'lucide-react'
 
 import type { International } from '@/types/experience'
 import { formatPrice } from '@/lib/utils'
 import { Media } from '@/components/common'
-import { Badge } from '@/components/ui/badge'
 
 interface InternationalTripCardProps {
   experience: International
@@ -13,70 +12,115 @@ interface InternationalTripCardProps {
 export function InternationalTripCard({
   experience,
 }: InternationalTripCardProps) {
-  const image = experience.gallery[0]
+  const firstImage = experience.gallery?.[0]
 
-  const src = typeof image === 'string' ? image : (image?.url ?? '')
-
-  const alt =
-    typeof image === 'string'
-      ? experience.name
-      : (image?.alt ?? experience.name)
+  const image =
+    typeof firstImage === 'string'
+      ? {
+          src: firstImage,
+          alt: experience.name,
+        }
+      : firstImage?.url
+        ? {
+            src: firstImage.url,
+            alt: firstImage.alt || experience.name,
+          }
+        : null
 
   return (
-    <Link href={`/international/${experience.slug}`} className="group block">
-      <div className="overflow-hidden rounded-3xl">
-        <Media
-          src={src}
-          alt={alt}
-          ratio="4/3"
-          className="transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-      </div>
-
-      <div className="pt-5">
-        <div className="flex items-center justify-between gap-3">
-          <span className="flex items-center gap-1.5 text-xs uppercase tracking-[0.16em] text-muted-foreground">
-            <Globe2 className="size-3.5" />
-            {experience.country}
-          </span>
-
-          <Badge variant="secondary">{experience.tier}</Badge>
+    <article>
+      <Link
+        href={`/international/${experience.slug}`}
+        aria-label={`View ${experience.name}`}
+        className="
+          group block
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-primary
+          focus-visible:ring-offset-4
+        "
+      >
+        {/* Image */}
+        <div className="relative overflow-hidden rounded-2xl bg-muted">
+          {image ? (
+            <Media
+              src={image.src}
+              alt={image.alt}
+              ratio="4/3"
+              sizes="
+                (max-width: 640px) 100vw,
+                (max-width: 1024px) 50vw,
+                33vw
+              "
+              className="
+                transition-transform
+                duration-500
+                ease-out
+                group-hover:scale-[1.02]
+              "
+            />
+          ) : (
+            <div className="aspect-4/3 w-full bg-muted" aria-hidden="true" />
+          )}
         </div>
 
-        <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
-          {experience.name}
-        </h3>
+        {/* Content */}
+        <div className="pt-4 sm:pt-5">
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground sm:text-sm">
+            <MapPin
+              className="size-3.5 shrink-0"
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          {experience.tagline}
-        </p>
-
-        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1.5">
-            <Clock className="size-3.5" />
-            {experience.duration}
-          </span>
-
-          <span className="flex items-center gap-1.5">
-            <Users className="size-3.5" />
-            Up to {experience.maxGroupSize}
-          </span>
-        </div>
-
-        <div className="mt-5 flex items-end justify-between">
-          <div>
-            <p className="text-xs text-muted-foreground">From</p>
-
-            <p className="text-xl font-semibold">
-              {formatPrice(experience.priceFrom)}
-            </p>
+            <span className="truncate">{experience.country}</span>
           </div>
 
-          <span className="text-sm font-medium transition-transform group-hover:translate-x-1">
-            Explore →
-          </span>
+          <h3 className="text-xl font-semibold leading-tight tracking-[-0.04em] text-foreground sm:text-2xl">
+            {experience.name}
+          </h3>
+
+          {experience.tagline && (
+            <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
+              {experience.tagline}
+            </p>
+          )}
+
+          {/* Facts */}
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground sm:text-sm">
+            {experience.duration && (
+              <span className="inline-flex items-center gap-1.5">
+                <Clock
+                  aria-hidden="true"
+                  className="size-3.5 shrink-0"
+                  strokeWidth={1.75}
+                />
+                {experience.duration}
+              </span>
+            )}
+
+            {experience.maxGroupSize && (
+              <span className="inline-flex items-center gap-1.5">
+                <Users
+                  aria-hidden="true"
+                  className="size-3.5 shrink-0"
+                  strokeWidth={1.75}
+                />
+                Up to {experience.maxGroupSize}
+              </span>
+            )}
+          </div>
+
+          {/* Price */}
+          <div className="mt-4 flex items-baseline gap-2">
+            <span className="text-xl font-semibold tracking-tight sm:text-2xl">
+              {formatPrice(experience.priceFrom)}
+            </span>
+
+            <span className="text-xs text-muted-foreground">/ traveler</span>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </article>
   )
 }

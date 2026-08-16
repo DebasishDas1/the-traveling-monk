@@ -1,7 +1,8 @@
-import { Story } from "@/lib/data/stories-page"
-import Link from "next/link"
-import { Media } from "../common"
-import { ArrowRight } from "lucide-react"
+import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
+
+import { Media } from '@/components/common'
+import type { Story } from '@/lib/data/stories-page'
 
 interface StoryCardProps {
   story: Story
@@ -9,55 +10,109 @@ interface StoryCardProps {
 
 export function StoryCard({ story }: StoryCardProps) {
   return (
-    <Link href={`/stories/${story.slug}`} className="group block">
-      <article>
-        <div className="overflow-hidden rounded-[1.5rem]">
+    <article className="group">
+      <Link
+        href={`/stories/${story.slug}`}
+        aria-label={`Read: ${story.title}`}
+        className="
+          block
+          rounded-2xl
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-primary
+          focus-visible:ring-offset-4
+        "
+      >
+        {/* Image */}
+        <div className="overflow-hidden rounded-2xl bg-muted">
           <Media
             src={story.image}
-            alt={story.imageAlt}
+            alt={story.imageAlt || story.title}
             ratio="4/5"
+            sizes="
+              (max-width: 640px) 100vw,
+              (max-width: 1024px) 50vw,
+              33vw
+            "
             className="
               transition-transform
-              duration-700
+              duration-500
               ease-out
-              group-hover:scale-[1.03]
+              group-hover:scale-[1.025]
             "
           />
         </div>
 
-        <div className="mt-5">
-          <div className="flex items-center gap-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">
-            <span>{story.category}</span>
+        {/* Content */}
+        <div className="pt-4 sm:pt-5">
+          {/* Meta */}
+          <div className="flex min-w-0 items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground sm:text-xs">
+            <span className="truncate">{story.category}</span>
 
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true" className="shrink-0">
+              ·
+            </span>
 
-            <span>{story.location}</span>
+            <span className="truncate">{story.location}</span>
           </div>
 
-          <div className="mt-3 flex items-start justify-between gap-4">
-            <h3 className="text-2xl font-medium leading-tight tracking-[-0.04em] text-balance">
+          {/* Title */}
+          <div className="mt-2.5 flex items-start gap-3">
+            <h3
+              className="
+                min-w-0
+                flex-1
+                text-xl
+                font-semibold
+                leading-[1.1]
+                tracking-[-0.035em]
+                text-balance
+                text-foreground
+                sm:text-2xl
+              "
+            >
               {story.title}
             </h3>
 
-            <ArrowRight
+            <span
+              aria-hidden="true"
               className="
-                mt-1
-                size-4
+                mt-0.5
+                flex
+                size-8
                 shrink-0
-                transition-transform
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-border
+                text-foreground
+                transition-all
                 duration-300
-                group-hover:translate-x-1
+                group-hover:border-primary
+                group-hover:bg-primary
+                group-hover:text-primary-foreground
               "
-            />
+            >
+              <ArrowUpRight className="size-3.5" />
+            </span>
           </div>
 
-          <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">
-            {story.excerpt}
-          </p>
+          {/* Excerpt */}
+          {story.excerpt && (
+            <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
+              {story.excerpt}
+            </p>
+          )}
 
-          <p className="mt-4 text-xs text-muted-foreground">{story.readTime}</p>
+          {/* Read time */}
+          {story.readTime && (
+            <p className="mt-3 text-xs text-muted-foreground">
+              {story.readTime}
+            </p>
+          )}
         </div>
-      </article>
-    </Link>
+      </Link>
+    </article>
   )
 }
