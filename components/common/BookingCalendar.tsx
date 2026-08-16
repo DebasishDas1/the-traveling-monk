@@ -1,11 +1,12 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Check } from 'lucide-react'
 
 import type { AvailableDateSlot } from '@/types/experience'
 import { cn } from '@/lib/utils'
 import { Calendar } from '@/components/ui/calendar'
+import { Button } from '../ui/button'
 
 interface BookingCalendarProps {
   dates: AvailableDateSlot[]
@@ -14,34 +15,31 @@ interface BookingCalendarProps {
 }
 
 function parseBookingDate(value: string): Date | null {
-  const parsed = new Date(value)
+  const date = new Date(value)
 
-  if (Number.isNaN(parsed.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return null
   }
 
-  return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate())
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
 
-function sameDay(a: Date | null, b: Date) {
-  return (
-    !!a &&
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  )
+function getDayKey(date: Date) {
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
 }
 
-function formatDisplayDate(value: string) {
-  const date = parseBookingDate(value)
+function getMonthStart(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), 1)
+}
 
-  if (!date) return value
+const dateFormatter = new Intl.DateTimeFormat('en-IN', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+})
 
-  return new Intl.DateTimeFormat('en-IN', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(date)
+function formatDisplayDate(date: Date, fallback: string) {
+  return Number.isNaN(date.getTime()) ? fallback : dateFormatter.format(date)
 }
 
 export function BookingCalendar({
@@ -49,22 +47,29 @@ export function BookingCalendar({
   value,
   onChange,
 }: BookingCalendarProps) {
-  const availableDates = useMemo(
-    () =>
-      dates
-        .map((item) => ({
-          ...item,
-          dateObject: parseBookingDate(item.date),
-        }))
-        .filter(
-          (item): item is typeof item & { dateObject: Date } =>
-            item.dateObject !== null
-        ),
-    [dates]
+  const availableDates = useMemo(() => {
+    return dates.flatMap((item) => {
+      const dateObject = parseBookingDate(item.date)
+
+      if (!dateObject) return []
+
+      return [
+        {
+          item,
+          date: dateObject,
+          dayKey: getDayKey(dateObject),
+        },
+      ]
+    })
+  }, [dates])
+
+  const availableDateKeys = useMemo(
+    () => new Set(availableDates.map(({ dayKey }) => dayKey)),
+    [availableDates]
   )
 
   const availableDateObjects = useMemo(
-    () => availableDates.map((item) => item.dateObject),
+    () => availableDates.map(({ date }) => date),
     [availableDates]
   )
 
@@ -73,99 +78,109 @@ export function BookingCalendar({
     [value]
   )
 
-  const [month, setMonth] = useState<Date>(
-    () => selectedDate ?? availableDateObjects[0] ?? new Date()
+  const [month, setMonth] = useState(() =>
+    getMonthStart(selectedDate ?? availableDateObjects[0] ?? new Date())
   )
 
-  const isAvailable = (date: Date) =>
-    availableDates.some((item) => sameDay(item.dateObject, date))
+  const selectDate = useCallback(
+    (date: Date) => {
+      const selected = availableDates.find(
+        (item) => item.dayKey === getDayKey(date)
+      )
 
-  const selectDate = (date: Date) => {
-    const selected = availableDates.find((item) =>
-      sameDay(item.dateObject, date)
-    )
+      if (!selected) return
 
-    if (!selected) return
+      onChange(selected.item.date)
+      setMonth(getMonthStart(date))
+    },
+    [availableDates, onChange]
+  )
 
-    onChange(selected.date)
+  const handleCalendarSelect = useCallback(
+    (date: Date | undefined) => {
+      if (date) {
+        selectDate(date)
+      }
+    },
+    [selectDate]
+  )
 
-    // Always move calendar to the selected date's month.
-    setMonth(new Date(date.getFullYear(), date.getMonth(), 1))
-  }
+  const handleDepartureSelect = useCallback(
+    (date: string) => {
+      const dateObject = parseBookingDate(date)
 
-  const handleCalendarSelect = (date: Date | undefined) => {
-    if (!date) return
+      if (!dateObject) return
 
-    selectDate(date)
-  }
+      onChange(date)
+      setMonth(getMonthStart(dateObject))
+    },
+    [onChange]
+  )
 
-  const handleDepartureSelect = (date: string) => {
-    const dateObject = parseBookingDate(date)
-
-    if (!dateObject) return
-
-    onChange(date)
-
-    // Open the month containing the selected departure.
-    setMonth(new Date(dateObject.getFullYear(), dateObject.getMonth(), 1))
-  }
+  const isAvailable = useCallback(
+    (date: Date) => availableDateKeys.has(getDayKey(date)),
+    [availableDateKeys]
+  )
 
   return (
-    <div>
-      <Calendar
-        mode="single"
-        month={month}
-        onMonthChange={setMonth}
-        selected={selectedDate ?? undefined}
-        onSelect={handleCalendarSelect}
-        disabled={(date) => !isAvailable(date)}
-        modifiers={{
-          available: availableDateObjects,
-        }}
-        modifiersClassNames={{
-          available:
-            'bg-primary/10 text-primary font-semibold rounded-md hover:bg-primary/20',
-        }}
-        className="mx-auto"
-      />
+    <div className="grid grid-cols-[minmax(0,1fr)_130px] items-start md:grid-cols-[minmax(0,1fr)_280px]">
+      <div className="min-w-0 p-1 md:p-3">
+        <Calendar
+          mode="single"
+          month={month}
+          onMonthChange={setMonth}
+          selected={selectedDate ?? undefined}
+          onSelect={handleCalendarSelect}
+          disabled={(date) => !isAvailable(date)}
+          modifiers={{
+            available: availableDateObjects,
+          }}
+          modifiersClassNames={{
+            available:
+              'bg-primary/10 text-primary font-semibold rounded-md hover:bg-primary/20',
+          }}
+          className="mx-auto w-full"
+        />
+      </div>
 
-      <div className="border-t px-3 py-3">
-        <p className="mb-2 text-xs text-muted-foreground">
-          Available departures
+      <div className="min-w-0 px-2 py-2 md:px-3 md:py-3">
+        <p className="mb-2 text-center text-[10px] font-medium text-muted-foreground md:text-xs">
+          Departures
         </p>
 
         <div className="space-y-1">
-          {availableDates.map((item) => {
+          {availableDates.map(({ item, date }) => {
             const selected = item.date === value
 
             return (
-              <button
+              <Button
                 key={item.date}
                 type="button"
+                variant={selected ? 'secondary' : 'ghost'}
                 aria-pressed={selected}
                 onClick={() => handleDepartureSelect(item.date)}
                 className={cn(
-                  'flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left',
-                  'outline-none transition-colors',
-                  'hover:bg-muted',
-                  'focus-visible:ring-2 focus-visible:ring-primary',
-                  selected && 'bg-primary/10'
+                  'h-auto w-full justify-between gap-1 px-2 py-2 text-left',
+                  selected && 'bg-primary/10 text-primary'
                 )}
               >
-                <div>
-                  <p className="text-sm font-medium">
-                    {formatDisplayDate(item.date)}
+                <div className="min-w-0">
+                  <p className="truncate text-xs font-medium md:text-sm">
+                    {formatDisplayDate(date, item.date)}
                   </p>
 
-                  <p className="mt-0.5 text-xs text-muted-foreground">
-                    {item.spots} {item.spots === 1 ? 'spot' : 'spots'} left
+                  <p className="mt-0.5 truncate text-[10px] text-muted-foreground md:text-xs">
+                    {item.spots} {item.spots === 1 ? 'spot' : 'spots'}
                   </p>
                 </div>
 
                 {selected && (
-                  <Check className="size-4 text-primary" aria-hidden="true" />
+                  <Check
+                    className="size-3 shrink-0 md:size-4"
+                    aria-hidden="true"
+                  />
                 )}
-              </button>
+              </Button>
             )
           })}
         </div>

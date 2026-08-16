@@ -22,12 +22,22 @@ function getImage(
     }
   }
 
-  if (!image.url) return null
-
-  return {
-    src: image.url,
-    alt: image.alt || fallbackAlt,
+  // Handle image objects with src or url
+  if ('url' in image) {
+    return {
+      src: image.url,
+      alt: image.alt || fallbackAlt,
+    }
   }
+
+  if ('src' in image) {
+    return {
+      src: image.src,
+      alt: image.alt || fallbackAlt,
+    }
+  }
+
+  return null
 }
 
 export function HomeStayCard({ experience }: HomeStayCardProps) {

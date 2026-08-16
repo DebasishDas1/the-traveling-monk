@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { CalendarDays, Minus, Plus, Users } from 'lucide-react'
 
 import type { AvailableDateSlot } from '@/types/experience'
 
+import { BookingCalendar } from '@/components/common'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Popover,
   PopoverContent,
@@ -19,7 +21,7 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
-import { BookingCalendar } from '@/components/common'
+import { formatPrice } from '@/lib/utils'
 
 interface BookingBarProps {
   title: string
@@ -29,6 +31,28 @@ interface BookingBarProps {
   maxGuests: number
 }
 
+const dateFormatter = new Intl.DateTimeFormat('en-IN', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+})
+
+function parseBookingDate(value: string): Date | null {
+  const parsed = new Date(value)
+
+  if (Number.isNaN(parsed.getTime())) {
+    return null
+  }
+
+  return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate())
+}
+
+function formatDisplayDate(value: string) {
+  const date = parseBookingDate(value)
+
+  return date ? dateFormatter.format(date) : value
+}
+
 export function BookingBar({
   title,
   price,
@@ -36,6 +60,7 @@ export function BookingBar({
   availableDates,
   maxGuests,
 }: BookingBarProps) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const dates = availableDates ?? []
   const hasDates = dates.length > 0
 
@@ -43,22 +68,29 @@ export function BookingBar({
   const [guests, setGuests] = useState(1)
   const [sheetOpen, setSheetOpen] = useState(false)
 
-  const selectedDateValue =
-    dates.find((item) => item.date === selectedDate)?.date ??
-    dates[0]?.date ??
-    ''
+  const selectedDateValue = useMemo(
+    () =>
+      dates.find(({ date }) => date === selectedDate)?.date ??
+      dates[0]?.date ??
+      '',
+    [dates, selectedDate]
+  )
 
   const total = price * guests
 
-  const decreaseGuests = () => {
+  const decreaseGuests = useCallback(() => {
     setGuests((current) => Math.max(1, current - 1))
-  }
+  }, [])
 
-  const increaseGuests = () => {
+  const increaseGuests = useCallback(() => {
     setGuests((current) => Math.min(maxGuests, current + 1))
-  }
+  }, [maxGuests])
 
-  const handleBook = () => {
+  const handleDateChange = useCallback((date: string) => {
+    setSelectedDate(date)
+  }, [])
+
+  const handleBook = useCallback(() => {
     if (!selectedDateValue || !hasDates) return
 
     const booking = {
@@ -68,18 +100,14 @@ export function BookingBar({
     }
 
     console.log(booking)
-  }
+  }, [guests, hasDates, selectedDateValue, total])
 
   return (
     <>
-      {/* =====================================================
-          DESKTOP BOOKING BAR
-      ====================================================== */}
-
+      {/* Desktop */}
       <div className="fixed inset-x-0 bottom-0 z-50 hidden px-4 pb-4 md:block">
-        <div className="mx-auto max-w-5xl">
-          <div className="flex min-h-16 items-center gap-2 rounded-2xl border bg-background px-3 shadow-lg">
-            {/* Title */}
+        <Card className="mx-auto max-w-5xl rounded-2xl shadow-lg bg-white">
+          <CardContent className="flex min-h-16 items-center gap-2 p-3">
             <div className="min-w-0 flex-1 px-3">
               <p className="truncate text-lg font-semibold">{title}</p>
             </div>
@@ -89,12 +117,11 @@ export function BookingBar({
             <DesktopDatePicker
               dates={dates}
               value={selectedDateValue}
-              onChange={setSelectedDate}
+              onChange={handleDateChange}
             />
 
             <Separator orientation="vertical" className="h-8" />
 
-            {/* Guests */}
             <GuestPicker
               value={guests}
               max={maxGuests}
@@ -104,50 +131,47 @@ export function BookingBar({
 
             <Separator orientation="vertical" className="h-8" />
 
-            {/* Price */}
             <PriceBlock label={priceLabel} value={price} />
 
-            {/* Total */}
             <PriceBlock label="Total" value={total} />
 
             <Button
+              type="button"
               className="h-10 shrink-0 rounded-xl px-5"
               disabled={!hasDates}
               onClick={handleBook}
             >
               Book now
             </Button>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* =====================================================
-          MOBILE BOOKING BAR
-      ====================================================== */}
-
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background/95 backdrop-blur-xl md:hidden">
+      {/* Mobile bottom bar */}
+      <div className="fixed inset-x-0 bottom-0 z-50 bg-background/80 backdrop-blur-xl md:hidden">
         <div className="flex items-center gap-4 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
           <div className="min-w-0 flex-1">
             <p className="text-xs text-muted-foreground">From</p>
 
             <p className="text-lg font-semibold tracking-tight">
-              ₹{formatCurrency(price)}
+              {formatPrice(price)}
               <span className="ml-1 text-xs font-normal text-muted-foreground">
                 / person
               </span>
             </p>
           </div>
 
-          <Button disabled={!hasDates} onClick={() => setSheetOpen(true)}>
+          <Button
+            type="button"
+            disabled={!hasDates}
+            onClick={() => setSheetOpen(true)}
+          >
             Book now
           </Button>
         </div>
       </div>
 
-      {/* =====================================================
-          MOBILE BOOKING SHEET
-      ====================================================== */}
-
+      {/* Mobile booking sheet */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetContent
           side="bottom"
@@ -157,59 +181,59 @@ export function BookingBar({
             flex-col
             gap-0
             overflow-hidden
-            rounded-t-3xl
-            border-t
-            bg-background
+            rounded-t-4xl
+            bg-white
             p-0
+            backdrop-blur-2xl
             sm:max-h-[88svh]
           "
         >
-          {/* Header */}
-          <SheetHeader className="shrink-0 border-b px-5 py-5 sm:px-7 sm:py-6">
-            <SheetTitle className="text-xl font-semibold tracking-tight sm:text-2xl">
+          <SheetHeader className="shrink-0 px-5 pt-5 text-left sm:px-7">
+            <SheetTitle className="text-xl tracking-tight sm:text-2xl">
               Book {title}
             </SheetTitle>
 
-            <SheetDescription className="text-sm leading-6">
+            <SheetDescription>
               Choose your departure date and number of guests.
             </SheetDescription>
           </SheetHeader>
 
-          {/* Content */}
+          {/* Scrollable content */}
           <div className="min-h-0 flex-1 overflow-y-auto">
-            <div className="space-y-6 px-5 py-5 sm:px-7 sm:py-7">
-              {/* Departure */}
-              <section>
-                <SectionLabel
-                  icon={<CalendarDays />}
-                  title="Departure"
-                  description="Select an available date"
-                />
+            <div className="space-y-5 px-5 py-5 sm:px-7 sm:py-7">
+              {/* Date */}
+              <Card className="overflow-hidden border">
+                <CardHeader className="px-4 pb-2 pt-4">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <CalendarDays className="size-4 text-muted-foreground" />
+                    Departure
+                  </CardTitle>
+                </CardHeader>
 
-                <div className="mt-3 overflow-hidden rounded-2xl border">
+                <CardContent className="p-0">
                   <BookingCalendar
                     dates={dates}
                     value={selectedDateValue}
-                    onChange={setSelectedDate}
+                    onChange={handleDateChange}
                   />
-                </div>
-              </section>
+                </CardContent>
+              </Card>
 
               {/* Guests */}
-              <section>
-                <div className="flex items-center justify-between rounded-2xl border p-4 sm:p-5">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted">
+              <Card className="border shadow-none">
+                <CardContent className="flex items-center justify-between gap-4 p-4 sm:p-5">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-background">
                       <Users
                         className="size-4 text-muted-foreground"
                         aria-hidden="true"
                       />
                     </div>
 
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm font-medium">Guests</p>
 
-                      <p className="mt-0.5 text-xs text-muted-foreground">
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
                         Up to {maxGuests} guests
                       </p>
                     </div>
@@ -221,42 +245,41 @@ export function BookingBar({
                     onDecrease={decreaseGuests}
                     onIncrease={increaseGuests}
                   />
-                </div>
-              </section>
-
-              {/* Summary */}
-              <section className="rounded-2xl bg-muted/50 p-4 sm:p-5">
-                <div className="flex items-end justify-between gap-4">
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium">Total</p>
-
-                    <p className="mt-1 truncate text-xs text-muted-foreground">
-                      {guests} {guests === 1 ? 'guest' : 'guests'}
-                      {selectedDateValue && (
-                        <> · {formatDisplayDate(selectedDateValue)}</>
-                      )}
-                    </p>
-                  </div>
-
-                  <p className="shrink-0 text-xl font-semibold tracking-tight sm:text-2xl">
-                    ₹{formatCurrency(total)}
-                  </p>
-                </div>
-              </section>
+                </CardContent>
+              </Card>
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="shrink-0 px-5 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:px-7 sm:pb-5">
-            <Button
-              className="h-12 w-full rounded-xl"
-              disabled={!selectedDateValue}
-              onClick={handleBook}
-            >
-              Continue
-            </Button>
+          {/* Sticky footer */}
+          <div className="shrink-0 bg-background/95 px-5 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] backdrop-blur-xl sm:px-7 sm:pb-5">
+            <div className="flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <p className="text-sm font-medium">Total</p>
 
-            <p className="mt-2 text-center text-[11px] leading-5 text-muted-foreground">
+                <p className="mt-1 truncate text-xs text-muted-foreground">
+                  {guests} {guests === 1 ? 'guest' : 'guests'}
+                  {selectedDateValue && (
+                    <> · {formatDisplayDate(selectedDateValue)}</>
+                  )}
+                </p>
+              </div>
+
+              <div className="flex shrink-0 items-center gap-4">
+                <p className="text-2xl font-semibold tracking-tight">
+                  {formatPrice(total)}
+                </p>
+
+                <Button
+                  type="button"
+                  disabled={!selectedDateValue}
+                  onClick={handleBook}
+                >
+                  Continue
+                </Button>
+              </div>
+            </div>
+
+            <p className="mt-2 text-center text-[11px] text-muted-foreground">
               You&apos;ll confirm your booking before payment.
             </p>
           </div>
@@ -280,7 +303,7 @@ function PriceBlock({ label, value }: PriceBlockProps) {
     <div className="shrink-0 px-3 text-right">
       <p className="text-[11px] text-muted-foreground">{label}</p>
 
-      <p className="text-sm font-semibold">₹{formatCurrency(value)}</p>
+      <p className="text-sm font-semibold">{formatPrice(value)}</p>
     </div>
   )
 }
@@ -299,6 +322,7 @@ function DesktopDatePicker({ dates, value, onChange }: DesktopDatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger
+        type="button"
         disabled={!dates.length}
         className="
           flex
@@ -310,8 +334,8 @@ function DesktopDatePicker({ dates, value, onChange }: DesktopDatePickerProps) {
           px-3
           text-left
           outline-none
-          transition-none
-          focus:bg-transparent
+          transition-colors
+          hover:bg-muted/50
           focus-visible:ring-2
           focus-visible:ring-primary
           disabled:pointer-events-none
@@ -336,40 +360,11 @@ function DesktopDatePicker({ dates, value, onChange }: DesktopDatePickerProps) {
 
       <PopoverContent
         align="center"
-        className="w-auto rounded-2xl bg-background p-2"
+        className="w-auto rounded-2xl p-2 bg-white"
       >
         <BookingCalendar dates={dates} value={value} onChange={onChange} />
       </PopoverContent>
     </Popover>
-  )
-}
-
-/* ============================================================
-   SECTION LABEL
-============================================================ */
-
-interface SectionLabelProps {
-  icon: React.ReactNode
-  title: string
-  description: string
-}
-
-function SectionLabel({ icon, title, description }: SectionLabelProps) {
-  return (
-    <div className="flex items-center justify-between">
-      <div>
-        <h3 className="text-sm font-medium">{title}</h3>
-
-        <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>
-      </div>
-
-      <span
-        className="size-4 text-muted-foreground [&>svg]:size-4"
-        aria-hidden="true"
-      >
-        {icon}
-      </span>
-    </div>
   )
 }
 
@@ -386,105 +381,35 @@ interface GuestPickerProps {
 
 function GuestPicker({ value, max, onDecrease, onIncrease }: GuestPickerProps) {
   return (
-    <div className="flex items-center gap-2">
-      <GuestButton
-        label="Remove guest"
+    <div className="flex items-center gap-1">
+      <Button
+        // variant="outline"
+        size="icon"
+        className="size-8 rounded-full"
         disabled={value <= 1}
         onClick={onDecrease}
+        aria-label="Decrease guests"
       >
-        <Minus />
-      </GuestButton>
+        <Minus className="size-3.5" />
+      </Button>
 
-      <span aria-live="polite" className="w-6 text-center text-sm font-medium">
+      <span
+        aria-live="polite"
+        className="w-12 text-center text-sm font-medium tabular-nums"
+      >
         {value}
       </span>
 
-      <GuestButton
-        label="Add guest"
+      <Button
+        // variant="outline"
+        size="icon"
+        className="size-8 rounded-full"
         disabled={value >= max}
         onClick={onIncrease}
+        aria-label="Increase guests"
       >
-        <Plus />
-      </GuestButton>
+        <Plus className="size-3.5" />
+      </Button>
     </div>
   )
-}
-
-/* ============================================================
-   GUEST BUTTON
-============================================================ */
-
-interface GuestButtonProps {
-  label: string
-  disabled: boolean
-  onClick: () => void
-  children: React.ReactNode
-}
-
-function GuestButton({ label, disabled, onClick, children }: GuestButtonProps) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      disabled={disabled}
-      onClick={onClick}
-      className="
-        inline-flex
-        size-9
-        items-center
-        justify-center
-        rounded-full
-        border
-        outline-none
-        transition-none
-        focus:bg-transparent
-        focus-visible:ring-2
-        focus-visible:ring-primary
-        disabled:pointer-events-none
-        disabled:opacity-40
-      "
-    >
-      <span className="size-3.5 [&>svg]:size-3.5" aria-hidden="true">
-        {children}
-      </span>
-    </button>
-  )
-}
-
-/* ============================================================
-   DATE HELPERS
-============================================================ */
-
-/**
- * Parses dates such as:
- *
- * "Oct 18, 2026"
- * "Nov 07, 2026"
- *
- * Returns null for invalid values.
- */
-function parseBookingDate(value: string): Date | null {
-  const parsed = new Date(value)
-
-  if (Number.isNaN(parsed.getTime())) {
-    return null
-  }
-
-  return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate())
-}
-
-function formatDisplayDate(value: string) {
-  const date = parseBookingDate(value)
-
-  if (!date) return value
-
-  return new Intl.DateTimeFormat('en-IN', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(date)
-}
-
-function formatCurrency(value: number) {
-  return value.toLocaleString('en-IN')
 }

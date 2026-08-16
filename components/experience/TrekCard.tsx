@@ -3,7 +3,7 @@ import { Clock, Gauge, MapPin, Mountain } from 'lucide-react'
 
 import { Media } from '@/components/common'
 import type { Trek } from '@/types/experience'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice, getImage } from '@/lib/utils'
 
 interface TrekCardProps {
   experience: Trek
@@ -11,19 +11,7 @@ interface TrekCardProps {
 
 export function TrekCard({ experience }: TrekCardProps) {
   const firstImage = experience.gallery?.[0]
-
-  const image =
-    typeof firstImage === 'string'
-      ? {
-          src: firstImage,
-          alt: experience.title,
-        }
-      : firstImage?.url
-        ? {
-            src: firstImage.url,
-            alt: firstImage.alt || experience.title,
-          }
-        : null
+  const image = getImage(firstImage, experience.title)
 
   const altitudeFeet = Math.round(experience.altitude * 3.28084)
 

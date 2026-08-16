@@ -13,6 +13,7 @@ import { feelings, destinations, gallery } from '@/lib/data/home-stays-page'
 
 import { homestaysData } from '@/lib/data/homestays-data'
 import { HomeStayCard } from '@/components/experience/HomeStayCard'
+import { PageGallery } from '@/components/experience/PageGallery'
 
 /**
  * Maps are not part of the critical rendering path.
@@ -233,55 +234,16 @@ export default function HomeStaysPage() {
       {/* =====================================================
           GALLERY
       ====================================================== */}
-
-      <Section>
-        <Container>
-          <Heading
-            align="center"
-            eyebrow="The feeling"
-            title="Come for the mountains. Remember the moments."
-            size="h2"
-          />
-
-          <div className="mt-12 grid gap-3 md:h-168 md:grid-cols-12 md:grid-rows-2">
-            {/* Large */}
-            <div className="md:col-span-5 md:row-span-2">
-              <Media
-                src={gallery[0].src}
-                alt={gallery[0].alt}
-                ratio="4/5"
-                className="h-full"
-                sizes="(max-width: 768px) 100vw, 42vw"
-              />
-            </div>
-
-            {/* Wide */}
-            <div className="md:col-span-7">
-              <Media
-                src={gallery[1].src}
-                alt={gallery[1].alt}
-                ratio="16/9"
-                className="h-full"
-                sizes="(max-width: 768px) 100vw, 58vw"
-              />
-            </div>
-
-            {/* Small */}
-            <div className="grid grid-cols-2 gap-3 md:col-span-7">
-              {gallery.slice(2, 4).map((image) => (
-                <Media
-                  key={image.src}
-                  src={image.src}
-                  alt={image.alt}
-                  ratio="1/1"
-                  className="h-full"
-                  sizes="(max-width: 768px) 50vw, 29vw"
-                />
-              ))}
-            </div>
-          </div>
-        </Container>
-      </Section>
+      {gallery.length > 0 && (
+        <Section>
+          <Container>
+            <PageGallery
+              images={gallery}
+              title="Come for the mountains. Remember the moments."
+            />
+          </Container>
+        </Section>
+      )}
     </main>
   )
 }

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Clock, MapPin, Users } from 'lucide-react'
 
 import type { International } from '@/types/experience'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice, getImage } from '@/lib/utils'
 import { Media } from '@/components/common'
 
 interface InternationalTripCardProps {
@@ -13,19 +13,7 @@ export function InternationalTripCard({
   experience,
 }: InternationalTripCardProps) {
   const firstImage = experience.gallery?.[0]
-
-  const image =
-    typeof firstImage === 'string'
-      ? {
-          src: firstImage,
-          alt: experience.name,
-        }
-      : firstImage?.url
-        ? {
-            src: firstImage.url,
-            alt: firstImage.alt || experience.name,
-          }
-        : null
+  const image = getImage(firstImage, experience.name)
 
   return (
     <article>

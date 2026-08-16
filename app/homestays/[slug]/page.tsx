@@ -83,13 +83,25 @@ function getImage(
     }
   }
 
-  if (!image.url) return null
-
-  return {
-    src: image.url,
-    alt: image.alt || fallbackAlt,
+  // Handle MediaUrl object (has url)
+  if ('url' in image) {
+    return {
+      src: image.url,
+      alt: image.alt || fallbackAlt,
+    }
   }
+
+  // Handle object with src property
+  if ('src' in image) {
+    return {
+      src: image.src,
+      alt: image.alt || fallbackAlt,
+    }
+  }
+
+  return null
 }
+
 
 function getGallery(homestay: Homestay): ResolvedImage[] {
   return homestay.gallery

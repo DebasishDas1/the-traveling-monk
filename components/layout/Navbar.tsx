@@ -63,10 +63,9 @@ export function Navbar() {
           <Image
             src="/dark-logo.png"
             alt="The Traveling Monk"
-            width={70}
-            height={64}
+            width={80}
+            height={80}
             priority
-            className="h-12 w-12 object-contain sm:h-14 sm:w-14"
           />
         </Link>
 
@@ -124,7 +123,7 @@ export function Navbar() {
 
             <SheetContent
               side="right"
-              className="w-full border-none bg-background/95 p-6 backdrop-blur-xl sm:max-w-md"
+              className="w-full border-none bg-background/40 p-6 backdrop-blur-xl sm:max-w-md"
             >
               <div className="flex h-full flex-col justify-between pb-8 pt-20">
                 {/* Mobile Links */}

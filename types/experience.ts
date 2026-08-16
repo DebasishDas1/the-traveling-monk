@@ -60,7 +60,7 @@ export interface GoogleDriveImage extends MediaUrl {
   fileId: string
 }
 
-export type ExperienceMedia = string | MediaUrl
+export type ExperienceMedia = string | MediaUrl | { src: string; alt?: string }
 
 // ─────────────────────────────────────────────
 // BOOKING

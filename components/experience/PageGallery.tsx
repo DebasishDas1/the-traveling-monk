@@ -1,9 +1,10 @@
 import { Container, Heading, Media, Section } from '@/components/common'
 import { getImage } from '@/lib/utils'
+import type { MediaUrl } from '@/types/experience'
 
 interface PageGalleryProps {
-  images: Array<string | { url: string; alt?: string }>
-  title: string
+  images: Array<string | { src: string; alt?: string } | MediaUrl>;
+  title: string;
 }
 
 export function PageGallery({ images, title }: PageGalleryProps) {
@@ -14,22 +15,31 @@ export function PageGallery({ images, title }: PageGalleryProps) {
 
         <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3">
           {images.map((image, index) => {
-            const item = getImage(image, `${title} photo ${index + 1}`)
-
-            if (!item) return null
+            let src: string;
+            let alt: string;
+            if (typeof image === 'string') {
+              const resolved = getImage(image, `${title} photo ${index + 1}`);
+              if (!resolved) return null;
+              src = resolved.src;
+              alt = resolved.alt;
+            } else if ('url' in image) {
+              // MediaUrl type
+              src = image.url;
+              alt = image.alt ?? `${title} photo ${index + 1}`;
+            } else {
+              // {src, alt} shape
+              src = image.src;
+              alt = image.alt ?? `${title} photo ${index + 1}`;
+            }
 
             return (
               <div
                 key={index}
                 className="mb-4 break-inside-avoid overflow-hidden rounded-2xl"
               >
-                <Media
-                  src={item.src}
-                  alt={item.alt}
-                  ratio={index % 3 === 0 ? '4/5' : '4/3'}
-                />
+                <Media src={src} alt={alt} ratio={index % 3 === 0 ? '4/5' : '4/3'} />
               </div>
-            )
+            );
           })}
         </div>
       </Container>

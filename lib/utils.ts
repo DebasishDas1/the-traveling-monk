@@ -30,6 +30,7 @@ export const FALLBACK_IMAGE = '/dark-logo.png'
 export type ImageInput =
   | string
   | MediaUrl
+  | { src: string; alt?: string }
   | null
   | undefined
 
@@ -116,14 +117,22 @@ export function getImage(
     }
   }
 
-  if (!image.url) {
-    return null
+  // Handle MediaUrl (url) or object with src
+  if ('url' in image && image.url) {
+    return {
+      src: getImageSrc(image.url, width),
+      alt: image.alt?.trim() || fallbackAlt,
+    }
   }
 
-  return {
-    src: getImageSrc(image.url, width),
-    alt: image.alt?.trim() || fallbackAlt,
+  if ('src' in image && image.src) {
+    return {
+      src: getImageSrc(image.src, width),
+      alt: image.alt?.trim() || fallbackAlt,
+    }
   }
+
+  return null
 }
 
 /**
