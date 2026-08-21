@@ -64,11 +64,16 @@ export function HomepageHero() {
     <section className="pt-24">
       {/* Section header */}
       <Container className="my-6 md:my-10 flex flex-col items-center gap-6">
-        <Heading title="Walk until you find yourself." align="center" />
+        <Heading title="Go somewhere. Come back renewed." align="center" />
+        <div className="flex gap-4">
+          <Button asChild>
+            <Link href="/experiences">Begin Your Reset</Link>
+          </Button>
 
-        <Button asChild variant="outline">
-          <Link href="/experiences">View All</Link>
-        </Button>
+          <Button asChild variant="outline">
+            <Link href="/contact">Explore Experiences</Link>
+          </Button>
+        </div>
       </Container>
 
       {/* Hero carousel */}

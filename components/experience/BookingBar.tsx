@@ -7,7 +7,7 @@ import type { AvailableDateSlot } from '@/types/experience'
 
 import { BookingCalendar } from '@/components/common'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import {
   Popover,
   PopoverContent,
@@ -17,7 +17,6 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
@@ -174,79 +173,56 @@ export function BookingBar({
       {/* Mobile booking sheet */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <SheetContent
+          className="bg-background/80 shadow-sm backdrop-blur-xl rounded-t-4xl max-h-[92svh] border-none"
           side="bottom"
-          className="
-            flex
-            max-h-[92svh]
-            flex-col
-            gap-0
-            overflow-hidden
-            rounded-t-4xl
-            bg-white
-            p-0
-            backdrop-blur-2xl
-            sm:max-h-[88svh]
-          "
         >
-          <SheetHeader className="shrink-0 px-5 pt-5 text-left sm:px-7">
-            <SheetTitle className="text-xl tracking-tight sm:text-2xl">
+          <div className="shrink-0 px-5 pt-5 text-left sm:px-7">
+            <SheetTitle className="text-xl tracking-tight">
               Book {title}
             </SheetTitle>
 
             <SheetDescription>
               Choose your departure date and number of guests.
             </SheetDescription>
-          </SheetHeader>
+          </div>
 
           {/* Scrollable content */}
-          <div className="min-h-0 flex-1 overflow-y-auto">
-            <div className="space-y-5 px-5 py-5 sm:px-7 sm:py-7">
-              {/* Date */}
-              <Card className="overflow-hidden border">
-                <CardHeader className="px-4 pb-2 pt-4">
-                  <CardTitle className="flex items-center gap-2 text-sm">
-                    <CalendarDays className="size-4 text-muted-foreground" />
-                    Departure
-                  </CardTitle>
-                </CardHeader>
+          <div className="space-y-5 px-5 py-5 sm:px-7 sm:py-7">
+            <div className="overflow-hidden bg-white/60 rounded-2xl">
+              <BookingCalendar
+                dates={dates}
+                value={selectedDateValue}
+                onChange={handleDateChange}
+              />
+            </div>
 
-                <CardContent className="p-0">
-                  <BookingCalendar
-                    dates={dates}
-                    value={selectedDateValue}
-                    onChange={handleDateChange}
-                  />
-                </CardContent>
-              </Card>
-
-              {/* Guests */}
-              <Card className="border shadow-none">
-                <CardContent className="flex items-center justify-between gap-4 p-4 sm:p-5">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-background">
-                      <Users
-                        className="size-4 text-muted-foreground"
-                        aria-hidden="true"
-                      />
-                    </div>
-
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium">Guests</p>
-
-                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                        Up to {maxGuests} guests
-                      </p>
-                    </div>
+            {/* Guests */}
+            <div className="overflow-hidden bg-white/60 rounded-2xl">
+              <div className="flex items-center justify-between gap-4 p-4 sm:p-5">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-background">
+                    <Users
+                      className="size-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
                   </div>
 
-                  <GuestPicker
-                    value={guests}
-                    max={maxGuests}
-                    onDecrease={decreaseGuests}
-                    onIncrease={increaseGuests}
-                  />
-                </CardContent>
-              </Card>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">Guests</p>
+
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                      Up to {maxGuests} guests
+                    </p>
+                  </div>
+                </div>
+
+                <GuestPicker
+                  value={guests}
+                  max={maxGuests}
+                  onDecrease={decreaseGuests}
+                  onIncrease={increaseGuests}
+                />
+              </div>
             </div>
           </div>
 
@@ -278,10 +254,6 @@ export function BookingBar({
                 </Button>
               </div>
             </div>
-
-            <p className="mt-2 text-center text-[11px] text-muted-foreground">
-              You&apos;ll confirm your booking before payment.
-            </p>
           </div>
         </SheetContent>
       </Sheet>

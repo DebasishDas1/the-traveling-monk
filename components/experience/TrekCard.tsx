@@ -157,7 +157,7 @@ export function TrekCard({ experience }: TrekCardProps) {
             <span className="text-xl font-semibold tracking-tight sm:text-2xl">
               {formatPrice(experience.priceFrom)}
               <span className="ml-3 text-2xl font-normal text-muted-foreground line-through">
-                {formatPrice(experience.priceFrom * 0.75)}
+                {formatPrice(experience.priceFrom * 1.25)}
               </span>
             </span>
 

@@ -191,6 +191,8 @@ export interface Trek extends BaseExperience {
   season?: Season[]
 
   geoLocation?: string
+
+  reviews?: Review[]
 }
 
 // ─────────────────────────────────────────────
@@ -282,3 +284,13 @@ export const isHomestay = (experience: Experience): experience is Homestay =>
 export const isInternational = (
   experience: Experience
 ): experience is International => experience.type === OfferingType.INTERNATIONAL
+
+export interface Review {
+  id: string
+  trekId: number
+  name: string
+  email?: string
+  rating: 1 | 2 | 3 | 4 | 5
+  text: string
+  timestamp: number
+}

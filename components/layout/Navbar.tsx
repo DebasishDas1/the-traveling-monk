@@ -53,7 +53,7 @@ export function Navbar() {
           : 'bg-transparent py-4'
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
+      <div className="mx-auto flex max-w-[93%] md:max-w-7xl items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
@@ -61,10 +61,10 @@ export function Navbar() {
           className="shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           <Image
-            src="/dark-logo.png"
+            src="/apple-touch-icon.png"
             alt="The Traveling Monk"
-            width={80}
-            height={80}
+            width={40}
+            height={40}
             priority
           />
         </Link>
@@ -110,20 +110,19 @@ export function Navbar() {
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger
               render={
-                <Button
-                  variant="ghost"
-                  size="icon"
+                <button
+                  type="button"
                   aria-label="Open navigation menu"
-                  className="size-10 rounded-full"
-                />
+                  className="inline-flex size-10 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                >
+                  <Menu aria-hidden="true" className="size-6" />
+                </button>
               }
-            >
-              <Menu aria-hidden="true" className="size-5" />
-            </SheetTrigger>
+            />
 
             <SheetContent
               side="right"
-              className="w-full border-none bg-background/40 p-6 backdrop-blur-xl sm:max-w-md"
+              className="w-full border-none bg-background/60 p-6 backdrop-blur-xl sm:max-w-md"
             >
               <div className="flex h-full flex-col justify-between pb-8 pt-20">
                 {/* Mobile Links */}

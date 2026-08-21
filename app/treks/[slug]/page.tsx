@@ -42,6 +42,9 @@ const BookingBar = dynamic(() =>
   import('@/components/experience/BookingBar').then((m) => m.BookingBar)
 )
 
+const ReviewsSection = dynamic(() =>
+  import('@/components/experience/ReviewsSection').then((m) => m.ReviewsSection)
+)
 /* -------------------------------------------------------------------------- */
 /* Data                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -388,6 +391,23 @@ export default async function TrekPage({ params }: TrekPageProps) {
           </Section>
         )}
       </main>
+
+      {/* Reviews */}
+      <Section>
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
+                Social proof
+              </p>
+              <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
+                What travelers say.
+              </h2>
+            </div>
+            <ReviewsSection trekId={trek.id} />
+          </div>
+        </Container>
+      </Section>
 
       {/* Booking */}
       <BookingBar
