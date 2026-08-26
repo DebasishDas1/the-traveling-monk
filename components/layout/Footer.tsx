@@ -98,7 +98,7 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer>
+    <footer className="bg-primary/5">
       <div className="container-app">
         <div className="grid gap-24 py-24 lg:grid-cols-[2fr_1fr_1fr]">
           {/* Brand */}

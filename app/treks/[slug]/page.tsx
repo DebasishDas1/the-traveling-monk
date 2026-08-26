@@ -7,13 +7,12 @@ import { trekData } from '@/lib/data/trek-data'
 import { OfferingType, type Trek } from '@/types/experience'
 import { getImage } from '@/lib/utils'
 
-import { Container, Fact, Section } from '@/components/common'
+import { Container, CtaSection, Fact, Section } from '@/components/common'
 import { GalleryHero } from '@/components/experience/GalleryHero'
 import { ItineraryCard } from '@/components/experience/ItineraryCard'
 import { TrekInclusions } from '@/components/experience/TrekInclusions'
 import { RelatedTreks } from '@/components/experience/RelatedTreks'
 import { Card, CardDescription, CardHeader } from '@/components/ui/card'
-
 /*
  * Non-critical components.
  *
@@ -22,10 +21,6 @@ import { Card, CardDescription, CardHeader } from '@/components/ui/card'
  */
 const PageGallery = dynamic(() =>
   import('@/components/experience/PageGallery').then((m) => m.PageGallery)
-)
-
-const Testimonials = dynamic(() =>
-  import('@/components/experience/Testimonials').then((m) => m.Testimonials)
 )
 
 const LocationMap = dynamic(
@@ -360,15 +355,6 @@ export default async function TrekPage({ params }: TrekPageProps) {
           </Container>
         </Section>
 
-        {/* Testimonials */}
-        {trek.testimonials?.length ? (
-          <Section>
-            <Container>
-              <Testimonials testimonials={trek.testimonials} />
-            </Container>
-          </Section>
-        ) : null}
-
         {/* Location */}
         {trek.geoLocation && (
           <Section>
@@ -395,18 +381,24 @@ export default async function TrekPage({ params }: TrekPageProps) {
       {/* Reviews */}
       <Section>
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-            <div className="lg:sticky lg:top-32 lg:self-start">
-              <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
-                Social proof
-              </p>
-              <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
-                What travelers say.
-              </h2>
-            </div>
-            <ReviewsSection trekId={trek.id} />
-          </div>
+          <ReviewsSection
+            experienceId={trek.id}
+            eyebrow="Social proof"
+            title="What travelers say."
+            description="Step away from everyday distractions and into journeys that help you discover yourself."
+          />
         </Container>
+      </Section>
+
+      {/* Completion CTA */}
+      <Section>
+        <CtaSection
+          eyebrow="Share your achievement"
+          title="Completed this trek?"
+          description="Upload your photo, generate a badge, and share with your community."
+          buttonText="Share your completion"
+          link={`/completion/${trek.slug}`}
+        />
       </Section>
 
       {/* Booking */}

@@ -1,39 +1,86 @@
 'use client'
 
 import { useState } from 'react'
+import { Plus } from 'lucide-react'
+
+import { Heading } from '../common'
 import { ReviewForm } from './ReviewForm'
 import { ReviewsList } from './ReviewsList'
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+import { Button } from '../ui/button'
+
 interface ReviewsSectionProps {
-  trekId: number
+  experienceId: number
+  eyebrow: string
+  title: string
+  description: string
 }
 
-export function ReviewsSection({ trekId }: ReviewsSectionProps) {
-  const [refreshTrigger, setRefreshTrigger] = useState(0)
-
-  const handleSuccess = () => {
-    setRefreshTrigger((current) => current + 1)
-  }
+export function ReviewsSection({
+  experienceId,
+  eyebrow,
+  title,
+  description,
+}: ReviewsSectionProps) {
+  const [open, setOpen] = useState(false)
 
   return (
-    <section id="reviews" className="scroll-mt-24">
-      <div className="mx-auto">
-        {/* Reviews */}
-        <div>
-          <div className="mb-8 sm:mb-10">
-            <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Reviews
-            </h2>
-
-            <p className="mt-3 text-small leading-6 text-muted-foreground sm:text-base">
-              See what other trekkers thought about their experience.
-            </p>
-          </div>
-
-          <ReviewsList trekId={trekId} refreshTrigger={refreshTrigger} />
+    <section
+      id="reviews"
+      aria-labelledby="reviews-heading"
+      className="scroll-mt-24"
+    >
+      <div className="flex flex-col gap-6 py-4 md:flex-row md:items-center md:justify-between">
+        <div id="reviews-heading">
+          <Heading
+            eyebrow={eyebrow}
+            title={title}
+            description={description}
+            size="h2"
+          />
         </div>
-        <ReviewForm trekId={trekId} onSuccess={handleSuccess} />
+
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger
+            render={
+              <Button type="button" className="w-full md:w-auto">
+                <Plus className="size-4" aria-hidden="true" />
+                Add Review
+              </Button>
+            }
+          />
+
+          <DialogContent>
+            <div className="p-6 sm:p-7">
+              <DialogHeader className="mb-6 pr-8">
+                <DialogTitle className="text-xl font-semibold tracking-tight">
+                  Add Review
+                </DialogTitle>
+
+                <DialogDescription className="mt-1">
+                  Share your experience with other travelers.
+                </DialogDescription>
+              </DialogHeader>
+
+              <ReviewForm
+                experienceId={experienceId}
+                onSuccess={() => setOpen(false)}
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
+
+      <ReviewsList experienceId={experienceId} />
     </section>
   )
 }

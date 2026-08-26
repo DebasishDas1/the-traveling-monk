@@ -23,7 +23,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
     <main>
       <Section className="min-h-[75vh] flex items-center">
         <Container>
-          <div className="mx-auto max-w-xl text-center">
+          <div className="mx-auto text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-muted">
               <Compass className="size-6 text-muted-foreground" />
             </div>

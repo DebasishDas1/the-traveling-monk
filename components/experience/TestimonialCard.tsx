@@ -1,0 +1,71 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import { Star } from 'lucide-react'
+import { formatDistanceToNow } from 'date-fns'
+
+import type { Testimonial } from '@/types/experience'
+
+export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  const { timestamp, name, city, quote, image, rating } = testimonial
+
+  const timeAgo = timestamp
+    ? formatDistanceToNow(timestamp, { addSuffix: true })
+    : null
+
+  const starCount = Math.max(0, Math.min(5, rating))
+
+  return (
+    <Card className="bg-white">
+      <CardHeader className="flex gap-3">
+        <Avatar className="size-10 shrink-0">
+          {image && <AvatarImage src={image} alt={name} />}
+          <AvatarFallback aria-hidden>
+            {name.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+
+        <div className="min-w-0">
+          <p className="truncate font-bold">{name}</p>
+          <p className="text-xs text-muted-foreground">Traveler</p>
+        </div>
+      </CardHeader>
+
+      <CardContent className="flex flex-wrap items-center gap-0 border-t-0">
+        <div
+          className="flex"
+          aria-label={`${starCount} out of 5 stars`}
+          role="img"
+        >
+          {Array.from({ length: rating }, (_, index) => (
+            <Star
+              key={index}
+              className="size-3.5 fill-current text-primary"
+              aria-hidden="true"
+            />
+          ))}
+        </div>
+
+        <p className="ml-2 text-xs text-muted-foreground">
+          {city}
+          {timeAgo && ` · ${timeAgo}`}
+        </p>
+      </CardContent>
+      <CardFooter className="relative border-none pt-6 md:text-2xl md:leading-9">
+        <span
+          className="absolute -top-1 left-4 font-serif text-5xl leading-none text-primary/20"
+          aria-hidden="true"
+        >
+          “
+        </span>
+
+        <blockquote className="relative pl-6 font-medium">{quote}</blockquote>
+        <span
+          className="absolute -bottom-6 right-4 font-serif text-6xl leading-none text-primary/20"
+          aria-hidden="true"
+        >
+          ”
+        </span>
+      </CardFooter>
+    </Card>
+  )
+}
