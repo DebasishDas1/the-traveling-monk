@@ -72,22 +72,34 @@ export function ReviewsList({ experienceId }: ReviewsListProps) {
   const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
-    const unsubscribe = subscribeToReviews(
-      experienceId,
-      (nextReviews) => {
-        setReviews(nextReviews)
-        setIsLoading(false)
-        setHasError(false)
-      },
-      (error) => {
-        console.error('Failed to load reviews:', error)
+    // Only run on client side
+    if (typeof window === 'undefined') {
+      return
+    }
 
+    try {
+      const unsubscribe = subscribeToReviews(
+        experienceId,
+        (nextReviews) => {
+          setReviews(nextReviews)
+          setIsLoading(false)
+          setHasError(false)
+        },
+        (error) => {
+          console.error('Failed to load reviews:', error)
+          setIsLoading(false)
+          setHasError(true)
+        }
+      )
+
+      return unsubscribe
+    } catch (error) {
+      console.error('Failed to subscribe to reviews:', error)
+      setTimeout(() => {
         setIsLoading(false)
         setHasError(true)
-      }
-    )
-
-    return unsubscribe
+      }, 0)
+    }
   }, [experienceId])
 
   if (isLoading) {

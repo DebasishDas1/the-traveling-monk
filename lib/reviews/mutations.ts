@@ -7,8 +7,11 @@ import type { Review } from '@/types/review'
 type CreateReviewInput = Omit<Review, 'id' | 'timestamp'>
 
 export async function submitReview(review: CreateReviewInput) {
-  const reviewsRef = ref(db, 'reviews')
+  if (!db) {
+    throw new Error('Firebase database not initialized')
+  }
 
+  const reviewsRef = ref(db, 'reviews')
   const reviewRef = push(reviewsRef)
 
   await set(reviewRef, {

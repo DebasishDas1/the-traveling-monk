@@ -1,4 +1,11 @@
-import { onValue, ref, query, orderByChild, equalTo, type DataSnapshot } from 'firebase/database'
+import {
+  onValue,
+  ref,
+  query,
+  orderByChild,
+  equalTo,
+  type DataSnapshot,
+} from 'firebase/database'
 
 import { db } from '@/lib/firebase/client'
 
@@ -28,8 +35,17 @@ export function subscribeToReviews(
   onData: (reviews: Review[]) => void,
   onError: (error: Error) => void
 ) {
+  if (!db) {
+    onError(new Error('Firebase database not initialized'))
+    return () => {} // Return dummy unsubscribe
+  }
+
   const reviewsRef = ref(db, 'reviews')
-  const q = query(reviewsRef, orderByChild('experienceId'), equalTo(experienceId))
+  const q = query(
+    reviewsRef,
+    orderByChild('experienceId'),
+    equalTo(experienceId)
+  )
 
   return onValue(
     q,

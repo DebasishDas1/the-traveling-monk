@@ -1,7 +1,6 @@
 'use client'
 
-import { memo, useCallback, useMemo } from 'react'
-import { Download, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import Link from 'next/link'
 
 import type { Trek } from '@/types/experience'
@@ -22,12 +21,13 @@ import {
 } from '@/components/ui/dialog'
 
 import { Media } from '../common'
+import { CompletionCardDownload } from './CompletionCardDownload'
 
 interface SocialShareProps {
   open: boolean
   trek: Trek
   photoUrl: string
-  badgeUrl: string
+  badgeUrl?: string
   completionDate: string
   quote: string
   onClose: () => void
@@ -39,84 +39,62 @@ function formatDate(date: string) {
   }).format(new Date(`${date}T00:00:00`))
 }
 
-const SocialShareContent = memo(function SocialShareContent({
+function buildShareLinks(text: string, url: string) {
+  const encodedText = encodeURIComponent(text)
+  const encodedUrl = encodeURIComponent(url)
+
+  return [
+    {
+      name: 'X',
+      href: `${xLink}?text=${encodedText}`,
+      label: 'Share on X',
+    },
+    {
+      name: 'Facebook',
+      href: `${facebookLink}?u=${encodedUrl}`,
+      label: 'Share on Facebook',
+    },
+    {
+      name: 'LinkedIn',
+      href: `${linkedinLink}?url=${encodedUrl}&summary=${encodedText}`,
+      label: 'Share on LinkedIn',
+    },
+    {
+      name: 'WhatsApp',
+      href: `${whatsappLink}?text=${encodedText}`,
+      label: 'Share on WhatsApp',
+    },
+    {
+      name: 'Telegram',
+      href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`,
+      label: 'Share on Telegram',
+    },
+  ]
+}
+
+function SocialShareContent({
   trek,
   photoUrl,
-  badgeUrl,
   completionDate,
   quote,
   onClose,
 }: Omit<SocialShareProps, 'open'>) {
-  const shareText = useMemo(() => {
-    return [
-      `I just completed the ${trek.title} trek with @TheTravelingMonk!`,
-      quote ? `"${quote}"` : '',
-      '🏔️',
-    ]
-      .filter(Boolean)
-      .join(' ')
-  }, [trek.title, quote])
+  const shareText = [
+    `I just completed the ${trek.title} trek with @TheTravelingMonk!`,
+    quote ? `"${quote}"` : null,
+    '🏔️',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
-  const shareUrl = useMemo(() => {
-    if (typeof window === 'undefined') return ''
-    return window.location.href
-  }, [])
+  const shareUrl = `${window.location.origin}/experiences/${trek.slug}`
 
-  const socialPlatforms = useMemo(() => {
-    const encodedText = encodeURIComponent(shareText)
-    const encodedUrl = encodeURIComponent(shareUrl)
-
-    return [
-      {
-        name: 'X',
-        href: `${xLink}?text=${encodedText}`,
-        label: 'Share on X',
-      },
-      {
-        name: 'Facebook',
-        href: `${facebookLink}?u=${encodedUrl}`,
-        label: 'Share on Facebook',
-      },
-      {
-        name: 'LinkedIn',
-        href: `${linkedinLink}?url=${encodedUrl}&summary=${encodedText}`,
-        label: 'Share on LinkedIn',
-      },
-      {
-        name: 'WhatsApp',
-        href: `${whatsappLink}?text=${encodedText}`,
-        label: 'Share on WhatsApp',
-      },
-      {
-        name: 'Telegram',
-        href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`,
-        label: 'Share on Telegram',
-      },
-    ]
-  }, [shareText, shareUrl])
-
-  const downloadBadgeImage = useCallback(() => {
-    const link = document.createElement('a')
-
-    link.href = badgeUrl
-    link.download = `${trek.slug}-completion-badge.png`
-    link.target = '_blank'
-    link.rel = 'noopener noreferrer'
-
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }, [badgeUrl, trek.slug])
-
-  const handleClose = useCallback(() => {
-    onClose()
-  }, [onClose])
+  const socialPlatforms = buildShareLinks(shareText, shareUrl)
 
   return (
     <DialogContent
       showCloseButton={false}
       className="
-        w-[calc(100%-2rem)]
         gap-0
         overflow-hidden
         rounded-2xl
@@ -126,10 +104,9 @@ const SocialShareContent = memo(function SocialShareContent({
         shadow-xl
       "
     >
-      {/* Header */}
-      <DialogHeader className="flex flex-row items-center justify-between border-b border-border px-5 py-4 sm:px-6">
-        <div>
-          <DialogTitle className="text-base font-semibold">
+      <DialogHeader className="flex flex-row items-center justify-between px-5 py-4 sm:px-6">
+        <div className="min-w-0">
+          <DialogTitle className="text-2xl font-semibold">
             Trek conquered
           </DialogTitle>
 
@@ -142,72 +119,149 @@ const SocialShareContent = memo(function SocialShareContent({
           type="button"
           variant="ghost"
           size="icon"
-          onClick={handleClose}
-          className="size-8 rounded-full text-muted-foreground hover:text-foreground"
-          aria-label="Close"
+          onClick={onClose}
+          className="
+            size-8
+            shrink-0
+            rounded-full
+            text-muted-foreground
+            hover:bg-muted
+            hover:text-foreground
+          "
+          aria-label="Close dialog"
         >
           <X className="size-4" />
         </Button>
       </DialogHeader>
 
-      <div className="space-y-6 p-5 sm:p-6">
-        {/* Photo */}
-        <Media
-          src={photoUrl}
-          alt={`Photo from ${trek.title}`}
-          priority
-          sizes="(max-width: 640px) calc(100vw - 40px), 432px"
-        />
+      <div className="space-y-5 px-3 pb-5 sm:px-4 sm:pb-6">
+        {/* Completion preview */}
+        <div className="relative overflow-hidden rounded-xl">
+          <div className="aspect-video">
+            <Media
+              src={photoUrl}
+              alt={`Photo from ${trek.title}`}
+              priority
+              sizes="
+                (max-width: 640px)
+                calc(100vw - 40px),
+                480px
+              "
+              className="h-full w-full object-cover"
+            />
+          </div>
 
-        {/* Trek info */}
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold tracking-tight">{trek.title}</h2>
+          {/* Bottom fade */}
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none
+              absolute inset-x-0 bottom-0
+              h-56
+              bg-linear-to-t
+              from-black/45
+              via-black/15
+              via-45%
+              to-transparent
+            "
+          />
 
-          <p className="text-xs text-muted-foreground">
-            Completed {formatDate(completionDate)}
-          </p>
+          {/* Local readability glow */}
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none
+              absolute
+              -bottom-16
+              -left-16
+              size-80
+              rounded-full
+              bg-black/20
+              blur-3xl
+            "
+          />
 
-          {quote && (
-            <p className="pt-3 text-sm leading-relaxed text-muted-foreground">
-              “{quote}”
-            </p>
-          )}
+          {/* Text */}
+          <div className="absolute inset-x-0 bottom-0 px-4 pb-5 sm:px-5 sm:pb-6">
+            <div className="max-w-[92%]">
+              <h2
+                className="
+                  text-4xl
+                  font-semibold
+                  leading-[0.95]
+                  tracking-[-0.035em]
+                  text-white/60
+                  drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]
+                "
+              >
+                {trek.title}
+              </h2>
+
+              <p
+                className="
+                  mt-2
+                  text-sm
+                  font-medium
+                  tracking-wide
+                  text-white/85
+                  drop-shadow-[0_1px_6px_rgba(0,0,0,0.35)]
+                  sm:text-base
+                "
+              >
+                The Traveling Monk | Completed {formatDate(completionDate)}
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Share */}
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-          {socialPlatforms.map((platform) => (
-            <Button key={platform.name} asChild variant="outline">
+        {/* Share actions */}
+        <div
+          aria-label="Share your trek"
+          className="
+            grid
+            grid-cols-2
+            gap-2
+            sm:grid-cols-3
+          "
+        >
+          {socialPlatforms.map(({ name, href, label }) => (
+            <Button
+              key={name}
+              asChild
+              variant="outline"
+              className="h-10 rounded-lg text-sm"
+            >
               <Link
-                href={platform.href}
+                href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={platform.label}
+                aria-label={label}
               >
-                {platform.name}
+                {name}
               </Link>
             </Button>
           ))}
-          <Button
-            onClick={downloadBadgeImage}
-            className="h-10 w-full rounded-lg text-sm"
-          >
-            <Download className="mr-2 size-4" />
-            Download
-          </Button>
+
+          <CompletionCardDownload
+            trek={trek}
+            photoUrl={photoUrl}
+            completionDate={completionDate}
+            className="h-10 rounded-lg text-sm"
+          />
         </div>
       </div>
     </DialogContent>
   )
-})
+}
 
 export function SocialShare({ open, onClose, ...props }: SocialShareProps) {
   return (
     <Dialog
       open={open}
-      onOpenChange={(value) => {
-        if (!value) onClose()
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          onClose()
+        }
       }}
     >
       {open && <SocialShareContent {...props} onClose={onClose} />}
