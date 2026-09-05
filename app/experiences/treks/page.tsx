@@ -31,25 +31,23 @@ export default function TreksPage() {
   return (
     <main>
       {/* LCP / Hero */}
-      <Section>
-        <Container>
-          <MediaHeading
-            eyebrow="Himalayan Treks"
-            title="Find your way into the mountains."
-            description="Journeys that take you away from the noise and closer to what matters."
-            size="display"
-            image={
-              <Media
-                src="/illustrations/mountain-journey.png"
-                alt="Traveller beginning a journey through the Himalayan mountains"
-                ratio="1/1"
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            }
-          />
-        </Container>
-      </Section>
+      <Container>
+        <MediaHeading
+          eyebrow="Himalayan Treks"
+          title="Find your way into the mountains."
+          description="Journeys that take you away from the noise and closer to what matters."
+          size="display"
+          image={
+            <Media
+              src="/illustrations/mountain-journey.png"
+              alt="Traveller beginning a journey through the Himalayan mountains"
+              ratio="1/1"
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          }
+        />
+      </Container>
 
       {/* Trek collection */}
       <Container>

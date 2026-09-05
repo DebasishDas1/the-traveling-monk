@@ -18,7 +18,7 @@ export function InternationalTripCard({
   return (
     <article>
       <Link
-        href={`/international/${experience.slug}`}
+        href={`/experiences/international/${experience.slug}`}
         aria-label={`View ${experience.name}`}
         className="
           group block

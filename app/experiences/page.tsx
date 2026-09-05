@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 
 import {
   Container,
+  CtaSection,
   Heading,
   Media,
   MediaHeading,
@@ -14,7 +15,6 @@ import { TrekCard } from '@/components/experience/TrekCard'
 import { HomeStayCard } from '@/components/experience/HomeStayCard'
 import { InternationalTripCard } from '@/components/experience/InternationalTripCard'
 import { CategoryCard } from '@/components/experience/CategoryCard'
-import { Button } from '@/components/ui/button'
 
 import { trekData } from '@/lib/data/trek-data'
 import { homestaysData } from '@/lib/data/homestays-data'
@@ -45,19 +45,19 @@ const categories = [
   {
     label: 'Treks',
     description: 'Walk a little farther from the noise.',
-    href: '/treks',
+    href: '/experiences/treks',
     image: '/illustrations/trek.png',
   },
   {
     label: 'Homestays',
     description: 'Stay somewhere that feels like nowhere else.',
-    href: '/homestays',
+    href: '/experiences/homestays',
     image: '/illustrations/home-stay.png',
   },
   {
     label: 'International Trips',
     description: 'Go somewhere unfamiliar. Come back different.',
-    href: '/international',
+    href: '/experiences/international',
     image: '/illustrations/Around the world-amico.png',
   },
 ] as const
@@ -82,24 +82,24 @@ export default function ExperiencesPage() {
           HERO
       ====================================================== */}
 
-      <Section>
-        <Container>
-          <MediaHeading
-            eyebrow="Experiences"
-            title="Choose your way out of the ordinary."
-            description="Treks, stays, and journeys designed to slow you down, bring you closer to people, and leave you feeling renewed."
-            size="display"
-            image={
-              <Media
-                src="/illustrations/choose.png"
-                alt="Traveller sitting beside the sea"
-                ratio="1/1"
-                priority
-              />
-            }
-          />
-        </Container>
-      </Section>
+      {/* <Section> */}
+      <Container>
+        <MediaHeading
+          eyebrow="Experiences"
+          title="Choose your way out of the ordinary."
+          description="Treks, stays, and journeys designed to slow you down, bring you closer to people, and leave you feeling renewed."
+          size="display"
+          image={
+            <Media
+              src="/illustrations/choose.png"
+              alt="Traveller sitting beside the sea"
+              ratio="1/1"
+              priority
+            />
+          }
+        />
+      </Container>
+      {/* </Section> */}
 
       {/* =====================================================
           CATEGORIES
@@ -262,32 +262,13 @@ export default function ExperiencesPage() {
         </Container>
       </Section>
 
-      {/* =====================================================
-          CTA
-      ====================================================== */}
-
-      <Section>
-        <Container>
-          <div className="text-center">
-            <Heading
-              align="center"
-              eyebrow="Ready?"
-              title="Begin your reset."
-              description="The mountains, quiet homes, and unfamiliar places are closer than you think."
-              size="h2"
-            />
-
-            <div className="flex justify-center pt-6">
-              <Button asChild>
-                <Link href="/experiences">
-                  Explore experiences
-                  <ArrowRight aria-hidden="true" className="size-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </Section>
+      <CtaSection
+        eyebrow="Ready?"
+        title="Begin your reset."
+        description="The mountains, quiet homes, and unfamiliar places are closer than you think."
+        buttonText="Explore experiences"
+        link="/experiences"
+      />
     </main>
   )
 }

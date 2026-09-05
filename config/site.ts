@@ -9,18 +9,28 @@ export const siteConfig = {
     {
       label: 'Experiences',
       href: '/experiences',
+      subLinks: [
+        {
+          label: 'All Experiences',
+          href: '/experiences',
+        },
+        {
+          label: 'Treks',
+          href: '/experiences/treks',
+        },
+        {
+          label: 'Homestays',
+          href: '/experiences/homestays',
+        },
+        {
+          label: 'International',
+          href: '/experiences/international',
+        },
+      ],
     },
     {
-      label: 'Treks',
-      href: '/treks',
-    },
-    {
-      label: 'Homestays',
-      href: '/homestays',
-    },
-    {
-      label: 'International',
-      href: '/international',
+      label: 'Tools',
+      href: '/tools',
     },
     {
       label: 'Stories',
@@ -42,35 +52,35 @@ export const siteConfig = {
   },
 } as const
 
-// whatsapp
-export const whatsappNumber = '7003564123'
-export const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hi, I have a question about your treks`)}`
+// -----------------------------------------------------------------------------
+// WhatsApp
+// -----------------------------------------------------------------------------
 
-// facebook
+export const whatsappNumber = '7003564123'
+
+export const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+  'Hi, I have a question about your treks'
+)}`
+
+// -----------------------------------------------------------------------------
+// Social
+// -----------------------------------------------------------------------------
+
 export const facebookLink =
   'https://www.facebook.com/profile.php?id=61589167761191'
 
-// instagram
-export const instagramLink =
-  'https://www.instagram.com/thetravelingmonk.in?igsh=MXZ1OXMweDZhYXloYw=='
+export const instagramLink = 'https://www.instagram.com/thetravelingmonk.in'
 
-// youtube
 export const youtubeLink = 'https://www.youtube.com/@travelwiththemonk'
 
-// twitter
 export const twitterLink = 'https://twitter.com/thetravelingmonk'
 
-// linkedin
 export const linkedinLink = 'https://www.linkedin.com/company/thetravelingmonk'
 
-// telegram
 export const telegramLink = 'https://t.me/thetravelingmonk'
 
-// threads
 export const threadsLink = 'https://www.threads.net/@thetravelingmonk'
 
-// tiktok
 export const tiktokLink = 'https://www.tiktok.com/@thetravelingmonk'
 
-// x
 export const xLink = 'https://x.com/thetravelingmonk'

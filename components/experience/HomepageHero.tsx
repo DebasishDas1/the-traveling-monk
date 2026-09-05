@@ -61,7 +61,7 @@ export function HomepageHero() {
   }, [api])
 
   return (
-    <section className="pt-24">
+    <section className="pt-10">
       {/* Section header */}
       <Container className="my-6 md:my-10 flex flex-col items-center gap-6">
         <Heading title="Go somewhere. Come back renewed." align="center" />
@@ -154,24 +154,43 @@ function HeroSlide({ slide, priority = false }: HeroSlideProps) {
         className="object-cover"
       />
 
-      {/* Image overlay */}
-      <div aria-hidden="true" className="absolute inset-0 bg-black/30" />
+      {/* ================================================================
+          LEFT-SIDE TEXT GRADIENT
+          Keeps the image bright while improving text readability.
+      ================================================================= */}
+      <div
+        aria-hidden="true"
+        className="
+          absolute
+          inset-0
+          bg-linear-to-r
+          from-black/70
+          via-black/40
+          to-transparent
+          md:from-black/65
+          md:via-black/30
+          md:to-transparent
+        "
+      />
 
+      {/* Subtle bottom fade for additional readability */}
       <div
         aria-hidden="true"
         className="
           absolute
           inset-x-0
           bottom-0
-          h-2/3
+          h-1/2
           bg-linear-to-t
-          from-black/70
-          via-black/20
+          from-black/35
           to-transparent
+          md:hidden
         "
       />
 
-      {/* Content */}
+      {/* ================================================================
+          CONTENT
+      ================================================================= */}
       <div className="absolute inset-0 flex items-end">
         <div
           className="
@@ -188,11 +207,28 @@ function HeroSlide({ slide, priority = false }: HeroSlideProps) {
         >
           <div className="space-y-5">
             <div className="space-y-2">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+              <p
+                className="
+                  text-xs
+                  font-medium
+                  uppercase
+                  tracking-[0.3em]
+                  text-white/70
+                "
+              >
                 The Traveling Monk
               </p>
 
-              <p className="text-xs uppercase tracking-[0.2em] text-white/75 sm:text-sm">
+              <p
+                className="
+                  text-xs
+                  font-medium
+                  uppercase
+                  tracking-[0.2em]
+                  text-white/85
+                  sm:text-sm
+                "
+              >
                 {slide.category}
               </p>
             </div>
@@ -218,7 +254,7 @@ function HeroSlide({ slide, priority = false }: HeroSlideProps) {
                 max-w-[44ch]
                 text-sm
                 leading-6
-                text-white/75
+                text-white/80
                 sm:text-base
                 md:text-lg
                 md:leading-7
@@ -227,7 +263,16 @@ function HeroSlide({ slide, priority = false }: HeroSlideProps) {
               {slide.description}
             </p>
 
-            <Button asChild size="lg" className="h-11 rounded-full px-6">
+            <Button
+              asChild
+              size="lg"
+              className="
+                h-11
+                rounded-full
+                px-6
+                font-medium
+              "
+            >
               <Link href={slide.href}>{slide.cta}</Link>
             </Button>
           </div>

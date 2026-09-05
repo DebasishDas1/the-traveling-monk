@@ -67,26 +67,24 @@ export default function HomeStaysPage() {
           HERO
       ====================================================== */}
 
-      <Section>
-        <Container>
-          <MediaHeading
-            eyebrow="Himalayan Homestays"
-            title="Stay somewhere that feels lived in."
-            description="Slower journeys that connect you to the landscape, the food, and the people."
-            size="display"
-            imagePosition="left"
-            image={
-              <Media
-                src="/illustrations/Alone-cuate.png"
-                alt="Traveller enjoying a quiet moment during a Himalayan homestay"
-                ratio="1/1"
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            }
-          />
-        </Container>
-      </Section>
+      <Container>
+        <MediaHeading
+          eyebrow="Himalayan Homestays"
+          title="Stay somewhere that feels lived in."
+          description="Slower journeys that connect you to the landscape, the food, and the people."
+          size="display"
+          imagePosition="left"
+          image={
+            <Media
+              src="/illustrations/Alone-cuate.png"
+              alt="Traveller enjoying a quiet moment during a Himalayan homestay"
+              ratio="1/1"
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          }
+        />
+      </Container>
 
       {/* =====================================================
           HOMESTAYS

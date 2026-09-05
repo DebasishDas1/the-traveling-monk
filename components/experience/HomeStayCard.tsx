@@ -48,7 +48,7 @@ export function HomeStayCard({ experience }: HomeStayCardProps) {
   return (
     <article>
       <Link
-        href={`/homestays/${experience.slug}`}
+        href={`/experiences/homestays/${experience.slug}`}
         aria-label={`View ${experience.name}`}
         className="
           group block

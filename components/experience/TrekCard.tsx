@@ -18,7 +18,7 @@ export function TrekCard({ experience }: TrekCardProps) {
   return (
     <article>
       <Link
-        href={`/treks/${experience.slug}`}
+        href={`/experiences/treks/${experience.slug}`}
         aria-label={`View ${experience.title}`}
         className="
           group block

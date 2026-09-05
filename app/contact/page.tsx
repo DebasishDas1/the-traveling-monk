@@ -50,7 +50,7 @@ export default function ContactPage() {
       {/* =====================================================
           HERO
       ====================================================== */}
-      <Section className="pt-8 md:pt-12 lg:pt-16">
+      <Section>
         <Container>
           <MediaHeading
             eyebrow="Get in touch"

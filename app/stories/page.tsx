@@ -34,7 +34,7 @@ export default function StoriesPage() {
   return (
     <main>
       {/* Hero */}
-      <Section className="pt-8 md:pt-12 lg:pt-16">
+      <Section>
         <Container>
           <div className="mx-auto max-w-5xl">
             <Heading

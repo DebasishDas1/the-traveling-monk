@@ -37,48 +37,46 @@ export default function InternationalPage() {
   return (
     <main className="overflow-hidden">
       {/* Hero */}
-      <Section className="pt-8 md:pt-12 lg:pt-16">
-        <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-6">
-              <Heading
-                eyebrow="International Journeys"
-                title="Go somewhere that changes your perspective."
-                description="Curated journeys beyond the familiar. New streets, unfamiliar food, unexpected friendships, and stories you'll carry home."
-                size="display"
-              />
+      <Container>
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-6">
+            <Heading
+              eyebrow="International Journeys"
+              title="Go somewhere that changes your perspective."
+              description="Curated journeys beyond the familiar. New streets, unfamiliar food, unexpected friendships, and stories you'll carry home."
+              size="display"
+            />
 
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Button asChild>
-                  <Link href="/experiences">
-                    Explore journeys
-                    <ArrowRight aria-hidden="true" className="size-4" />
-                  </Link>
-                </Button>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href="/experiences">
+                  Explore journeys
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </Button>
 
-                <Button asChild variant="outline">
-                  <Link href="/destinations">Where are we going?</Link>
-                </Button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-6">
-              <Media
-                src="/illustrations/Globalization-pana.png"
-                alt="Travellers exploring an international destination"
-                ratio="4/5"
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+              <Button asChild variant="outline">
+                <Link href="/destinations">Where are we going?</Link>
+              </Button>
             </div>
           </div>
-        </Container>
-      </Section>
+
+          <div className="lg:col-span-6">
+            <Media
+              src="/illustrations/Globalization-pana.png"
+              alt="Travellers exploring an international destination"
+              ratio="4/5"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+        </div>
+      </Container>
 
       {/* Featured journeys */}
       {trips.length > 0 && (
         <Container>
-          <div className="mb-8 flex items-end justify-between gap-6">
+          <div className="my-8 flex items-end justify-between gap-6">
             <Heading
               eyebrow="Featured journeys"
               title="Go a little farther."

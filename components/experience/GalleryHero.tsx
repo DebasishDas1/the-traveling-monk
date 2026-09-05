@@ -16,12 +16,21 @@ interface GalleryHeroProps {
   }[]
   title: string
   length: number
+  parentHref?: string
+  parentLabel?: string
 }
 
-export const GalleryHero = ({ images, title, length }: GalleryHeroProps) => {
+export const GalleryHero = ({
+  images,
+  title,
+  length,
+  parentHref = '/experiences',
+  parentLabel = 'Experiences',
+}: GalleryHeroProps) => {
   const [heroImage, secondaryImage, tertiaryImage] = images
+
   return (
-    <div className="pt-20 md:pt-28">
+    <div className="pt-8">
       <Container>
         {/* Breadcrumb */}
         <Breadcrumb className="mb-6">
@@ -33,8 +42,8 @@ export const GalleryHero = ({ images, title, length }: GalleryHeroProps) => {
             <BreadcrumbSeparator />
 
             <BreadcrumbItem>
-              <BreadcrumbLink render={<Link href="/treks" />}>
-                Treks
+              <BreadcrumbLink render={<Link href={parentHref} />}>
+                {parentLabel}
               </BreadcrumbLink>
             </BreadcrumbItem>
 
@@ -65,21 +74,21 @@ export const GalleryHero = ({ images, title, length }: GalleryHeroProps) => {
               {length > 0 && (
                 <div
                   className="
-            absolute
-            bottom-6
-            right-6
-            flex
-            items-center
-            gap-2
-            rounded-full
-            bg-black/80
-            px-5
-            py-3
-            text-sm
-            font-medium
-            text-white
-            backdrop-blur-md
-          "
+                    absolute
+                    bottom-6
+                    right-6
+                    flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    bg-black/80
+                    px-5
+                    py-3
+                    text-sm
+                    font-medium
+                    text-white
+                    backdrop-blur-md
+                  "
                 >
                   <svg
                     aria-hidden="true"
