@@ -1,15 +1,3 @@
-/**
- * Experience Types
- *
- * Unified experience model for:
- * - Himalayan Treks
- * - Getaways
- * - International Trips
- *
- * Uses discriminated unions so category-specific
- * fields remain type-safe while sharing one platform model.
- */
-
 import type { ReviewRating } from './review'
 
 // ─────────────────────────────────────────────
@@ -72,6 +60,12 @@ export interface AvailableDateSlot {
   date: string
   spots: number
 }
+export interface BookingPayload {
+  slug: string;
+  date: string;
+  guests: number;
+  total: number;
+}
 
 // ─────────────────────────────────────────────
 // SOCIAL PROOF
@@ -105,8 +99,9 @@ export interface TrekTimelineItem extends BaseTimelineItem {
 }
 
 export interface GetawayTimelineItem extends BaseTimelineItem {
-  from: string
-  to: string
+  from?: string
+  to?: string
+  pointers: string[]
 }
 
 export interface InternationalTimelineItem extends BaseTimelineItem {
@@ -141,23 +136,19 @@ export interface InternationalPricing {
 export interface BaseExperience {
   id: number
   slug: string
-
   gallery: ExperienceMedia[]
-
   highlights: string[]
-
   description: string
-
   testimonials?: Testimonial[]
-
   inclusions?: string[]
-
   exclusions?: string[]
-
   featured?: boolean
-
   active: boolean
 }
+
+// ─────────────────────────────────────────────
+// TREK
+// ─────────────────────────────────────────────
 
 export interface Trek extends BaseExperience {
   type: OfferingType.TREK
@@ -182,43 +173,59 @@ export interface Trek extends BaseExperience {
   geoLocation?: string
 }
 
+// ─────────────────────────────────────────────
+// GETAWAY
+// ─────────────────────────────────────────────
+
 export interface Getaway extends BaseExperience {
   type: OfferingType.GETAWAY
 
   name: string
   tagline: string
+
   location: string
   region?: string
+
   duration: string
-  maxGuests: number
+
   priceFrom: number
   pricing?: GetawayPricing
+
   roomDescription: string
-  foodDescription: string
-  experienceDescription: string
-  meals: string
+
   availableDates: AvailableDateSlot[]
+
   itinerary?: GetawayTimelineItem[]
-  amenities?: string[]
-  thingsToDo?: string[]
 }
+
+// ─────────────────────────────────────────────
+// INTERNATIONAL
+// ─────────────────────────────────────────────
 
 export interface International extends BaseExperience {
   type: OfferingType.INTERNATIONAL
 
   name: string
   tagline: string
+
   country: string
   location: string
+
   duration: string
+
   tier: TierLevel
+
   priceFrom: number
   pricing?: InternationalPricing
+
   maxGroupSize: number
   spotsLeft: number
+
   visaRequired: boolean
   bestSeason: string
+
   availableDates: AvailableDateSlot[]
+
   itinerary?: InternationalTimelineItem[]
 }
 

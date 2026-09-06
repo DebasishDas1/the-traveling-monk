@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { Check, Clock3, MapPin, Sparkles, Users, Utensils } from 'lucide-react'
+import { Check, Clock3, MapPin, Users, Utensils } from 'lucide-react'
 
 import { getawaysData } from '@/lib/data/getaway-data'
 import { isGetaway, type Getaway } from '@/types/experience'
@@ -17,18 +17,10 @@ import {
 
 import { BookingBar } from '@/components/experience/BookingBar'
 import { GalleryHero } from '@/components/experience/GalleryHero'
-import { ItineraryCard } from '@/components/experience/ItineraryCard'
 import { PageGallery } from '@/components/experience/PageGallery'
 import { Testimonials } from '@/components/experience/Testimonials'
 import { TrekInclusions } from '@/components/experience/TrekInclusions'
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { GetawayItineraryCard } from '@/components/experience/GetawayItineraryCard'
 
 interface GetawayPageProps {
   params: Promise<{
@@ -160,18 +152,17 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
     },
     {
       label: 'Guests',
-      value: `Up to ${getaway.maxGuests}`,
+      value: `Up to 30`,
       icon: <Users className="size-4" />,
     },
     {
       label: 'Meals',
-      value: getaway.meals,
+      value: 'Included',
       icon: <Utensils className="size-4" />,
     },
   ]
 
   const hasHighlights = getaway.highlights.length > 0
-  const hasThingsToDo = Boolean(getaway.thingsToDo?.length)
   const hasInclusions =
     Boolean(getaway.inclusions?.length) || Boolean(getaway.exclusions?.length)
   const hasGallery = getaway.gallery.length > 3
@@ -181,7 +172,6 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
   return (
     <main className="pb-28">
       {/* HERO */}
-
       <GalleryHero
         images={gallery}
         title={getaway.name}
@@ -189,7 +179,6 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
       />
 
       {/* QUICK FACTS */}
-
       <Container>
         <div className="grid grid-cols-2 gap-4 py-4 md:grid-cols-4">
           {facts.map((fact) => (
@@ -198,177 +187,28 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
         </div>
       </Container>
 
-      {/* INTRO */}
-
+      {/* Introduction */}
       <Section>
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[1fr_0.65fr] lg:gap-20">
-            <div>
-              <Heading
-                eyebrow="The stay"
-                size="h2"
-                title="Not a hotel. A place to belong for a while."
-              />
+          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
+                The experience
+              </p>
 
-              <Card className="mt-6">
-                <CardHeader>
-                  <CardDescription className="text-lg font-normal leading-relaxed">
-                    {getaway.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
+                Slow mornings.
+                <span className="block text-muted-foreground">
+                  Nowhere to rush.
+                </span>
+              </h2>
             </div>
-
-            <Card className="h-fit rounded-3xl border-0 bg-muted/50 shadow-none">
-              <CardHeader>
-                <Sparkles className="mb-2 size-5" />
-
-                <CardTitle className="text-xl">
-                  What makes this stay special?
-                </CardTitle>
-              </CardHeader>
-
-              <CardContent className="space-y-5">
-                <div>
-                  <p className="mb-1 text-sm font-medium">The room</p>
-
-                  <p className="text-sm leading-6 text-muted-foreground">
-                    {getaway.roomDescription}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="mb-1 text-sm font-medium">The food</p>
-
-                  <p className="text-sm leading-6 text-muted-foreground">
-                    {getaway.foodDescription}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="mb-1 text-sm font-medium">The experience</p>
-
-                  <p className="text-sm leading-6 text-muted-foreground">
-                    {getaway.experienceDescription}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="text-lg">{getaway.description}</div>
           </div>
         </Container>
       </Section>
-
-      {/* HIGHLIGHTS */}
-
-      {hasHighlights && (
-        <Container>
-          <Heading
-            align="center"
-            eyebrow="The experience"
-            size="h2"
-            title="Come for the mountains. Stay for everything else."
-            description="Small moments that make this more than just a place to sleep."
-          />
-
-          <div className="mx-auto mt-14 grid max-w-5xl gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {getaway.highlights.map((highlight) => (
-              <div key={highlight} className="flex gap-4">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                  <Check className="size-4" />
-                </div>
-
-                <p className="pt-1 text-sm leading-6">{highlight}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      )}
-
-      {/* FOOD */}
-
-      <Section className="bg-muted/30">
-        <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <div className="order-2 lg:order-1">
-              <Heading
-                eyebrow="Around the table"
-                size="h2"
-                title="Food that tastes like the place you're in."
-                description={getaway.foodDescription}
-              />
-
-              <div className="mt-8 rounded-2xl border bg-background p-5">
-                <div className="flex gap-4">
-                  <Utensils className="mt-1 size-5 shrink-0" />
-
-                  <div>
-                    <p className="font-medium">Meals included</p>
-
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                      {getaway.meals}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="order-1 overflow-hidden rounded-3xl lg:order-2">
-              {primaryImage && (
-                <Media
-                  src={primaryImage.src}
-                  alt={primaryImage.alt}
-                  ratio="4/3"
-                />
-              )}
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* THINGS TO DO */}
-
-      {hasThingsToDo && (
-        <Container className="pb-24">
-          <Heading
-            align="center"
-            eyebrow="Beyond the stay"
-            size="h2"
-            title="Explore at your own pace."
-            description="A few ideas for making the most of your time here."
-          />
-
-          <div className="mx-auto mt-14 grid gap-4 sm:grid-cols-2">
-            {getaway.thingsToDo?.map((thing) => (
-              <div
-                key={thing}
-                className="flex items-center gap-4 rounded-2xl border bg-card p-5"
-              >
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                  <Sparkles className="size-4" />
-                </div>
-
-                <span className="text-sm font-medium">{thing}</span>
-              </div>
-            ))}
-          </div>
-        </Container>
-      )}
-
-      {/* INCLUSIONS / EXCLUSIONS */}
-
-      {hasInclusions && (
-        <Section>
-          <Container>
-            <TrekInclusions
-              inclusions={getaway.inclusions}
-              exclusions={getaway.exclusions}
-            />
-          </Container>
-        </Section>
-      )}
 
       {/* ITINERARY */}
-
       {itinerary.length > 0 && (
         <Section>
           <Container>
@@ -394,14 +234,13 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
 
               <div className="space-y-8">
                 {itinerary.map((item) => (
-                  <ItineraryCard
-                    key={item.day}
+                  <GetawayItineraryCard
+                    key={`${item.day}-${item.title}`}
                     day={item.day}
                     image={resolveImage(item.imageUrl, item.title)}
                     title={item.title}
                     description={item.description}
-                    from={item.from}
-                    to={item.to}
+                    pointers={item.pointers}
                   />
                 ))}
               </div>
@@ -409,25 +248,98 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
           </Container>
         </Section>
       )}
+      {/* HIGHLIGHTS */}
+      {hasHighlights && (
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <Heading title="A little peek at what awaits" size="h2" />
+              <Media
+                src="/illustrations/todo.png"
+                alt="Traveller beginning a journey through the Himalayan mountains"
+                ratio="1/1"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="mx-auto grid gap-3 grid-cols-2 lg:grid-cols-4">
+              {getaway.highlights.map((highlight) => (
+                <div
+                  key={highlight}
+                  className="flex gap-4 flex-col items-center justify-center p-6 rounded-lg text-center bg-primary text-white"
+                >
+                  <Check className="size-8" />
+                  <p>{highlight}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      )}
 
+      {/* FOOD */}
+      <Section className="bg-muted/30">
+        <Container>
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+            <div className="order-2 lg:order-1">
+              <Heading
+                eyebrow="Around the table"
+                size="h2"
+                title="Food that tastes like the place you're in."
+                description="We believe that good food is a big part of a good trip. That's why we make sure you're well-fed with simple, tasty food made from whatever's fresh and local."
+              />
+
+              <div className="mt-8 rounded-2xl border bg-background p-5">
+                <div className="flex gap-4">
+                  <Utensils className="mt-1 size-5 shrink-0" />
+
+                  <div>
+                    <p className="font-medium">Meals included</p>
+
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                      Included
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="order-1 overflow-hidden rounded-3xl lg:order-2">
+              {primaryImage && (
+                <Media
+                  src={primaryImage.src}
+                  alt={primaryImage.alt}
+                  ratio="4/3"
+                />
+              )}
+            </div>
+          </div>
+        </Container>
+      </Section>
+      {/* INCLUSIONS / EXCLUSIONS */}
+      {hasInclusions && (
+        <Section>
+          <Container>
+            <TrekInclusions
+              inclusions={getaway.inclusions}
+              exclusions={getaway.exclusions}
+            />
+          </Container>
+        </Section>
+      )}
       {/* GALLERY */}
-
       {hasGallery && (
         <Container>
           <PageGallery images={getaway.gallery} title={getaway.name} />
         </Container>
       )}
-
       {/* TESTIMONIALS */}
-
       {hasTestimonials && (
         <Container>
           <Testimonials testimonials={getaway.testimonials!} />
         </Container>
       )}
-
       {/* CTA */}
-
       <CtaSection
         eyebrow="Your next chapter"
         title="Maybe this is exactly what you needed."
@@ -435,15 +347,14 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
         buttonText="Start planning"
         link="/bookings"
       />
-
       {/* BOOKING BAR */}
-
       <BookingBar
+        slug={slug}
         title={getaway.name}
         price={getaway.priceFrom}
         priceLabel="per night"
         availableDates={getaway.availableDates}
-        maxGuests={getaway.maxGuests}
+        maxGuests={30}
       />
     </main>
   )

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BedDouble, Clock, MapPin, Utensils, Users } from 'lucide-react'
+import { BedDouble, Clock, MapPin } from 'lucide-react'
 
 import type { Getaway } from '@/types/experience'
 import { Media } from '@/components/common'
@@ -155,28 +155,6 @@ export function GetawayCard({ experience }: GetawayCardProps) {
                   aria-hidden="true"
                 />
                 <span className="truncate">{experience.duration}</span>
-              </span>
-            )}
-
-            {experience.maxGuests && (
-              <span className="inline-flex min-w-0 items-center gap-1.5">
-                <Users
-                  className="size-3.5 shrink-0"
-                  strokeWidth={1.75}
-                  aria-hidden="true"
-                />
-                <span className="truncate">Up to {experience.maxGuests}</span>
-              </span>
-            )}
-
-            {experience.meals && (
-              <span className="inline-flex min-w-0 items-center gap-1.5">
-                <Utensils
-                  className="size-3.5 shrink-0"
-                  strokeWidth={1.75}
-                  aria-hidden="true"
-                />
-                <span className="truncate">{experience.meals}</span>
               </span>
             )}
           </div>

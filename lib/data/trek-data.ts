@@ -2062,6 +2062,9 @@ export const trekData: Trek[] = [
       convertGoogleDriveLink(
         'https://drive.google.com/file/d/1cxn-D6Vh9uJDdRg9pOsRN82MH56-B638/view?usp=drive_link'
       ),
+      convertGoogleDriveLink(
+        'https://drive.google.com/file/d/17h-qfIABLO5R7p5jT3sEG-wAkV4Mpe5k/view?usp=drive_link'
+      ),
     ],
     description:
       'Immerse yourself in Nagaland’s rich tribal culture at the Hornbill Festival before embarking on a trek to the breathtaking Dzukou Valley. Experience authentic village homestays in Zakhama, explore local heritage and historical sights, and spend an unforgettable night under the stars at the top of Dzukou Valley.',
@@ -2103,6 +2106,9 @@ export const trekData: Trek[] = [
         to: 'Zakhama',
         altitude: '1400m',
         duration: '3-4 hours drive',
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1cxn-D6Vh9uJDdRg9pOsRN82MH56-B638/view?usp=drive_link'
+        ),
       },
       {
         day: 2,
@@ -2113,6 +2119,9 @@ export const trekData: Trek[] = [
         to: 'Kisama Heritage Village',
         altitude: '1400m',
         duration: 'Full day',
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1ZXO50m7Hh5mJ20Unn4SSKdD8Rkxgd3De/view?usp=drive_link'
+        ),
       },
       {
         day: 3,
@@ -2123,6 +2132,9 @@ export const trekData: Trek[] = [
         to: 'Kisama / Kohima',
         altitude: '1400m',
         duration: 'Half day',
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1IQFceCF2mUKBGdRTBOSRj-41d3_HvIxi/view?usp=drive_link'
+        ),
       },
       {
         day: 4,
@@ -2133,6 +2145,9 @@ export const trekData: Trek[] = [
         to: 'Dzukou Valley Top',
         altitude: '2452m',
         duration: '5-6 hours trek',
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1nYexCj3FEbskGx_-ZpyhWvF9gz72jbMU/view?usp=drive_link'
+        ),
       },
       {
         day: 5,
@@ -2143,6 +2158,9 @@ export const trekData: Trek[] = [
         to: 'Dimapur',
         altitude: '260m',
         duration: '4 hours trek + 4 hours drive',
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1BivVWuwxeArtJ7_tMqtMQ51yVwRQJJ5B/view?usp=drive_link'
+        ),
       },
     ],
   },
