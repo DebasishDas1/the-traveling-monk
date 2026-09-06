@@ -39,7 +39,7 @@ export function RelatedTreks({ currentTrek, treks }: RelatedTreksProps) {
         </div>
 
         <Link
-          href="/treks"
+          href="/experiences/trek"
           className="
               hidden
               items-center
@@ -63,7 +63,7 @@ export function RelatedTreks({ currentTrek, treks }: RelatedTreksProps) {
       </div>
 
       <Link
-        href="/treks"
+        href="/experiences/trek"
         className="mt-8 inline-flex items-center gap-2 text-sm font-medium md:hidden"
       >
         View all treks

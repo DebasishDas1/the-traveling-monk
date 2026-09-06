@@ -19,14 +19,14 @@ import { contactOptions, faqs } from '@/lib/data/contact-page'
 export const metadata: Metadata = {
   title: 'Contact The Traveling Monk',
   description:
-    'Have questions about Himalayan treks, homestays, or international journeys? Contact The Traveling Monk and let us help plan your next journey.',
+    'Have questions about Himalayan treks, getaways, or international journeys? Contact The Traveling Monk and let us help plan your next journey.',
   alternates: {
     canonical: '/contact',
   },
   openGraph: {
     title: 'Contact The Traveling Monk',
     description:
-      'Questions about a trek, homestay, or journey? Get in touch with The Traveling Monk.',
+      'Questions about a trek, getaway, or journey? Get in touch with The Traveling Monk.',
     type: 'website',
     images: [
       {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contact The Traveling Monk',
     description:
-      'Questions about a trek, homestay, or journey? Get in touch with The Traveling Monk.',
+      'Questions about a trek, getaway, or journey? Get in touch with The Traveling Monk.',
     images: ['/illustrations/conversation.png'],
   },
 }
@@ -50,25 +50,24 @@ export default function ContactPage() {
       {/* =====================================================
           HERO
       ====================================================== */}
-      <Section>
-        <Container>
-          <MediaHeading
-            eyebrow="Get in touch"
-            title="Let's talk about your next journey."
-            description="Whether you know exactly where you want to go or have absolutely no idea yet, we're here."
-            size="display"
-            image={
-              <Media
-                src="/illustrations/conversation.png"
-                alt="Travellers having a conversation"
-                ratio="1/1"
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            }
-          />
-        </Container>
-      </Section>
+      <Container className="py-10">
+        <MediaHeading
+          eyebrow="Get in touch"
+          title="Let's talk about your next journey."
+          description="Whether you know exactly where you want to go or have absolutely no idea yet, we're here."
+          size="display"
+          imagePosition="left"
+          image={
+            <Media
+              src="/illustrations/conversation.png"
+              alt="Travellers having a conversation"
+              ratio="1/1"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          }
+        />
+      </Container>
 
       {/* =====================================================
           CONTACT

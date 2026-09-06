@@ -50,22 +50,7 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           {timeAgo && ` · ${timeAgo}`}
         </p>
       </CardContent>
-      <CardFooter className="relative border-none pt-6 md:text-2xl md:leading-9">
-        <span
-          className="absolute -top-1 left-4 font-serif text-5xl leading-none text-primary/20"
-          aria-hidden="true"
-        >
-          “
-        </span>
-
-        <blockquote className="relative pl-6 font-medium">{quote}</blockquote>
-        <span
-          className="absolute -bottom-6 right-4 font-serif text-6xl leading-none text-primary/20"
-          aria-hidden="true"
-        >
-          ”
-        </span>
-      </CardFooter>
+      <CardFooter className="border-none text-xl">{quote}</CardFooter>
     </Card>
   )
 }

@@ -16,13 +16,13 @@ export const metadata: Metadata = {
   description:
     'Explore Himalayan treks for adventure, stillness, friendship, and a refreshing escape from everyday life.',
   alternates: {
-    canonical: '/treks',
+    canonical: '/experiences/trek',
   },
   openGraph: {
     title: 'Himalayan Treks',
     description:
       'Explore Himalayan treks for adventure, stillness, friendship, and a refreshing escape from everyday life.',
-    url: '/treks',
+    url: '/experiences/trek',
     type: 'website',
   },
 }

@@ -17,14 +17,14 @@ import { categories, principles, founders } from '@/lib/data/about-page'
 export const metadata: Metadata = {
   title: 'About The Traveling Monk | Meaningful Travel & Himalayan Journeys',
   description:
-    'Discover The Traveling Monk — journeys, Himalayan treks, homestays, and international experiences designed to slow down, reconnect, and return renewed.',
+    'Discover The Traveling Monk — journeys, Himalayan treks, getaways, and international experiences designed to slow down, reconnect, and return renewed.',
   alternates: {
     canonical: '/about',
   },
   openGraph: {
     title: 'About The Traveling Monk | Meaningful Travel',
     description:
-      'We create thoughtful journeys, Himalayan treks, homestays, and international experiences for people who want to slow down and reconnect.',
+      'We create thoughtful journeys, Himalayan treks, getaways, and international experiences for people who want to slow down and reconnect.',
     type: 'website',
     images: [
       {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About The Traveling Monk | Meaningful Travel',
     description:
-      'Thoughtful journeys, Himalayan treks, homestays, and international experiences designed to help you slow down and reconnect.',
+      'Thoughtful journeys, Himalayan treks, getaways, and international experiences designed to help you slow down and reconnect.',
     images: ['/images/about/about-hero-2.png'],
   },
 }

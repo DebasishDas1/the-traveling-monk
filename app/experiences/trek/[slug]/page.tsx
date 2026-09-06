@@ -107,14 +107,14 @@ export async function generateMetadata({
     description: trek.description,
 
     alternates: {
-      canonical: `/treks/${trek.slug}`,
+      canonical: `/experiences/trek/${trek.slug}`,
     },
 
     openGraph: {
       type: 'article',
       title: trek.title,
       description: trek.description,
-      url: `/treks/${trek.slug}`,
+      url: `/experiences/trek/${trek.slug}`,
       ...(image && {
         images: [
           {
@@ -191,7 +191,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
     '@type': 'TouristTrip',
     name: trek.title,
     description: trek.description,
-    url: `https://thetravelingmonk.com/treks/${trek.slug}`,
+    url: `https://thetravelingmonk.com/experiences/trek/${trek.slug}`,
     image: heroImages.map((image) => image.src),
     touristType: 'Adventure travelers',
     offers: {
@@ -199,7 +199,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
       price: trek.priceFrom,
       priceCurrency: 'INR',
       availability: 'https://schema.org/InStock',
-      url: `https://thetravelingmonk.com/treks/${trek.slug}`,
+      url: `https://thetravelingmonk.com/experiences/trek/${trek.slug}`,
     },
   }
 

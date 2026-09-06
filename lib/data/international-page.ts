@@ -83,7 +83,7 @@ export const faqs = [
   {
     question: 'What kind of accommodation do you use?',
     answer:
-      'Accommodation varies by destination. We favour thoughtfully chosen hotels, guesthouses, homestays, and other places with character.',
+      'Accommodation varies by destination. We favour thoughtfully chosen hotels, guesthouses, getaways, and other places with character.',
   },
   {
     question: 'Is travel insurance required?',

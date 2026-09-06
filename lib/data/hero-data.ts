@@ -9,18 +9,18 @@ export const heroSlidesData: HeroSlide[] = [
     description:
       'Snow-covered trails, quiet forests and unforgettable sunrises in the Himalayas.',
     image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b',
-    href: '/treks/kheerganga-trek',
+    href: '/experiences/trek/kheerganga-trek',
     cta: 'Begin Your Reset',
   },
   {
     id: '2',
-    category: 'HOMESTAY',
-    title: 'Kasol Mountain Homestay',
+    category: 'GETAWAY',
+    title: 'Kasol Mountain Getaway',
     description: 'Wake up beside the river and rediscover slow mornings.',
     image: convertGoogleDriveLink(
       'https://drive.google.com/file/d/1hhrLuila_DgtMz38JsyKUrnIFhWBQ9u-/view?usp=drive_link'
     ),
-    href: '/homestays/kasol-manali',
+    href: '/getaways/kasol-manali',
     cta: 'Begin Your Reset',
   },
   {

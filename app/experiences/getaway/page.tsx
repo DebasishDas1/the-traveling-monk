@@ -9,10 +9,10 @@ import {
   Section,
 } from '@/components/common'
 
-import { feelings, destinations, gallery } from '@/lib/data/home-stays-page'
+import { feelings, destinations, gallery } from '@/lib/data/getaway-page'
 
-import { homestaysData } from '@/lib/data/homestays-data'
-import { HomeStayCard } from '@/components/experience/HomeStayCard'
+import { getawaysData } from '@/lib/data/getaway-data'
+import { GetawayCard } from '@/components/experience/GetawayCard'
 import { PageGallery } from '@/components/experience/PageGallery'
 
 /**
@@ -36,31 +36,31 @@ const LocationMap = dynamic(
 )
 
 export const metadata: Metadata = {
-  title: 'Himalayan Homestays | The Traveling Monk',
+  title: 'Himalayan Getaways | The Traveling Monk',
   description:
-    'Stay with local hosts in the Himalayas. Discover peaceful homestays, local food, mountain culture, and slower journeys with The Traveling Monk.',
+    'Stay with local hosts in the Himalayas. Discover peaceful getaways, local food, mountain culture, and slower journeys with The Traveling Monk.',
 
   alternates: {
-    canonical: '/homestays',
+    canonical: '/getaways',
   },
 
   openGraph: {
-    title: 'Himalayan Homestays | The Traveling Monk',
+    title: 'Himalayan Getaways | The Traveling Monk',
     description:
       'Stay with local hosts in the Himalayas and experience the mountains at a slower pace.',
     type: 'website',
-    url: '/homestays',
+    url: '/getaways',
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: 'Himalayan Homestays | The Traveling Monk',
+    title: 'Himalayan Getaways | The Traveling Monk',
     description:
       'Stay with local hosts in the Himalayas and experience the mountains at a slower pace.',
   },
 }
 
-export default function HomeStaysPage() {
+export default function GetawaysPage() {
   return (
     <main>
       {/* =====================================================
@@ -69,7 +69,7 @@ export default function HomeStaysPage() {
 
       <Container>
         <MediaHeading
-          eyebrow="Himalayan Homestays"
+          eyebrow="Himalayan Getaways"
           title="Stay somewhere that feels lived in."
           description="Slower journeys that connect you to the landscape, the food, and the people."
           size="display"
@@ -77,7 +77,7 @@ export default function HomeStaysPage() {
           image={
             <Media
               src="/illustrations/Alone-cuate.png"
-              alt="Traveller enjoying a quiet moment during a Himalayan homestay"
+              alt="Traveller enjoying a quiet moment during a Himalayan getaway"
               ratio="1/1"
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -87,14 +87,14 @@ export default function HomeStaysPage() {
       </Container>
 
       {/* =====================================================
-          HOMESTAYS
+          GETAWAYS
       ====================================================== */}
 
       <Section>
         <Container>
           <div className="grid gap-8 md:grid-cols-2 grid-cols-1">
-            {homestaysData.map((homestay) => (
-              <HomeStayCard key={homestay.id} experience={homestay} />
+            {getawaysData.map((getaway) => (
+              <GetawayCard key={getaway.id} experience={getaway} />
             ))}
           </div>
         </Container>
@@ -203,7 +203,7 @@ export default function HomeStaysPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Media
               src="/illustrations/women-talking.png"
-              alt="Homestay host welcoming travellers"
+              alt="Getaway host welcoming travellers"
               ratio="3/2"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />

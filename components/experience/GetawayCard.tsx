@@ -1,16 +1,16 @@
 import Link from 'next/link'
 import { BedDouble, Clock, MapPin, Utensils, Users } from 'lucide-react'
 
-import type { Homestay } from '@/types/experience'
+import type { Getaway } from '@/types/experience'
 import { Media } from '@/components/common'
 import { formatPrice } from '@/lib/utils'
 
-interface HomeStayCardProps {
-  experience: Homestay
+interface GetawayCardProps {
+  experience: Getaway
 }
 
 function getImage(
-  image: Homestay['gallery'][number] | undefined,
+  image: Getaway['gallery'][number] | undefined,
   fallbackAlt: string
 ) {
   if (!image) return null
@@ -40,7 +40,7 @@ function getImage(
   return null
 }
 
-export function HomeStayCard({ experience }: HomeStayCardProps) {
+export function GetawayCard({ experience }: GetawayCardProps) {
   const image = getImage(experience.gallery?.[0], experience.name)
 
   const price = experience.pricing?.perNight ?? experience.priceFrom
@@ -48,7 +48,7 @@ export function HomeStayCard({ experience }: HomeStayCardProps) {
   return (
     <article>
       <Link
-        href={`/experiences/homestays/${experience.slug}`}
+        href={`/experiences/getaway/${experience.slug}`}
         aria-label={`View ${experience.name}`}
         className="
           group block
@@ -89,7 +89,7 @@ export function HomeStayCard({ experience }: HomeStayCardProps) {
               strokeWidth={1.75}
               aria-hidden="true"
             />
-            Homestay
+            Getaway
           </div>
 
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground sm:text-sm">

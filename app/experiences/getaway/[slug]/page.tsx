@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 
 import { Check, Clock3, MapPin, Sparkles, Users, Utensils } from 'lucide-react'
 
-import { homestaysData } from '@/lib/data/homestays-data'
-import { OfferingType, type Homestay } from '@/types/experience'
+import { getawaysData } from '@/lib/data/getaway-data'
+import { isGetaway, type Getaway } from '@/types/experience'
 
 import {
   Container,
@@ -15,9 +15,13 @@ import {
   Section,
 } from '@/components/common'
 
-import { GalleryHero } from '@/components/experience/GalleryHero'
 import { BookingBar } from '@/components/experience/BookingBar'
-import { Badge } from '@/components/ui/badge'
+import { GalleryHero } from '@/components/experience/GalleryHero'
+import { ItineraryCard } from '@/components/experience/ItineraryCard'
+import { PageGallery } from '@/components/experience/PageGallery'
+import { Testimonials } from '@/components/experience/Testimonials'
+import { TrekInclusions } from '@/components/experience/TrekInclusions'
+
 import {
   Card,
   CardContent,
@@ -25,11 +29,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Testimonials } from '@/components/experience/Testimonials'
-import { PageGallery } from '@/components/experience/PageGallery'
-import { TrekInclusions } from '@/components/experience/TrekInclusions'
 
-interface HomestayPageProps {
+interface GetawayPageProps {
   params: Promise<{
     slug: string
   }>
@@ -39,38 +40,31 @@ interface HomestayPageProps {
    DATA
 ───────────────────────────────────────────── */
 
-function getHomestay(slug: string): Homestay | undefined {
-  return homestaysData.find(
-    (experience): experience is Homestay =>
-      experience.type === OfferingType.HOMESTAY &&
-      experience.slug === slug &&
-      experience.active
+function getGetaway(slug: string): Getaway | undefined {
+  return getawaysData.find(
+    (experience) =>
+      isGetaway(experience) && experience.slug === slug && experience.active
   )
 }
 
 export function generateStaticParams() {
-  return homestaysData
-    .filter(
-      (experience) =>
-        experience.type === OfferingType.HOMESTAY && experience.active
-    )
-    .map(({ slug }) => ({
-      slug,
-    }))
+  return getawaysData
+    .filter((experience) => isGetaway(experience) && experience.active)
+    .map(({ slug }) => ({ slug }))
 }
 
 /* ─────────────────────────────────────────────
    HELPERS
 ───────────────────────────────────────────── */
 
-type GalleryImage = Homestay['gallery'][number]
+type GalleryImage = Getaway['gallery'][number]
 
 interface ResolvedImage {
   src: string
   alt: string
 }
 
-function getImage(
+function resolveImage(
   image: GalleryImage | undefined,
   fallbackAlt: string
 ): ResolvedImage | null {
@@ -83,7 +77,6 @@ function getImage(
     }
   }
 
-  // Handle MediaUrl object (has url)
   if ('url' in image) {
     return {
       src: image.url,
@@ -91,23 +84,17 @@ function getImage(
     }
   }
 
-  // Handle object with src property
-  if ('src' in image) {
-    return {
-      src: image.src,
-      alt: image.alt || fallbackAlt,
-    }
+  return {
+    src: image.src,
+    alt: image.alt || fallbackAlt,
   }
-
-  return null
 }
 
-
-function getGallery(homestay: Homestay): ResolvedImage[] {
-  return homestay.gallery
+function getHeroGallery(getaway: Getaway): ResolvedImage[] {
+  return getaway.gallery
     .slice(0, 3)
-    .map((image) => getImage(image, homestay.name))
-    .filter((image): image is ResolvedImage => image !== null)
+    .map((image) => resolveImage(image, getaway.name))
+    .filter((image): image is ResolvedImage => Boolean(image))
 }
 
 /* ─────────────────────────────────────────────
@@ -116,24 +103,22 @@ function getGallery(homestay: Homestay): ResolvedImage[] {
 
 export async function generateMetadata({
   params,
-}: HomestayPageProps): Promise<Metadata> {
+}: GetawayPageProps): Promise<Metadata> {
   const { slug } = await params
-  const homestay = getHomestay(slug)
+  const getaway = getGetaway(slug)
 
-  if (!homestay) {
-    return {}
-  }
+  if (!getaway) return {}
 
-  const title = `${homestay.name} | The Traveling Monk`
-  const image = getImage(homestay.gallery[0], homestay.name)
+  const title = `${getaway.name} | The Traveling Monk`
+  const image = resolveImage(getaway.gallery[0], getaway.name)
 
   return {
     title,
-    description: homestay.description,
+    description: getaway.description,
 
     openGraph: {
       title,
-      description: homestay.description,
+      description: getaway.description,
       type: 'website',
       images: image
         ? [
@@ -151,63 +136,59 @@ export async function generateMetadata({
    PAGE
 ───────────────────────────────────────────── */
 
-export default async function HomestayPage({ params }: HomestayPageProps) {
+export default async function GetawayPage({ params }: GetawayPageProps) {
   const { slug } = await params
-  const homestay = getHomestay(slug)
+  const getaway = getGetaway(slug)
 
-  if (!homestay) {
+  if (!getaway) {
     notFound()
   }
 
-  const gallery = getGallery(homestay)
-  const primaryImage = gallery[2]
+  const gallery = getHeroGallery(getaway)
+  const primaryImage = gallery[0]
 
   const facts = [
     {
       label: 'Location',
-      value: homestay.location,
+      value: getaway.location,
       icon: <MapPin className="size-4" />,
     },
     {
       label: 'Stay',
-      value: homestay.duration,
+      value: getaway.duration,
       icon: <Clock3 className="size-4" />,
     },
     {
       label: 'Guests',
-      value: `Up to ${homestay.maxGuests}`,
+      value: `Up to ${getaway.maxGuests}`,
       icon: <Users className="size-4" />,
     },
     {
       label: 'Meals',
-      value: homestay.meals,
+      value: getaway.meals,
       icon: <Utensils className="size-4" />,
     },
   ]
 
-  const hasHighlights = homestay.highlights.length > 0
-  const hasThingsToDo = Boolean(homestay.thingsToDo?.length)
-  const hasAmenities = Boolean(homestay.amenities?.length)
+  const hasHighlights = getaway.highlights.length > 0
+  const hasThingsToDo = Boolean(getaway.thingsToDo?.length)
   const hasInclusions =
-    Boolean(homestay.inclusions?.length) || Boolean(homestay.exclusions?.length)
-  const hasGallery = homestay.gallery.length > 3
-  const hasTestimonials = Boolean(homestay.testimonials)
+    Boolean(getaway.inclusions?.length) || Boolean(getaway.exclusions?.length)
+  const hasGallery = getaway.gallery.length > 3
+  const hasTestimonials = Boolean(getaway.testimonials?.length)
+  const itinerary = getaway.itinerary ?? []
 
   return (
     <main className="pb-28">
-      {/* ─────────────────────────────────────
-          HERO
-      ───────────────────────────────────── */}
+      {/* HERO */}
 
       <GalleryHero
         images={gallery}
-        title={homestay.name}
-        length={homestay.gallery.length}
+        title={getaway.name}
+        length={getaway.gallery.length}
       />
 
-      {/* ─────────────────────────────────────
-          QUICK FACTS
-      ───────────────────────────────────── */}
+      {/* QUICK FACTS */}
 
       <Container>
         <div className="grid grid-cols-2 gap-4 py-4 md:grid-cols-4">
@@ -217,9 +198,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
         </div>
       </Container>
 
-      {/* ─────────────────────────────────────
-          INTRO
-      ───────────────────────────────────── */}
+      {/* INTRO */}
 
       <Section>
         <Container>
@@ -234,7 +213,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
               <Card className="mt-6">
                 <CardHeader>
                   <CardDescription className="text-lg font-normal leading-relaxed">
-                    {homestay.description}
+                    {getaway.description}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -254,7 +233,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
                   <p className="mb-1 text-sm font-medium">The room</p>
 
                   <p className="text-sm leading-6 text-muted-foreground">
-                    {homestay.roomDescription}
+                    {getaway.roomDescription}
                   </p>
                 </div>
 
@@ -262,7 +241,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
                   <p className="mb-1 text-sm font-medium">The food</p>
 
                   <p className="text-sm leading-6 text-muted-foreground">
-                    {homestay.foodDescription}
+                    {getaway.foodDescription}
                   </p>
                 </div>
 
@@ -270,7 +249,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
                   <p className="mb-1 text-sm font-medium">The experience</p>
 
                   <p className="text-sm leading-6 text-muted-foreground">
-                    {homestay.experienceDescription}
+                    {getaway.experienceDescription}
                   </p>
                 </div>
               </CardContent>
@@ -279,9 +258,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
         </Container>
       </Section>
 
-      {/* ─────────────────────────────────────
-          HIGHLIGHTS
-      ───────────────────────────────────── */}
+      {/* HIGHLIGHTS */}
 
       {hasHighlights && (
         <Container>
@@ -294,24 +271,20 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
           />
 
           <div className="mx-auto mt-14 grid max-w-5xl gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {homestay.highlights.map((highlight) => (
+            {getaway.highlights.map((highlight) => (
               <div key={highlight} className="flex gap-4">
                 <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
                   <Check className="size-4" />
                 </div>
 
-                <p className="pt-1 text-sm leading-6 text-foreground">
-                  {highlight}
-                </p>
+                <p className="pt-1 text-sm leading-6">{highlight}</p>
               </div>
             ))}
           </div>
         </Container>
       )}
 
-      {/* ─────────────────────────────────────
-          FOOD
-      ───────────────────────────────────── */}
+      {/* FOOD */}
 
       <Section className="bg-muted/30">
         <Container>
@@ -321,7 +294,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
                 eyebrow="Around the table"
                 size="h2"
                 title="Food that tastes like the place you're in."
-                description={homestay.foodDescription}
+                description={getaway.foodDescription}
               />
 
               <div className="mt-8 rounded-2xl border bg-background p-5">
@@ -332,7 +305,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
                     <p className="font-medium">Meals included</p>
 
                     <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                      {homestay.meals}
+                      {getaway.meals}
                     </p>
                   </div>
                 </div>
@@ -352,9 +325,7 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
         </Container>
       </Section>
 
-      {/* ─────────────────────────────────────
-          THINGS TO DO
-      ───────────────────────────────────── */}
+      {/* THINGS TO DO */}
 
       {hasThingsToDo && (
         <Container className="pb-24">
@@ -362,12 +333,12 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
             align="center"
             eyebrow="Beyond the stay"
             size="h2"
-            title="There's no itinerary. That's the point."
-            description="Explore at your own pace, or simply do absolutely nothing."
+            title="Explore at your own pace."
+            description="A few ideas for making the most of your time here."
           />
 
           <div className="mx-auto mt-14 grid gap-4 sm:grid-cols-2">
-            {homestay.thingsToDo!.map((thing) => (
+            {getaway.thingsToDo?.map((thing) => (
               <div
                 key={thing}
                 className="flex items-center gap-4 rounded-2xl border bg-card p-5"
@@ -383,65 +354,79 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
         </Container>
       )}
 
-      {/* ─────────────────────────────────────
-          AMENITIES
-      ───────────────────────────────────── */}
-
-      {hasAmenities && (
-        <Container>
-          <Heading
-            align="center"
-            eyebrow="Good to have"
-            size="h2"
-            title="Everything you need. Nothing you don't."
-          />
-
-          <div className="mx-auto mt-12 flex flex-wrap justify-center gap-3">
-            {homestay.amenities!.map((amenity) => (
-              <Badge key={amenity} className="px-15 py-5 text-lg">
-                {amenity}
-              </Badge>
-            ))}
-          </div>
-        </Container>
-      )}
-
-      {/* ─────────────────────────────────────
-          INCLUSIONS / EXCLUSIONS
-      ───────────────────────────────────── */}
+      {/* INCLUSIONS / EXCLUSIONS */}
 
       {hasInclusions && (
         <Section>
           <Container>
             <TrekInclusions
-              inclusions={homestay.inclusions}
-              exclusions={homestay.exclusions}
+              inclusions={getaway.inclusions}
+              exclusions={getaway.exclusions}
             />
           </Container>
         </Section>
       )}
 
-      {/* ─────────────────────────────────────
-          GALLERY
-      ───────────────────────────────────── */}
+      {/* ITINERARY */}
 
-      {hasGallery && (
-        <PageGallery images={homestay.gallery} title={homestay.name} />
+      {itinerary.length > 0 && (
+        <Section>
+          <Container>
+            <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
+              <div className="lg:sticky lg:top-32 lg:self-start">
+                <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
+                  The journey
+                </p>
+
+                <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
+                  Take it one day at a time.
+                </h2>
+
+                <p className="mt-5 text-base leading-7 text-muted-foreground">
+                  A thoughtfully paced journey with enough room to explore,
+                  pause, and enjoy where you are.
+                </p>
+
+                <div className="mt-8 hidden lg:block">
+                  <div className="h-px w-12 bg-primary" />
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                {itinerary.map((item) => (
+                  <ItineraryCard
+                    key={item.day}
+                    day={item.day}
+                    image={resolveImage(item.imageUrl, item.title)}
+                    title={item.title}
+                    description={item.description}
+                    from={item.from}
+                    to={item.to}
+                  />
+                ))}
+              </div>
+            </div>
+          </Container>
+        </Section>
       )}
 
-      {/* ─────────────────────────────────────
-          TESTIMONIALS
-      ───────────────────────────────────── */}
+      {/* GALLERY */}
 
-      {hasTestimonials && (
+      {hasGallery && (
         <Container>
-          <Testimonials testimonials={homestay.testimonials!} />
+          <PageGallery images={getaway.gallery} title={getaway.name} />
         </Container>
       )}
 
-      {/* ─────────────────────────────────────
-          CTA
-      ───────────────────────────────────── */}
+      {/* TESTIMONIALS */}
+
+      {hasTestimonials && (
+        <Container>
+          <Testimonials testimonials={getaway.testimonials!} />
+        </Container>
+      )}
+
+      {/* CTA */}
 
       <CtaSection
         eyebrow="Your next chapter"
@@ -451,16 +436,14 @@ export default async function HomestayPage({ params }: HomestayPageProps) {
         link="/bookings"
       />
 
-      {/* ─────────────────────────────────────
-          BOOKING BAR
-      ───────────────────────────────────── */}
+      {/* BOOKING BAR */}
 
       <BookingBar
-        title={homestay.name}
-        price={homestay.priceFrom}
+        title={getaway.name}
+        price={getaway.priceFrom}
         priceLabel="per night"
-        availableDates={homestay.availableDates}
-        maxGuests={homestay.maxGuests}
+        availableDates={getaway.availableDates}
+        maxGuests={getaway.maxGuests}
       />
     </main>
   )

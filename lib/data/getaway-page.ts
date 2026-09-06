@@ -32,19 +32,19 @@ export const destinations = [
   {
     name: 'Himachal Pradesh',
     description: 'Mountain villages, cedar forests, and quiet valleys.',
-    image: '/images/homestays/himachal.jpg',
+    image: '/images/getaways/himachal.jpg',
     geoLocation: 'https://maps.app.goo.gl/y8GQ2PWeSkDNnWa29',
   },
   {
     name: 'Uttarakhand',
     description: 'Slow mornings beneath the Himalayas.',
-    image: '/images/homestays/uttarakhand.jpg',
+    image: '/images/getaways/uttarakhand.jpg',
     geoLocation: 'https://maps.app.goo.gl/6QFxytug88811N5H9',
   },
   {
     name: 'Meghalaya',
     description: 'Rain, forests, living roots, and generous hosts.',
-    image: '/images/homestays/meghalaya.jpg',
+    image: '/images/getaways/meghalaya.jpg',
     geoLocation: 'https://maps.app.goo.gl/98tx51HANA4oSHPt5',
   },
 ]
@@ -52,12 +52,12 @@ export const destinations = [
 
 export const gallery = [
   {
-    src: '/map-location/mountain-homestay-surrounded-by-nature.jpg',
-    alt: 'Mountain homestay surrounded by nature',
+    src: '/map-location/mountain-getaway-surrounded-by-nature.jpg',
+    alt: 'Mountain getaway surrounded by nature',
   },
   {
-    src: '/map-location/breakfast-homestay.jpg',
-    alt: 'Breakfast at a Himalayan homestay',
+    src: '/map-location/breakfast-getaway.jpg',
+    alt: 'Breakfast at a Himalayan getaway',
   },
   {
     src: '/map-location/old-man-mountain.jpg',

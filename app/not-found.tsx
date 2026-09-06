@@ -37,7 +37,7 @@ export default function NotFound() {
               Return to Basecamp
             </Button>
           </Link>
-          <Link href="/treks">
+          <Link href="/trek">
             <Button
               variant="outline"
               size="lg"

@@ -3,7 +3,7 @@
  *
  * Unified experience model for:
  * - Himalayan Treks
- * - Homestays
+ * - Getaways
  * - International Trips
  *
  * Uses discriminated unions so category-specific
@@ -18,7 +18,7 @@ import type { ReviewRating } from './review'
 
 export enum OfferingType {
   TREK = 'trek',
-  HOMESTAY = 'homestay',
+  GETAWAY = 'getaway',
   INTERNATIONAL = 'international',
 }
 
@@ -90,21 +90,26 @@ export interface Testimonial {
 // TIMELINE
 // ─────────────────────────────────────────────
 
-export interface TimelineItem {
+export interface BaseTimelineItem {
   day: number
   title: string
   description: string
   imageUrl?: string
 }
 
-export interface TrekTimelineItem extends TimelineItem {
+export interface TrekTimelineItem extends BaseTimelineItem {
   from: string
   to: string
   altitude: string
   duration: string
 }
 
-export interface InternationalTimelineItem extends TimelineItem {
+export interface GetawayTimelineItem extends BaseTimelineItem {
+  from: string
+  to: string
+}
+
+export interface InternationalTimelineItem extends BaseTimelineItem {
   from: string
   to: string
   duration: string
@@ -119,7 +124,7 @@ export interface TrekPricing {
   currency: 'INR'
 }
 
-export interface HomestayPricing {
+export interface GetawayPricing {
   perNight: number
   currency: 'INR'
 }
@@ -154,115 +159,66 @@ export interface BaseExperience {
   active: boolean
 }
 
-// ─────────────────────────────────────────────
-// TREK
-// ─────────────────────────────────────────────
-
 export interface Trek extends BaseExperience {
   type: OfferingType.TREK
 
   title: string
   tagline: string
-
   location: string
   region?: string
-
   duration: string
-
   difficulty: DifficultyLevel
-
   priceFrom: number
-
   pricing?: TrekPricing
-
   maxGroupSize: number
-
   altitude: number
-
   nextDate: string
-
   spotsLeft: number
-
   minAge?: number
-
   pickupDrop?: string
-
   availableDates: AvailableDateSlot[]
-
   itinerary?: TrekTimelineItem[]
-
   season?: Season[]
-
   geoLocation?: string
 }
 
-// ─────────────────────────────────────────────
-// HOMESTAY
-// ─────────────────────────────────────────────
-
-export interface Homestay extends BaseExperience {
-  type: OfferingType.HOMESTAY
+export interface Getaway extends BaseExperience {
+  type: OfferingType.GETAWAY
 
   name: string
   tagline: string
-
   location: string
   region?: string
-
   duration: string
-
   maxGuests: number
-
   priceFrom: number
-
-  pricing?: HomestayPricing
-
+  pricing?: GetawayPricing
   roomDescription: string
-
   foodDescription: string
-
   experienceDescription: string
-
   meals: string
-
   availableDates: AvailableDateSlot[]
-
+  itinerary?: GetawayTimelineItem[]
   amenities?: string[]
-
   thingsToDo?: string[]
 }
-
-// ─────────────────────────────────────────────
-// INTERNATIONAL
-// ─────────────────────────────────────────────
 
 export interface International extends BaseExperience {
   type: OfferingType.INTERNATIONAL
 
   name: string
   tagline: string
-
   country: string
   location: string
-
   duration: string
-
   tier: TierLevel
-
   priceFrom: number
-
   pricing?: InternationalPricing
-
   maxGroupSize: number
-
   spotsLeft: number
-
   visaRequired: boolean
-
   bestSeason: string
-
   availableDates: AvailableDateSlot[]
-
   itinerary?: InternationalTimelineItem[]
 }
 
@@ -270,7 +226,7 @@ export interface International extends BaseExperience {
 // UNION
 // ─────────────────────────────────────────────
 
-export type Experience = Trek | Homestay | International
+export type Experience = Trek | Getaway | International
 
 // ─────────────────────────────────────────────
 // TYPE GUARDS
@@ -279,8 +235,8 @@ export type Experience = Trek | Homestay | International
 export const isTrek = (experience: Experience): experience is Trek =>
   experience.type === OfferingType.TREK
 
-export const isHomestay = (experience: Experience): experience is Homestay =>
-  experience.type === OfferingType.HOMESTAY
+export const isGetaway = (experience: Experience): experience is Getaway =>
+  experience.type === OfferingType.GETAWAY
 
 export const isInternational = (
   experience: Experience

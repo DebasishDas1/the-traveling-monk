@@ -54,7 +54,7 @@ export const faqs = [
   {
     question: 'What should I expect on a trek?',
     answer:
-      'Most of our treks involve walking for 4–6 hours a day, with ascents and descents on uneven trails. We keep groups small (8–12 people) and have experienced guides to support you throughout. Accommodation is typically in comfortable guesthouses or homestays, with all meals provided. You’ll carry a daypack, and your main luggage is transported separately. Most importantly, expect incredible views, campfire chats, and a chance to disconnect from the everyday hustle.',
+      'Most of our treks involve walking for 4–6 hours a day, with ascents and descents on uneven trails. We keep groups small (8–12 people) and have experienced guides to support you throughout. Accommodation is typically in comfortable guesthouses or getaways, with all meals provided. You’ll carry a daypack, and your main luggage is transported separately. Most importantly, expect incredible views, campfire chats, and a chance to disconnect from the everyday hustle.',
   },
   {
     question: 'Are your experiences beginner friendly?',

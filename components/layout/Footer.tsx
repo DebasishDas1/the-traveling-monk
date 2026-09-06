@@ -19,9 +19,9 @@ const footerGroups = [
     title: 'Explore',
     links: [
       { name: 'Experiences', href: '/experiences' },
-      { name: 'Treks', href: '/treks' },
-      { name: 'Homestays', href: '/homestays' },
-      { name: 'International', href: '/international' },
+      { name: 'Treks', href: '/experiences/trek' },
+      { name: 'Getaways', href: '/experiences/getaway' },
+      { name: 'International', href: '/experiences/international' },
     ],
   },
   {

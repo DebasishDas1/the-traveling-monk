@@ -15,12 +15,12 @@ export const siteConfig = {
           href: '/experiences',
         },
         {
-          label: 'Treks',
-          href: '/experiences/treks',
+          label: 'Trek',
+          href: '/experiences/trek',
         },
         {
-          label: 'Homestays',
-          href: '/experiences/homestays',
+          label: 'Getaway',
+          href: '/experiences/getaway',
         },
         {
           label: 'International',

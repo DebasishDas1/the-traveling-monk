@@ -3,7 +3,7 @@
  *
  * Generic review model that works across all experience types:
  * - Himalayan Treks
- * - Homestays
+ * - Getaways
  * - International Trips
  */
 

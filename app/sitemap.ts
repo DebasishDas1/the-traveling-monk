@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 import { trekData } from '@/lib/data/trek-data'
-import { homestaysData } from '@/lib/data/homestays-data'
+import { getawaysData } from '@/lib/data/getaway-data'
 import { internationalData } from '@/lib/data/international-data'
 
 const SITE_URL = 'https://thetravelingmonk.com'
@@ -21,13 +21,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/treks`,
+      url: `${SITE_URL}/trek`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/homestays`,
+      url: `${SITE_URL}/getaway`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -61,16 +61,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const trekRoutes = trekData
     .filter((trek) => trek.active)
     .map((trek) => ({
-      url: `${SITE_URL}/treks/${trek.slug}`,
+      url: `${SITE_URL}/trek/${trek.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     }))
 
-  const homestayRoutes = homestaysData
+  const getawayRoutes = getawaysData
     .filter((stay) => stay.active)
     .map((stay) => ({
-      url: `${SITE_URL}/homestays/${stay.slug}`,
+      url: `${SITE_URL}/getaway/${stay.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
@@ -88,7 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticRoutes,
     ...trekRoutes,
-    ...homestayRoutes,
+    ...getawayRoutes,
     ...internationalRoutes,
   ]
 }

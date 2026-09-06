@@ -17,7 +17,7 @@ const siteConfig = {
   name: 'The Traveling Monk',
   url: 'https://thetravelingmonk.com',
   description:
-    'Treks, homestays, and meaningful journeys designed to help you slow down, reconnect, and return renewed.',
+    'Treks, getaways and meaningful journeys designed to help you slow down, reconnect, and return renewed.',
 }
 
 export const metadata: Metadata = {

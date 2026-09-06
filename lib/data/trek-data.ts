@@ -2032,4 +2032,118 @@ export const trekData: Trek[] = [
     minAge: 16,
     pickupDrop: 'Gangotri',
   },
+
+  {
+    id: 14,
+    type: OfferingType.TREK,
+    slug: 'hornbill-festival-dzukou-valley-trek',
+    title: 'Hornbill Festival & Dzukou Valley Trek',
+    tagline: 'Combine Nagaland cultural celebrations with a high-valley trek',
+    location: 'Dzukou Valley & Zakhama, Nagaland, India',
+    region: 'Nagaland',
+    duration: '5 Days / 4 Nights',
+    difficulty: DifficultyLevel.MODERATE,
+    priceFrom: 13999, // B2C price
+    pricing: {
+      perPerson: 13999,
+      currency: 'INR',
+    },
+    featured: true,
+    active: true,
+    maxGroupSize: 12,
+    altitude: 2452, // Dzukou Valley peak elevation
+    nextDate: '2026-12-01',
+    spotsLeft: 12,
+    pickupDrop: 'Dimapur to Dimapur',
+    gallery: [
+      convertGoogleDriveLink(
+        'https://drive.google.com/file/d/1bFPm14-VvTZmg3aYwtLfp50kqFDEIDUH/view?usp=drive_link'
+      ),
+      convertGoogleDriveLink(
+        'https://drive.google.com/file/d/1cxn-D6Vh9uJDdRg9pOsRN82MH56-B638/view?usp=drive_link'
+      ),
+    ],
+    description:
+      'Immerse yourself in Nagaland’s rich tribal culture at the Hornbill Festival before embarking on a trek to the breathtaking Dzukou Valley. Experience authentic village homestays in Zakhama, explore local heritage and historical sights, and spend an unforgettable night under the stars at the top of Dzukou Valley.',
+    highlights: [
+      'Full day cultural immersion at Hornbill Festival',
+      'Stay at a traditional homestay in Zakhama Village',
+      'Visit the historical World War II Museum',
+      'Guided trek to the emerald green Dzukou Valley top',
+      'Overnight stay and exploration at Dzukou top',
+      'Private car transfers from Dimapur and back',
+    ],
+    inclusions: [
+      '3 Nights Homestay accommodation + 1 Night stay at Dzukou Valley',
+      'Breakfast, Packed Lunch (on trek day), and Dinner',
+      'Transportation (Dimapur <-> Zakhama, Zakhama <-> Trek start point)',
+      'Hornbill Festival Entry Fee',
+      'Local Tour Guide & Trek assistance',
+      'Inner Line Permits / Trek Permits',
+    ],
+    exclusions: [
+      'Lunch (except packed lunch on trek day)',
+      'Personal expenses',
+      'Travel to and from Dimapur',
+    ],
+    availableDates: [
+      {
+        date: '2026-12-01',
+        spots: 12,
+      },
+    ],
+    testimonials: [],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Dimapur to Zakhama Homestay',
+        description:
+          'Pickup from Dimapur to Zakhama Homestay. Local sightseeing & leisure day. Dinner at homestay.',
+        from: 'Dimapur',
+        to: 'Zakhama',
+        altitude: '1400m',
+        duration: '3-4 hours drive',
+      },
+      {
+        day: 2,
+        title: 'Zakhama & Hornbill Festival',
+        description:
+          'Breakfast, explore Zakhama village, and spend the day exploring Hornbill Festival. Drop back to homestay.',
+        from: 'Zakhama Homestay',
+        to: 'Kisama Heritage Village',
+        altitude: '1400m',
+        duration: 'Full day',
+      },
+      {
+        day: 3,
+        title: 'WW2 Museum & Leisure',
+        description:
+          'Breakfast, visit World War 2 museum, and drop back to homestay.',
+        from: 'Zakhama',
+        to: 'Kisama / Kohima',
+        altitude: '1400m',
+        duration: 'Half day',
+      },
+      {
+        day: 4,
+        title: 'Trek to Dzukou Valley Top',
+        description:
+          'Breakfast, packed lunch, drop to trek start point. Reach Dzukou top, explore the valley, and dinner.',
+        from: 'Zakhama',
+        to: 'Dzukou Valley Top',
+        altitude: '2452m',
+        duration: '5-6 hours trek',
+      },
+      {
+        day: 5,
+        title: 'Trek Down & Return to Dimapur',
+        description:
+          'Breakfast, trek down from Dzukou Valley, pickup by car, and drop back to Dimapur.',
+        from: 'Dzukou Valley Top',
+        to: 'Dimapur',
+        altitude: '260m',
+        duration: '4 hours trek + 4 hours drive',
+      },
+    ],
+  },
 ]

@@ -39,6 +39,7 @@ export function CategoryCard({
           transition-all duration-300
           group-hover:-translate-y-1
           group-hover:shadow-lg
+          bg-white
         "
       >
         <CardHeader>

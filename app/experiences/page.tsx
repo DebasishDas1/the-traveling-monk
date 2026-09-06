@@ -12,26 +12,26 @@ import {
 } from '@/components/common'
 
 import { TrekCard } from '@/components/experience/TrekCard'
-import { HomeStayCard } from '@/components/experience/HomeStayCard'
+import { GetawayCard } from '@/components/experience/GetawayCard'
 import { InternationalTripCard } from '@/components/experience/InternationalTripCard'
 import { CategoryCard } from '@/components/experience/CategoryCard'
 
 import { trekData } from '@/lib/data/trek-data'
-import { homestaysData } from '@/lib/data/homestays-data'
+import { getawaysData } from '@/lib/data/getaway-data'
 import { internationalData } from '@/lib/data/international-data'
 import { isTrek } from '@/types/experience'
 
 export const metadata: Metadata = {
   title: 'Experiences | The Traveling Monk',
   description:
-    'Explore treks, homestays, and international journeys designed to help you slow down, reconnect, and return renewed.',
+    'Explore treks, getaways, and international journeys designed to help you slow down, reconnect, and return renewed.',
   alternates: {
     canonical: '/experiences',
   },
   openGraph: {
     title: 'Experiences | The Traveling Monk',
     description:
-      'Explore treks, homestays, and international journeys designed to help you slow down, reconnect, and return renewed.',
+      'Explore treks, getaways, and international journeys designed to help you slow down, reconnect, and return renewed.',
     type: 'website',
     url: '/experiences',
   },
@@ -45,14 +45,14 @@ const categories = [
   {
     label: 'Treks',
     description: 'Walk a little farther from the noise.',
-    href: '/experiences/treks',
+    href: '/experiences/trek',
     image: '/illustrations/trek.png',
   },
   {
-    label: 'Homestays',
+    label: 'Getaways',
     description: 'Stay somewhere that feels like nowhere else.',
-    href: '/experiences/homestays',
-    image: '/illustrations/home-stay.png',
+    href: '/experiences/getaway',
+    image: '/illustrations/country-side.svg',
   },
   {
     label: 'International Trips',
@@ -67,7 +67,7 @@ const featuredTreks = trekData
   .filter((experience) => experience.featured)
   .slice(0, 2)
 
-const featuredHomestays = homestaysData
+const featuredGetaways = getawaysData
   .filter((experience) => experience.featured)
   .slice(0, 2)
 
@@ -82,7 +82,6 @@ export default function ExperiencesPage() {
           HERO
       ====================================================== */}
 
-      {/* <Section> */}
       <Container>
         <MediaHeading
           eyebrow="Experiences"
@@ -99,7 +98,6 @@ export default function ExperiencesPage() {
           }
         />
       </Container>
-      {/* </Section> */}
 
       {/* =====================================================
           CATEGORIES
@@ -140,7 +138,7 @@ export default function ExperiencesPage() {
                 />
 
                 <Link
-                  href="/treks"
+                  href="/experiences/trek"
                   className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
                 >
                   Explore treks
@@ -162,26 +160,26 @@ export default function ExperiencesPage() {
       )}
 
       {/* =====================================================
-          FEATURED HOMESTAYS
+          FEATURED GETAWAYS
       ====================================================== */}
 
-      {featuredHomestays.length > 0 && (
-        <Section aria-labelledby="featured-homestays">
+      {featuredGetaways.length > 0 && (
+        <Section aria-labelledby="featured-getaways">
           <Container>
             <div className="space-y-10">
               <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
                 <Heading
-                  eyebrow="Homestays"
+                  eyebrow="Getaways"
                   title="Stay somewhere that feels lived in."
                   description="Slow down, share a meal, and experience a place through the people who call it home."
                   size="h2"
                 />
 
                 <Link
-                  href="/homestays"
+                  href="/getaways"
                   className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
                 >
-                  Explore homestays
+                  Explore getaways
                   <ArrowRight
                     aria-hidden="true"
                     className="size-4 transition-transform group-hover:translate-x-1"
@@ -190,8 +188,8 @@ export default function ExperiencesPage() {
               </div>
 
               <div className="grid gap-8 md:grid-cols-2">
-                {featuredHomestays.map((experience) => (
-                  <HomeStayCard key={experience.id} experience={experience} />
+                {featuredGetaways.map((experience) => (
+                  <GetawayCard key={experience.id} experience={experience} />
                 ))}
               </div>
             </div>

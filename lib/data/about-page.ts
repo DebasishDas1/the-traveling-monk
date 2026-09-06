@@ -28,14 +28,14 @@ export const categories = [
   {
     label: 'Treks',
     description: 'Walk a little farther from the noise.',
-    href: '/treks',
+    href: '/experiences/trek',
     image: '/illustrations/trek.png',
   },
   {
-    label: 'Homestays',
+    label: 'Getaways',
     description: 'Stay somewhere that feels like nowhere else.',
-    href: '/homestays',
-    image: '/illustrations/home-stay.png',
+    href: '/getaways',
+    image: '/illustrations/getaway.png',
   },
   {
     label: 'International Trips',
