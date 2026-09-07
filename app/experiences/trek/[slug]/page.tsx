@@ -403,6 +403,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
 
       {/* Booking */}
       <BookingBar
+        slug={trek.slug}
         title={trek.title}
         price={trek.priceFrom}
         priceLabel="per person"

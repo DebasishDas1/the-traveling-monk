@@ -36,7 +36,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
               The journey hit a bump.
             </h1>
 
-            <p className="mx-auto mt-5 max-w-md text-muted-foreground">
+            <p className="mx-auto mt-5 text-muted-foreground">
               Something unexpected happened while loading this page. Let&apos;s
               try that again.
             </p>
