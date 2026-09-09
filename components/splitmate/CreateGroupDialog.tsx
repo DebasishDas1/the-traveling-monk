@@ -14,6 +14,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -21,10 +22,6 @@ import {
 
 import { useSplitMateStore } from '@/store/splitmate.store'
 import type { SplitMateMember } from '@/types/splitmate'
-
-const fieldClass = 'h-12 rounded-xl'
-
-const inputClass = 'px-3 text-base'
 
 export function CreateGroupDialog() {
   const [open, setOpen] = useState(false)
@@ -102,24 +99,25 @@ export function CreateGroupDialog() {
         }
       />
 
-      <DialogContent className="p-6">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">
-            Create a group
-          </DialogTitle>
+          <DialogTitle>Create a group</DialogTitle>
 
-          <DialogDescription className="text-base text-muted-foreground">
+          <DialogDescription>
             Start a SplitMate group for your trip.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-5 py-10">
+        <div className="space-y-6">
           <Field>
-            <label htmlFor="group-name" className="mb-2 text-sm font-medium">
+            <label
+              htmlFor="group-name"
+              className="mb-2 block text-sm font-medium"
+            >
               Trip name
             </label>
 
-            <InputGroup className={fieldClass}>
+            <InputGroup className="h-12 rounded-xl">
               <InputGroupInput
                 id="group-name"
                 name="group-name"
@@ -129,18 +127,21 @@ export function CreateGroupDialog() {
                 placeholder="Manali 2026"
                 autoComplete="off"
                 required
-                className={inputClass}
+                className="px-3 text-base"
               />
             </InputGroup>
           </Field>
 
           <Field>
-            <label htmlFor="creator-name" className="mb-2 text-sm font-medium">
+            <label
+              htmlFor="creator-name"
+              className="mb-2 block text-sm font-medium"
+            >
               Your name
             </label>
 
-            <InputGroup className={fieldClass}>
-              <InputGroupAddon className="pl-5 text-muted-foreground">
+            <InputGroup className="h-12 rounded-xl">
+              <InputGroupAddon className="pl-4 text-muted-foreground">
                 <User className="size-4" aria-hidden="true" />
               </InputGroupAddon>
 
@@ -153,7 +154,7 @@ export function CreateGroupDialog() {
                 placeholder="Deba"
                 autoComplete="name"
                 required
-                className={inputClass}
+                className="text-base"
               />
             </InputGroup>
           </Field>
@@ -168,7 +169,7 @@ export function CreateGroupDialog() {
             </div>
 
             <div className="flex gap-2">
-              <InputGroup className="h-12 flex-1 rounded-xl">
+              <InputGroup className="h-12 min-w-0 flex-1 rounded-xl">
                 <InputGroupInput
                   value={memberName}
                   onChange={(event) => setMemberName(event.target.value)}
@@ -180,15 +181,16 @@ export function CreateGroupDialog() {
                   }}
                   placeholder="Friend's name"
                   autoComplete="off"
-                  className={inputClass}
+                  className="text-base"
                 />
               </InputGroup>
 
               <Button
+                type="button"
                 variant="secondary"
                 onClick={addMember}
                 disabled={!memberName.trim()}
-                aria-label="Add person"
+                className="h-12 shrink-0 rounded-xl px-4"
               >
                 <Plus />
                 Add
@@ -196,11 +198,11 @@ export function CreateGroupDialog() {
             </div>
 
             {members.length > 0 && (
-              <div className="space-y-1">
+              <div className="divide-y divide-border rounded-xl border border-border">
                 {members.map((member) => (
                   <div
                     key={member.id}
-                    className="flex items-center justify-between px-1 py-2"
+                    className="flex items-center justify-between px-3 py-2"
                   >
                     <span className="text-sm">{member.name}</span>
 
@@ -221,16 +223,16 @@ export function CreateGroupDialog() {
           </div>
         </div>
 
-        <div>
+        <DialogFooter className="pt-2">
           <Button
-            className="w-full sm:w-auto"
+            className="w-full rounded-xl sm:w-auto"
             disabled={!canContinue}
             onClick={handleCreate}
           >
             Continue
             <ArrowRight />
           </Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

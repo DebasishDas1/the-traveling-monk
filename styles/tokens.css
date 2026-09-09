@@ -1,3 +1,5 @@
+/* styles/tokens.css */
+
 @theme {
   /* ==========================================
      Typography
@@ -16,7 +18,7 @@
      Spacing
   ========================================== */
 
-  --spacing-xs: .5rem;
+  --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 2rem;
@@ -29,8 +31,8 @@
      Radius
   ========================================== */
 
-  --radius-xs: .5rem;
-  --radius-sm: .75rem;
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
   --radius-md: 1rem;
   --radius-lg: 1.25rem;
   --radius-xl: 1.5rem;
@@ -41,128 +43,215 @@
      Shadows
   ========================================== */
 
-  --shadow-xs: 0 1px 2px rgb(0 0 0 / .04);
-  --shadow-sm: 0 6px 18px rgb(0 0 0 / .05);
-  --shadow-md: 0 18px 40px rgb(0 0 0 / .08);
-  --shadow-lg: 0 32px 80px rgb(0 0 0 / .10);
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 6px 18px rgb(0 0 0 / 0.05);
+  --shadow-md: 0 18px 40px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 32px 80px rgb(0 0 0 / 0.1);
 
   /* ==========================================
-     Semantic Colors
+     Core Semantic Colors
   ========================================== */
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  /* Surfaces */
+
   --color-surface: var(--surface);
   --color-surface-secondary: var(--surface-secondary);
+
+  /* Card */
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  /* Popover / Dialog */
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Input */
+
+  --color-input: var(--input);
+
+  /* Primary */
 
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
 
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-foreground: var(--accent-foreground);
+  /* Secondary */
 
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
 
+  /* Accent */
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Muted */
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
+  /* Border / Focus */
+
   --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  /* States */
 
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-destructive: var(--destructive);
 
-  --color-ring: var(--ring);
+  /* State foregrounds */
+
+  --color-success-foreground: var(--success-foreground);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-destructive-foreground: var(--destructive-foreground);
 }
+
+/* ==========================================
+   Light Theme
+========================================== */
 
 :root {
+  /* Background */
 
-  /* Background - Warm, welcoming return */
+  --background: #faf8f5;
+  --foreground: #2a2622;
 
-  --background: #FAF8F5;
-  --foreground: #2A2622;
+  /* Surfaces */
 
-  /* Surfaces - Clean, minimal, honest */
+  --surface: #ffffff;
+  --surface-secondary: #f5f3f0;
 
-  --surface: #FFFFFF;
-  --surface-secondary: #F5F3F0;
+  /* Card */
 
-  /* Primary - Warm Neutral, grounded & calm */
+  --card: #ffffff;
+  --card-foreground: #2a2622;
 
-  --primary: #6B6359;
-  --primary-hover: #554D46;
-  --primary-foreground: #FFFFFF;
+  /* Popover / Dialog */
 
-  /* Accent - Warm Terracotta Clay - the heart of the brand */
+  --popover: #ffffff;
+  --popover-foreground: #2a2622;
 
-  --accent: #A67C52;
-  --accent-hover: #956A42;
-  --accent-foreground: #FFFFFF;
+  /* Input */
 
-  /* Secondary - Soft warm taupe */
+  --input: #e5dfd9;
 
-  --secondary: #E8E3DE;
-  --secondary-foreground: #3A3530;
+  /* Primary */
 
-  /* Muted - Barely there, peaceful */
+  --primary: #6b6359;
+  --primary-hover: #554d46;
+  --primary-foreground: #ffffff;
 
-  --muted: #F7F5F2;
-  --muted-foreground: #9A9490;
+  /* Secondary */
 
-  /* Border - Whisper-thin separation */
+  --secondary: #e8e3de;
+  --secondary-foreground: #3a3530;
 
-  --border: #E5DFD9;
+  /* Accent */
 
-  /* States - Soft, never jarring */
+  --accent: #a67c52;
+  --accent-hover: #956a42;
+  --accent-foreground: #ffffff;
 
-  --success: #7BA882;
-  --warning: #D4A366;
-  --destructive: #C9656F;
+  /* Muted */
 
-  --ring: #A67C52;
+  --muted: #f7f5f2;
+  --muted-foreground: #9a9490;
 
+  /* Border */
+
+  --border: #e5dfd9;
+
+  /* States */
+
+  --success: #7ba882;
+  --success-foreground: #ffffff;
+
+  --warning: #d4a366;
+  --warning-foreground: #2a2622;
+
+  --destructive: #c9656f;
+  --destructive-foreground: #ffffff;
+
+  /* Focus */
+
+  --ring: #a67c52;
 }
 
+/* ==========================================
+   Dark Theme
+========================================== */
 
 .dark {
+  /* Background */
 
-  --background: #1D1B18;
-  --foreground: #F1EFEC;
+  --background: #1d1b18;
+  --foreground: #f1efec;
+
+  /* Surfaces */
 
   --surface: #262320;
-  --surface-secondary: #2F2C28;
+  --surface-secondary: #2f2c28;
 
-  /* Primary - Lighter warm neutral for dark mode */
+  /* Card */
 
-  --primary: #9B8F84;
-  --primary-hover: #ACA199;
-  --primary-foreground: #1D1B18;
+  --card: #262320;
+  --card-foreground: #f1efec;
 
-  /* Accent - Warm terracotta glows in dark mode */
+  /* Popover / Dialog */
 
-  --accent: #B89968;
-  --accent-hover: #CAB182;
-  --accent-foreground: #1D1B18;
+  --popover: #262320;
+  --popover-foreground: #f1efec;
 
-  --secondary: #3A3530;
-  --secondary-foreground: #F1EFEC;
+  /* Input */
+
+  --input: rgba(255, 255, 255, 0.1);
+
+  /* Primary */
+
+  --primary: #9b8f84;
+  --primary-hover: #aca199;
+  --primary-foreground: #1d1b18;
+
+  /* Secondary */
+
+  --secondary: #3a3530;
+  --secondary-foreground: #f1efec;
+
+  /* Accent */
+
+  --accent: #b89968;
+  --accent-hover: #cab182;
+  --accent-foreground: #1d1b18;
+
+  /* Muted */
 
   --muted: #363230;
-  --muted-foreground: #B5AFA7;
+  --muted-foreground: #b5afa7;
 
-  --border: rgba(255,255,255,.05);
+  /* Border */
 
-  --success: #8FBB9D;
-  --warning: #E5B87D;
-  --destructive: #DD7A81;
+  --border: rgba(255, 255, 255, 0.08);
 
-  --ring: #B89968;
+  /* States */
 
+  --success: #8fbb9d;
+  --success-foreground: #1d1b18;
+
+  --warning: #e5b87d;
+  --warning-foreground: #1d1b18;
+
+  --destructive: #dd7a81;
+  --destructive-foreground: #1d1b18;
+
+  /* Focus */
+
+  --ring: #b89968;
 }
-
-
-/* #6b6359 */

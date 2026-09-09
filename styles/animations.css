@@ -1,5 +1,6 @@
-@theme inline {
+/* styles/animations.css */
 
+@theme inline {
   @keyframes fade-up {
     from {
       opacity: 0;
@@ -25,7 +26,7 @@
   @keyframes scale {
     from {
       opacity: 0;
-      transform: scale(.98);
+      transform: scale(0.98);
     }
 
     to {
@@ -34,12 +35,9 @@
     }
   }
 
-  --animate-fade-up:
-    fade-up .6s cubic-bezier(.22,.61,.36,1);
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  --animate-fade:
-    fade .4s ease;
+  --animate-fade: fade 0.4s ease;
 
-  --animate-scale:
-    scale .5s cubic-bezier(.22,.61,.36,1);
+  --animate-scale: scale 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }

@@ -48,14 +48,14 @@ export default function InternationalPage() {
             />
 
             <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild>
+              <Button>
                 <Link href="/experiences">
                   Explore journeys
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </Button>
 
-              <Button asChild variant="outline">
+              <Button variant="outline">
                 <Link href="/destinations">Where are we going?</Link>
               </Button>
             </div>
@@ -99,7 +99,7 @@ export default function InternationalPage() {
           </div>
 
           <div className="mt-8 md:hidden">
-            <Button asChild variant="outline" className="w-full">
+            <Button variant="outline" className="w-full">
               <Link href="/experiences">
                 View all journeys
                 <ArrowRight aria-hidden="true" className="size-4" />

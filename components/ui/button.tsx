@@ -1,80 +1,82 @@
-import * as React from 'react'
-import { Slot } from '@radix-ui/react-slot'
+import { Button as ButtonPrimitive } from '@base-ui/react/button'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from 'cn'
 
-import { cn } from '@/lib/utils'
-
-export const buttonVariants = cva(
+const buttonVariants = cva(
   [
-    'inline-flex items-center justify-center gap-2',
-    'whitespace-nowrap rounded-full',
-    'font-medium',
-    'transition-all duration-200',
-    'focus-visible:outline-none',
-    'focus-visible:ring-2',
-    'focus-visible:ring-ring',
-    'focus-visible:ring-offset-2',
-    'disabled:pointer-events-none',
-    'disabled:opacity-50',
-    'active:scale-[0.98]',
-    '[&_svg]:pointer-events-none',
-    '[&_svg]:size-4',
-    '[&_svg]:shrink-0',
+    'group/button inline-flex shrink-0 items-center justify-center',
+    'h-11 rounded-full',
+    'text-sm font-medium whitespace-nowrap',
+    'transition-[background-color,color,transform,opacity] duration-150 ease-out',
+    'outline-none select-none',
+    'focus-visible:ring-4 focus-visible:ring-ring/15',
+    'active:not-aria-[haspopup]:scale-[0.98]',
+    'disabled:pointer-events-none disabled:opacity-45',
+    'aria-invalid:ring-4 aria-invalid:ring-destructive/10',
+    '[&_svg]:pointer-events-none [&_svg]:shrink-0',
+    "[&_svg:not([class*='size-'])]:size-4",
   ].join(' '),
   {
     variants: {
       variant: {
-        primary:
-          'bg-primary text-primary-foreground hover:bg-primary-hover shadow-sm',
+        default:
+          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/85',
+
+        outline:
+          'bg-background text-foreground hover:bg-muted active:bg-muted/80',
 
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70',
 
-        outline: 'border border-border bg-transparent hover:bg-muted',
+        ghost:
+          'bg-transparent text-foreground hover:bg-muted active:bg-muted/80',
 
-        ghost: 'hover:bg-muted',
+        destructive:
+          'bg-destructive/10 text-destructive hover:bg-destructive/15 active:bg-destructive/20',
 
-        link: 'text-primary underline-offset-4 hover:underline',
+        link: 'h-auto rounded-none bg-transparent p-0 text-primary underline-offset-4 hover:underline',
       },
 
       size: {
-        sm: 'h-10 px-4 text-sm',
+        default:
+          'gap-2 px-5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4',
 
-        default: 'h-12 px-6',
+        xs: 'h-8 gap-1.5 px-3 text-xs',
 
-        lg: 'h-14 px-8 text-base',
+        sm: 'h-9 gap-1.5 px-4 text-[0.8rem]',
 
-        icon: 'size-12',
+        lg: 'h-12 gap-2 px-6 text-[0.95rem]',
+
+        icon: 'size-11',
+
+        'icon-xs': "size-8 [&_svg:not([class*='size-'])]:size-3",
+
+        'icon-sm': "size-9 [&_svg:not([class*='size-'])]:size-3.5",
+
+        'icon-lg': 'size-12',
       },
     },
 
     defaultVariants: {
-      variant: 'primary',
+      variant: 'default',
       size: 'default',
     },
   }
 )
 
-export interface ButtonProps
-  extends
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-}
-
-export function Button({
+function Button({
   className,
-  variant,
-  size,
-  asChild = false,
+  variant = 'default',
+  size = 'default',
   ...props
-}: ButtonProps) {
-  const Comp = asChild ? Slot : 'button'
-
+}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
   return (
-    <Comp
-      className={cn(buttonVariants({ variant, size }), className)}
+    <ButtonPrimitive
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
   )
 }
+
+export { Button, buttonVariants }

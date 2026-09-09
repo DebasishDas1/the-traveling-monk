@@ -61,16 +61,16 @@ export function HomepageHero() {
   }, [api])
 
   return (
-    <section className="pt-10">
+    <section className="pt-2">
       {/* Section header */}
-      <Container className="my-6 md:my-10 flex flex-col items-center gap-6">
+      <Container className="my-4 md:my-10 flex flex-col items-center gap-6">
         <Heading title="Go somewhere. Come back renewed." align="center" />
         <div className="flex gap-4">
-          <Button asChild>
+          <Button>
             <Link href="/experiences">Begin Your Reset</Link>
           </Button>
 
-          <Button asChild variant="outline">
+          <Button variant="secondary">
             <Link href="/contact">Explore Experiences</Link>
           </Button>
         </div>
@@ -89,11 +89,10 @@ export function HomepageHero() {
               <CarouselItem
                 key={slide.id}
                 className="
-                  basis-[78%]
+                  basis-[88%]
                   pl-2
-                  sm:basis-[76%]
-                  sm:pl-3
-                  lg:basis-[74%]
+                  md:basis-[70%]
+                  md:pl-2
                 "
               >
                 <HeroSlide slide={slide} priority={index === 0} />
@@ -264,7 +263,6 @@ function HeroSlide({ slide, priority = false }: HeroSlideProps) {
             </p>
 
             <Button
-              asChild
               size="lg"
               className="
                 h-11

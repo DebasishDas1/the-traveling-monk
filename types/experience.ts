@@ -60,13 +60,6 @@ export interface AvailableDateSlot {
   date: string
   spots: number
 }
-export interface BookingPayload {
-  slug: string;
-  date: string;
-  guests: number;
-  total: number;
-}
-
 // ─────────────────────────────────────────────
 // SOCIAL PROOF
 // ─────────────────────────────────────────────

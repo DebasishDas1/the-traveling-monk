@@ -1,20 +1,27 @@
-import { Button } from '@/components/ui/button';
-import { Minus, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button'
+import { Minus, Plus } from 'lucide-react'
 
 interface GuestPickerProps {
-  value: number;
-  max: number;
-  onDecrease: () => void;
-  onIncrease: () => void;
+  value: number
+  max: number
+  onDecrease: () => void
+  onIncrease: () => void
+  disabled?: boolean
 }
 
-export function GuestPicker({ value, max, onDecrease, onIncrease }: GuestPickerProps) {
+export function GuestPicker({
+  value,
+  max,
+  onDecrease,
+  onIncrease,
+  disabled,
+}: GuestPickerProps) {
   return (
     <div className="flex items-center gap-1">
       <Button
         size="icon"
         className="size-8 rounded-full"
-        disabled={value <= 1}
+        disabled={disabled || value <= 1}
         onClick={onDecrease}
         aria-label="Decrease guests"
       >
@@ -31,12 +38,12 @@ export function GuestPicker({ value, max, onDecrease, onIncrease }: GuestPickerP
       <Button
         size="icon"
         className="size-8 rounded-full"
-        disabled={value >= max}
+        disabled={disabled || value >= max}
         onClick={onIncrease}
         aria-label="Increase guests"
       >
         <Plus className="size-3.5" />
       </Button>
     </div>
-  );
+  )
 }

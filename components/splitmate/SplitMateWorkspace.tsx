@@ -18,15 +18,19 @@ import { formatMoney } from './money'
 function SplitMateWorkspaceComponent() {
   // Selectors – called unconditionally
   const group = useSplitMateStore((state: SplitMateState) => state.group)
-const expenses = useSplitMateStore((state: SplitMateState) => state.expenses)
-const removeExpense = useSplitMateStore((state: SplitMateState) => state.removeExpense)
+  const expenses = useSplitMateStore((state: SplitMateState) => state.expenses)
+  const removeExpense = useSplitMateStore(
+    (state: SplitMateState) => state.removeExpense
+  )
 
-  const [editingExpense, setEditingExpense] = useState<SplitMateExpense | null>(null)
+  const [editingExpense, setEditingExpense] = useState<SplitMateExpense | null>(
+    null
+  )
 
   // Memoised balances – safe even if group is undefined
   const balances = useMemo(
     () => (group ? calculateBalances(group.members, expenses) : []),
-    [group, expenses],
+    [group, expenses]
   )
 
   // Handlers – defined unconditionally
@@ -34,9 +38,12 @@ const removeExpense = useSplitMateStore((state: SplitMateState) => state.removeE
     setEditingExpense(expense)
   }, [])
 
-  const handleDelete = useCallback((id: string) => {
-    removeExpense(id)
-  }, [removeExpense])
+  const handleDelete = useCallback(
+    (id: string) => {
+      removeExpense(id)
+    },
+    [removeExpense]
+  )
 
   // Early return after hooks are called
   if (!group) return null
@@ -44,7 +51,7 @@ const removeExpense = useSplitMateStore((state: SplitMateState) => state.removeE
   return (
     <section className="mt-14 pb-24">
       {/* Group */}
-      <header className="bg-primary">
+      <header>
         <p className="text-sm text-muted-foreground">Group</p>
         <div className="mt-1 flex items-baseline justify-between gap-4">
           <h2 className="truncate text-3xl font-semibold tracking-tight">
@@ -77,27 +84,32 @@ const removeExpense = useSplitMateStore((state: SplitMateState) => state.removeE
             </p>
             <div className="mt-5">
               {balances.map((balance) => {
-                const member = group.members.find((m) => m.id === balance.memberId)
+                const member = group.members.find(
+                  (m) => m.id === balance.memberId
+                )
                 if (!member) return null
                 const isPositive = balance.netPaise > 0
                 const isNegative = balance.netPaise < 0
                 return (
-                  <div key={balance.memberId} className="flex items-center justify-between py-3">
+                  <div
+                    key={balance.memberId}
+                    className="flex items-center justify-between py-3"
+                  >
                     <span className="text-sm">{member.name}</span>
                     <span
                       className={
                         isPositive
                           ? 'text-sm font-medium tabular-nums'
                           : isNegative
-                          ? 'text-sm text-muted-foreground tabular-nums'
-                          : 'text-sm text-muted-foreground'
+                            ? 'text-sm text-muted-foreground tabular-nums'
+                            : 'text-sm text-muted-foreground'
                       }
                     >
                       {isPositive
                         ? `+${formatMoney(balance.netPaise)}`
                         : isNegative
-                        ? `-${formatMoney(Math.abs(balance.netPaise))}`
-                        : 'Settled'}
+                          ? `-${formatMoney(Math.abs(balance.netPaise))}`
+                          : 'Settled'}
                     </span>
                   </div>
                 )

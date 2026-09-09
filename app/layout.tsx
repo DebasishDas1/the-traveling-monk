@@ -6,12 +6,9 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 
 import './globals.css'
+import { cn } from "@/lib/utils";
 
-const geist = Geist({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-})
+const geist = Geist({subsets:['latin'],variable:'--font-sans'})
 
 const siteConfig = {
   name: 'The Traveling Monk',
@@ -94,7 +91,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <body className={`${geist.variable} font-sans antialiased`}>
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col bg-background">

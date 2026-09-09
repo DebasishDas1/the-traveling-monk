@@ -1,28 +1,31 @@
+// components/experience/BookingBar/BookingBar.tsx
 'use client'
 
 import { useCallback, useMemo, useState, memo } from 'react'
-
-import { toast } from 'sonner'
-
 import type { AvailableDateSlot } from '@/types/experience'
-
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { formatPrice } from '@/lib/utils'
-
+import { Loader2 } from 'lucide-react'
 import { DesktopDatePicker } from '@/components/experience/BookingBar/DesktopDatePicker'
 import { GuestPicker } from '@/components/experience/BookingBar/GuestPicker'
 import { PriceBlock } from '@/components/experience/BookingBar/PriceBlock'
 import { BookingSheet } from '@/components/experience/BookingBar/BookingSheet'
-import { submitBooking } from '@/utils/booking'
+import { BookingDetailsDialog } from '@/components/experience/BookingBar/BookingDetailsDialog'
+import { BookingDialog } from '@/components/experience/BookingBar/BookingDialog'
+import {
+  submitBooking,
+  validateBookingPayload,
+  type BookingResponse,
+} from '@/utils/booking'
 
 interface BookingBarProps {
   slug: string
   title: string
   price: number
   priceLabel: string
-  availableDates: AvailableDateSlot[] | null
+  availableDates?: AvailableDateSlot[] | null
   maxGuests: number
 }
 
@@ -34,25 +37,21 @@ export function BookingBar({
   availableDates,
   maxGuests,
 }: BookingBarProps) {
-  const dates = useMemo(() => availableDates ?? [], [availableDates]);
-  const hasDates = useMemo(() => dates.length > 0, [dates]);
-  const priceFormatted = useMemo(() => formatPrice(price), [price]);
-
+  const priceFormatted = useMemo(() => formatPrice(price), [price])
 
   const [selectedDate, setSelectedDate] = useState('')
   const [guests, setGuests] = useState(1)
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
   const [sheetOpen, setSheetOpen] = useState(false)
-
-
-  const selectedDateValue = useMemo(
-    () =>
-      dates.find(({ date }) => date === selectedDate)?.date ??
-      dates[0]?.date ??
-      '',
-    [dates, selectedDate]
+  const [detailsDialogOpen, setDetailsDialogOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogResponse, setDialogResponse] = useState<BookingResponse | null>(
+    null
   )
 
-  const total = price * guests
+  const total = useMemo(() => price * guests, [price, guests])
 
   const decreaseGuests = useCallback(() => {
     setGuests((current) => Math.max(1, current - 1))
@@ -66,25 +65,69 @@ export function BookingBar({
     setSelectedDate(date)
   }, [])
 
-  const handleBook = useCallback(async () => {
-    if (!selectedDateValue || !hasDates) return
+  const handleDesktopBook = useCallback(() => {
+    if (!selectedDate) return
+    setDetailsDialogOpen(true)
+  }, [selectedDate])
+
+  const handleConfirmBooking = useCallback(async () => {
+    if (!selectedDate || !name || !phone || isLoading) return
+
+    const validationError = validateBookingPayload({
+      slug,
+      date: selectedDate,
+      guests,
+      total,
+      name,
+      phone,
+    })
+
+    if (validationError) {
+      setDialogResponse({
+        success: false,
+        message: validationError,
+      })
+      setDialogOpen(true)
+      setDetailsDialogOpen(false)
+      return
+    }
+
+    setIsLoading(true)
+
     try {
-      const payload = {
+      const response = await submitBooking({
         slug,
-        date: selectedDateValue,
+        date: selectedDate,
         guests,
         total,
-      }
-      const response = await submitBooking(payload)
+        name,
+        phone,
+      })
+
+      setDialogResponse(response)
+      setDialogOpen(true)
+      setDetailsDialogOpen(false)
+
       if (response.success) {
-        toast.success('Booking successful!')
-      } else {
-        toast.error(response.message || 'Booking failed')
+        setSelectedDate('')
+        setGuests(1)
+        setName('')
+        setPhone('')
+        setSheetOpen(false)
       }
     } catch (error) {
-      toast.error('Unable to complete booking')
+      console.error('Booking error:', error)
+      setDialogResponse({
+        success: false,
+        message: 'Unable to complete booking. Please try again.',
+      })
+      setDialogOpen(true)
+    } finally {
+      setIsLoading(false)
     }
-  }, [slug, selectedDateValue, guests, total, hasDates])
+  }, [slug, selectedDate, guests, total, name, phone, isLoading])
+
+  const isDesktopBookingDisabled = !selectedDate
 
   return (
     <>
@@ -92,14 +135,12 @@ export function BookingBar({
       <div className="fixed inset-x-0 bottom-0 z-50 hidden px-4 pb-4 md:block">
         <Card className="mx-auto max-w-5xl rounded-2xl shadow-lg bg-white">
           <CardContent className="flex min-h-16 items-center gap-2 p-3">
-
             <div className="min-w-0 flex-1 px-3">
               <p className="truncate text-lg font-semibold">{title}</p>
             </div>
             <Separator orientation="vertical" className="h-8" />
             <DesktopDatePicker
-              dates={dates}
-              value={selectedDateValue}
+              value={selectedDate}
               onChange={handleDateChange}
             />
             <Separator orientation="vertical" className="h-8" />
@@ -115,10 +156,17 @@ export function BookingBar({
             <Button
               type="button"
               className="h-10 shrink-0 rounded-xl px-5"
-              disabled={!hasDates}
-              onClick={handleBook}
+              disabled={isDesktopBookingDisabled || isLoading}
+              onClick={handleDesktopBook}
             >
-              Book now
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Booking...
+                </>
+              ) : (
+                'Book now'
+              )}
             </Button>
           </CardContent>
         </Card>
@@ -136,11 +184,7 @@ export function BookingBar({
               </span>
             </p>
           </div>
-          <Button
-            type="button"
-            disabled={!hasDates}
-            onClick={() => setSheetOpen(true)}
-          >
+          <Button type="button" onClick={() => setSheetOpen(true)}>
             Book now
           </Button>
         </div>
@@ -153,18 +197,41 @@ export function BookingBar({
         title={title}
         price={price}
         priceLabel={priceLabel}
-        dates={dates}
-        selectedDateValue={selectedDateValue}
+        selectedDateValue={selectedDate}
         guests={guests}
         maxGuests={maxGuests}
+        name={name}
+        phone={phone}
         onDateChange={handleDateChange}
         onDecrease={decreaseGuests}
         onIncrease={increaseGuests}
+        onNameChange={setName}
+        onPhoneChange={setPhone}
         total={total}
-        onBook={handleBook}
+        onBook={handleConfirmBooking}
+        isLoading={isLoading}
+      />
+
+      {/* Desktop details dialog */}
+      <BookingDetailsDialog
+        open={detailsDialogOpen}
+        onOpenChange={setDetailsDialogOpen}
+        name={name}
+        phone={phone}
+        onNameChange={setName}
+        onPhoneChange={setPhone}
+        onSubmit={handleConfirmBooking}
+        isLoading={isLoading}
+      />
+
+      {/* Booking Result Dialog */}
+      <BookingDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        response={dialogResponse}
       />
     </>
   )
 }
 
-export default memo(BookingBar);
+export default memo(BookingBar)

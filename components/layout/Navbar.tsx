@@ -319,7 +319,6 @@ export function Navbar() {
                   ======================================================= */}
                   <div className="pt-7">
                     <Button
-                      asChild
                       size="lg"
                       className={cn(
                         'h-13 w-full rounded-full',

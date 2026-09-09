@@ -227,7 +227,6 @@ function SocialShareContent({
           {socialPlatforms.map(({ name, href, label }) => (
             <Button
               key={name}
-              asChild
               variant="outline"
               className="h-10 rounded-lg text-sm"
             >

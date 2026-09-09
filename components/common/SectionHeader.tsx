@@ -46,8 +46,8 @@ export function SectionHeader({
       </Stack>
 
       {action && (
-        <Button asChild variant="ghost" className="group">
-          <Link href={action.href}>
+        <Button variant="outline" className="group">
+          <Link href={action.href} className="flex items-center">
             {action.label}
             <ArrowRight className="ml-2 size-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>

@@ -1,8 +1,24 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
-@import "../styles/tokens.css";
-@import "../styles/utilities.css";
-@import "../styles/animations.css";
+@import '../styles/tokens.css';
+@import '../styles/utilities.css';
+@import '../styles/animations.css';
+
+@import 'shadcn/tailwind.css';
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

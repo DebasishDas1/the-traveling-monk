@@ -60,22 +60,20 @@ export function ReviewsSection({
           />
 
           <DialogContent>
-            <div className="p-6 sm:p-7">
-              <DialogHeader className="mb-6 pr-8">
-                <DialogTitle className="text-xl font-semibold tracking-tight">
-                  Add Review
-                </DialogTitle>
+            <DialogHeader className="mb-6 pr-8">
+              <DialogTitle className="text-xl font-semibold tracking-tight">
+                Add Review
+              </DialogTitle>
 
-                <DialogDescription className="mt-1">
-                  Share your experience with other travelers.
-                </DialogDescription>
-              </DialogHeader>
+              <DialogDescription className="mt-1">
+                Share your experience with other travelers.
+              </DialogDescription>
+            </DialogHeader>
 
-              <ReviewForm
-                experienceId={experienceId}
-                onSuccess={() => setOpen(false)}
-              />
-            </div>
+            <ReviewForm
+              experienceId={experienceId}
+              onSuccess={() => setOpen(false)}
+            />
           </DialogContent>
         </Dialog>
       </div>

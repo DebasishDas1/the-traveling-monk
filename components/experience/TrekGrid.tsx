@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { TrekCard } from './TrekCard'
 import { Button } from '@/components/ui/button'
 import { DifficultyLevel, type Trek } from '@/types/experience'
-import { cn } from '@/lib/utils'
 
 interface TrekGridProps {
   treks: Trek[]
@@ -46,15 +45,10 @@ export function TrekGrid({ treks }: TrekGridProps) {
             return (
               <Button
                 key={filter.value}
-                type="button"
                 size="sm"
-                variant={isActive ? 'primary' : 'outline'}
                 onClick={() => setActiveFilter(filter.value)}
                 aria-pressed={isActive}
-                className={cn(
-                  'shrink-0 rounded-full px-4 text-xs',
-                  isActive && 'bg-foreground text-background'
-                )}
+                variant={isActive ? 'default' : 'secondary'}
               >
                 {filter.label}
               </Button>

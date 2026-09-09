@@ -31,6 +31,9 @@ interface MediaProps extends Omit<
   objectPosition?: string
   wrapperClassName?: string
   priority?: boolean
+  // Default sizes follow a responsive pattern to avoid Next.js fill warnings
+  // Adjust as needed per layout. This provides 100vw up to 768px breakpoint.
+  // You can override via the `sizes` prop when using Media.
 }
 
 export function Media({
@@ -42,7 +45,8 @@ export function Media({
   className,
   wrapperClassName,
   priority = false,
-  sizes = '100vw',
+  // Use responsive sizes to avoid fill warnings – up to 640px width
+  sizes = '(max-width: 640px) 100vw, 640px',
   ...props
 }: MediaProps) {
   return (

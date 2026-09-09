@@ -1,6 +1,13 @@
 import type { Metadata } from 'next'
 
-import { Container, CtaSection, Heading, Section } from '@/components/common'
+import {
+  Container,
+  CtaSection,
+  Heading,
+  Media,
+  MediaHeading,
+  Section,
+} from '@/components/common'
 
 import { StoryCard } from '@/components/experience/StoryCard'
 import { stories, quoteList } from '@/lib/data/stories-page'
@@ -34,19 +41,23 @@ export default function StoriesPage() {
   return (
     <main>
       {/* Hero */}
-      <Section>
-        <Container>
-          <div className="mx-auto max-w-5xl">
-            <Heading
-              eyebrow="Stories from the road"
-              title="The places we go. The people we meet. The things that stay with us."
-              description="Stories about travel, friendship, stillness, adventure, and finding your way back to yourself."
-              size="display"
-              align="center"
+      <Container>
+        <MediaHeading
+          eyebrow="Stories from the road"
+          title="The places we go. The people we meet. The things that stay with us."
+          description="Stories about travel, friendship, stillness, adventure, and finding your way back to yourself."
+          size="display"
+          image={
+            <Media
+              src="/illustrations/group-discussion.png"
+              alt="Travellers discussing their journey"
+              ratio="1/1"
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
-          </div>
-        </Container>
-      </Section>
+          }
+        />
+      </Container>
 
       {/* Journal */}
       <Container>
