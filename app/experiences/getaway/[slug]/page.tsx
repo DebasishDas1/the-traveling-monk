@@ -345,7 +345,7 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
         title="Maybe this is exactly what you needed."
         description="Come for a few nights. Leave with a little more space in your head."
         buttonText="Start planning"
-        link="/bookings"
+        link="/experiences"
       />
       {/* BOOKING BAR */}
       <BookingBar

@@ -44,6 +44,10 @@ export const siteConfig = {
       label: 'Contact',
       href: '/contact',
     },
+    {
+      label: 'FAQ',
+      href: '/faq',
+    },
   ],
 
   cta: {

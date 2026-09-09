@@ -49,14 +49,17 @@ export default function InternationalPage() {
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Button>
-                <Link href="/experiences">
+                <Link href="/experiences" className="flex items-center gap-2">
                   Explore journeys
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </Button>
 
-              <Button variant="outline">
-                <Link href="/destinations">Where are we going?</Link>
+              <Button variant="secondary">
+                <Link href="/stories" className="flex items-center gap-2">
+                  Where are we going?
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
               </Button>
             </div>
           </div>

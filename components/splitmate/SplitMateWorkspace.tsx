@@ -49,7 +49,7 @@ function SplitMateWorkspaceComponent() {
   if (!group) return null
 
   return (
-    <section className="mt-14 pb-24">
+    <section className="pt-10 h-screen">
       {/* Group */}
       <header>
         <p className="text-sm text-muted-foreground">Group</p>

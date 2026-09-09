@@ -26,5 +26,10 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
     ],
+    shortcuts: [
+      { name: "Experiences", url: "/experiences", description: "Explore travel experiences" },
+      { name: "Contact", url: "/contact", description: "Get in touch" },
+    ],
+    categories: ["travel", "adventure", "trekking"],
   };
 }

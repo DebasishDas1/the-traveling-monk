@@ -1,18 +1,18 @@
+// components/experience/StoryCard.tsx
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-
 import { Media } from '@/components/common'
-import type { Story } from '@/lib/data/stories-page'
+import type { UserStory } from '@/types/story'
 
 interface StoryCardProps {
-  story: Story
+  story: UserStory
 }
 
 export function StoryCard({ story }: StoryCardProps) {
   return (
     <article className="group">
       <Link
-        href={`/stories/${story.slug}`}
+        href={`/stories/${story.id}`}
         aria-label={`Read: ${story.title}`}
         className="
           block
@@ -23,24 +23,30 @@ export function StoryCard({ story }: StoryCardProps) {
           focus-visible:ring-offset-4
         "
       >
-        {/* Image */}
-        <div className="overflow-hidden rounded-2xl bg-muted">
-          <Media
-            src={story.image}
-            alt={story.imageAlt || story.title}
-            ratio="4/5"
-            sizes="
-              (max-width: 640px) 100vw,
-              (max-width: 1024px) 50vw,
-              33vw
-            "
-            className="
-              transition-transform
-              duration-500
-              ease-out
-              group-hover:scale-[1.025]
-            "
-          />
+        {/* Image or Placeholder */}
+        <div className="overflow-hidden rounded-2xl bg-muted h-64 sm:h-72">
+          {story.imageUrl ? (
+            <Media
+              src={story.imageUrl}
+              alt={story.title}
+              ratio="4/5"
+              sizes="
+                (max-width: 640px) 100vw,
+                (max-width: 1024px) 50vw,
+                33vw
+              "
+              className="
+                transition-transform
+                duration-500
+                ease-out
+                group-hover:scale-[1.025]
+              "
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
+              <span className="text-muted-foreground text-sm">No image</span>
+            </div>
+          )}
         </div>
 
         {/* Content */}
@@ -48,11 +54,9 @@ export function StoryCard({ story }: StoryCardProps) {
           {/* Meta */}
           <div className="flex min-w-0 items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground sm:text-xs">
             <span className="truncate">{story.category}</span>
-
             <span aria-hidden="true" className="shrink-0">
               ·
             </span>
-
             <span className="truncate">{story.location}</span>
           </div>
 
@@ -99,18 +103,12 @@ export function StoryCard({ story }: StoryCardProps) {
           </div>
 
           {/* Excerpt */}
-          {story.excerpt && (
-            <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
-              {story.excerpt}
-            </p>
-          )}
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
+            {story.excerpt}
+          </p>
 
-          {/* Read time */}
-          {story.readTime && (
-            <p className="mt-3 text-xs text-muted-foreground">
-              {story.readTime}
-            </p>
-          )}
+          {/* Author */}
+          <p className="mt-3 text-xs text-muted-foreground">By {story.name}</p>
         </div>
       </Link>
     </article>

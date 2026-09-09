@@ -1,9 +1,32 @@
 import Link from 'next/link'
 import { Backpack, CalendarDays, Wallet } from 'lucide-react'
-
+import { Metadata } from 'next'
+import { siteConfig } from '@/config/site'
 import { Container, Media, MediaHeading } from '@/components/common'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+
+export const metadata: Metadata = {
+  title: `Tools – ${siteConfig.name}`,
+  description: 'Explore travel tools that make your trips easier.',
+  openGraph: {
+    title: `Tools – ${siteConfig.name}`,
+    description: 'Explore travel tools that make your trips easier.',
+    url: `${siteConfig.url}/tools`,
+    siteName: siteConfig.name,
+    images: [
+      { url: '/og-image.jpg', width: 1200, height: 630, alt: siteConfig.name },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Tools – ${siteConfig.name}`,
+    description: 'Explore travel tools that make your trips easier.',
+    images: ['/og-image.jpg'],
+  },
+}
 
 const toolList = [
   {

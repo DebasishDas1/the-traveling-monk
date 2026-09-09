@@ -11,7 +11,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import { formatPrice } from '@/lib/utils'
 import type { BookingResponse } from '@/utils/booking'
 
 interface BookingDialogProps {
@@ -34,16 +33,6 @@ export function BookingDialog({
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-      })
-    : null
-
-  const formattedTimestamp = data?.timestamp
-    ? new Date(data.timestamp).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
       })
     : null
 
@@ -106,6 +95,7 @@ export function BookingDialog({
                 sm:text-[26px]
               "
           >
+            {isSuccess && data && <div>Hi {response.data?.name}</div>}
             {isSuccess ? 'Enquiry Confirmed!' : 'Enquiry Unsuccessful'}
           </DialogTitle>
 
@@ -144,29 +134,12 @@ export function BookingDialog({
               <span className="truncate">{formattedDate}</span>
             </DetailCard>
 
-            {/* <DetailCard
-                icon={<Users className="h-4.25 w-4.25" />}
-                label="Guests"
-              >
-                <span className="truncate">{response.}</span>
-              </DetailCard> */}
-
             <DetailCard
               icon={<Users className="h-4.25 w-4.25" />}
               label="Guests"
             >
               {data.guests} {data.guests === 1 ? 'guest' : 'guests'}
             </DetailCard>
-
-            {/* Timestamp */}
-            {formattedTimestamp && (
-              <div className="pt-1 text-center text-[10px] text-muted-foreground sm:text-[11px]">
-                Booked on {formattedTimestamp}
-                <div className="mt-2 text-3xl font-black">
-                  {formatPrice(data.total)}
-                </div>
-              </div>
-            )}
           </div>
         )}
 

@@ -103,6 +103,9 @@ export function InternationalTripCard({
           <div className="mt-4 flex items-baseline gap-2">
             <span className="text-xl font-semibold tracking-tight sm:text-2xl">
               {formatPrice(experience.priceFrom)}
+              <span className="ml-3 text-2xl font-normal text-muted-foreground line-through">
+                {formatPrice(experience.priceFrom * 1.25)}
+              </span>
             </span>
 
             <span className="text-xs text-muted-foreground">/ traveler</span>

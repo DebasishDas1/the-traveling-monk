@@ -160,27 +160,15 @@ export function GetawayCard({ experience }: GetawayCardProps) {
           </div>
 
           {/* Price */}
-          <div className="mt-4 flex items-end justify-between">
-            <div className="min-w-0">
-              <div className="flex items-baseline gap-1.5">
-                <span
-                  className="
-                    text-xl
-                    font-semibold
-                    tracking-tight
-                    sm:text-2xl
-                  "
-                >
-                  {formatPrice(price)}
-                </span>
+          <div className="mt-4 flex items-baseline gap-2">
+            <span className="text-xl font-semibold tracking-tight sm:text-2xl">
+              {formatPrice(price)}
+              <span className="ml-3 text-2xl font-normal text-muted-foreground line-through">
+                {formatPrice(price * 1.25)}
+              </span>
+            </span>
 
-                <span className="text-xs text-muted-foreground">/ night</span>
-              </div>
-
-              <p className="mt-0.5 text-[11px] text-muted-foreground">
-                Per room
-              </p>
-            </div>
+            <span className="text-xs text-muted-foreground">/ traveler</span>
           </div>
         </div>
       </Link>

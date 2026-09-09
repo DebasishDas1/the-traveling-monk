@@ -34,13 +34,13 @@ export const categories = [
   {
     label: 'Getaways',
     description: 'Stay somewhere that feels like nowhere else.',
-    href: '/getaways',
-    image: '/illustrations/getaway.png',
+    href: '/experiences/getaway',
+    image: '/illustrations/country-side.svg',
   },
   {
     label: 'International Trips',
     description: 'Go somewhere unfamiliar. Come back different.',
-    href: '/international',
+    href: '/experiences/international',
     image: '/illustrations/Around the world-amico.png',
   },
 ] as const

@@ -90,8 +90,8 @@ export function HomepageHero() {
                 key={slide.id}
                 className="
                   basis-[88%]
-                  pl-2
-                  md:basis-[70%]
+                  pl-1
+                  md:basis-[75%]
                   md:pl-2
                 "
               >

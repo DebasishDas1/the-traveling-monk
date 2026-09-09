@@ -50,27 +50,25 @@ export default function AboutPage() {
       {/* =====================================================
           HERO
       ====================================================== */}
-      <Section className="pt-12 md:pt-20 lg:pt-28">
-        <Container>
-          <Heading
-            eyebrow="About The Traveling Monk"
-            title="Travel was never just about going somewhere."
-            description="Sometimes you leave home because you need to find your way back to yourself."
-            size="display"
-            align="center"
-          />
+      <Container className="pt-12">
+        <Heading
+          eyebrow="About The Traveling Monk"
+          title="Travel was never just about going somewhere."
+          description="Sometimes you leave home because you need to find your way back to yourself."
+          size="display"
+          align="center"
+        />
 
-          <div className="mt-12 overflow-hidden rounded-[1.5rem] md:mt-20 md:rounded-[2rem]">
-            <Media
-              src="/images/about/about-hero-2.png"
-              alt="Travellers walking through a mountain landscape"
-              ratio="16/9"
-              priority
-              sizes="(max-width: 768px) 100vw, 1200px"
-            />
-          </div>
-        </Container>
-      </Section>
+        <div className="mt-6">
+          <Media
+            src="/images/about/about-hero-2.png"
+            alt="Travellers walking through a mountain landscape"
+            ratio="16/9"
+            priority
+            sizes="(max-width: 768px) 100vw, 1200px"
+          />
+        </div>
+      </Container>
 
       {/* =====================================================
           FOUNDERS
