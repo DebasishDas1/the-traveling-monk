@@ -13,12 +13,14 @@ import { cn } from "@/lib/utils";
  */
 export function ResponsiveImage({
   sizes = "(max-width: 640px) 100vw, 640px",
+  alt = "",
   className,
   ...props
 }: ImageProps) {
   return (
     <Image
       {...props}
+      alt={alt}
       sizes={sizes}
       className={cn("object-cover", className)}
     />

@@ -150,7 +150,7 @@ export function StorySubmissionDialog({
                 <Input
                   id="name"
                   name="name"
-                  placeholder="John Doe"
+                  placeholder="Debasish Das"
                   value={formData.name}
                   onChange={handleChange}
                   disabled={isLoading}

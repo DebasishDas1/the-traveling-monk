@@ -3,41 +3,10 @@ import { BedDouble, Clock, MapPin } from 'lucide-react'
 
 import type { Getaway } from '@/types/experience'
 import { Media } from '@/components/common'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice, getImage } from '@/lib/utils'
 
 interface GetawayCardProps {
   experience: Getaway
-}
-
-function getImage(
-  image: Getaway['gallery'][number] | undefined,
-  fallbackAlt: string
-) {
-  if (!image) return null
-
-  if (typeof image === 'string') {
-    return {
-      src: image,
-      alt: fallbackAlt,
-    }
-  }
-
-  // Handle image objects with src or url
-  if ('url' in image) {
-    return {
-      src: image.url,
-      alt: image.alt || fallbackAlt,
-    }
-  }
-
-  if ('src' in image) {
-    return {
-      src: image.src,
-      alt: image.alt || fallbackAlt,
-    }
-  }
-
-  return null
 }
 
 export function GetawayCard({ experience }: GetawayCardProps) {

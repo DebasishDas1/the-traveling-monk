@@ -6,10 +6,12 @@ import {
 } from '@/components/ui/popover'
 import { CalendarDays } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
+import type { AvailableDateSlot } from '@/types/experience'
 
 interface DesktopDatePickerProps {
   value: string
   onChange: (value: string) => void
+  availableDates?: AvailableDateSlot[] | null
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en-IN', {
@@ -34,7 +36,11 @@ function formatDateToISO(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 }
 
-export function DesktopDatePicker({ value, onChange }: DesktopDatePickerProps) {
+export function DesktopDatePicker({
+  value,
+  onChange,
+  availableDates,
+}: DesktopDatePickerProps) {
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
       onChange(formatDateToISO(date))
@@ -68,7 +74,15 @@ export function DesktopDatePicker({ value, onChange }: DesktopDatePickerProps) {
           mode="single"
           selected={selectedDate}
           onSelect={handleDateSelect}
-          disabled={{ before: new Date() }}
+          disabled={(date) => {
+            if (date < new Date()) return true
+            if (!availableDates?.length) return false
+
+            const dateValue = formatDateToISO(date)
+            return !availableDates.some(
+              (slot) => slot.date === dateValue && slot.spots > 0
+            )
+          }}
           // initialFocus
         />
       </PopoverContent>

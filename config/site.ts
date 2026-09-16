@@ -3,7 +3,7 @@ export const siteConfig = {
 
   description: 'Travel with old friends. Return renewed.',
 
-  url: 'https://thetravelingmonk.com',
+  url: 'https://thetravelingmonk.in',
 
   navLinks: [
     {

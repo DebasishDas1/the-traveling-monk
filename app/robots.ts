@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { siteConfig } from "@/config/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -13,6 +14,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/", "/static/"],
       }
     ],
-    sitemap: "https://www.thetravelingmonk.in/sitemap.xml",
+    sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }

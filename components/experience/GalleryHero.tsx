@@ -67,6 +67,7 @@ export const GalleryHero = ({
                   alt={heroImage.alt}
                   className="h-full w-full object-cover"
                   radius="none"
+                  priority
                 />
               )}
 
@@ -118,7 +119,6 @@ export const GalleryHero = ({
                     alt={secondaryImage.alt}
                     className="h-full w-full object-cover"
                     radius="none"
-                    priority
                   />
                 </div>
               )}

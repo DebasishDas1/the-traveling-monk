@@ -142,6 +142,7 @@ export function BookingBar({
             <DesktopDatePicker
               value={selectedDate}
               onChange={handleDateChange}
+              availableDates={availableDates}
             />
             <Separator orientation="vertical" className="h-8" />
             <GuestPicker
@@ -195,8 +196,7 @@ export function BookingBar({
         open={sheetOpen}
         setOpen={setSheetOpen}
         title={title}
-        price={price}
-        priceLabel={priceLabel}
+        availableDates={availableDates}
         selectedDateValue={selectedDate}
         guests={guests}
         maxGuests={maxGuests}

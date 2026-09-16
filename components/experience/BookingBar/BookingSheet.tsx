@@ -12,13 +12,13 @@ import { Calendar } from '@/components/ui/calendar'
 import { GuestPicker } from './GuestPicker'
 import { formatPrice } from '@/lib/utils'
 import { Users, Loader2 } from 'lucide-react'
+import type { AvailableDateSlot } from '@/types/experience'
 
 interface BookingSheetProps {
   open: boolean
   setOpen: (open: boolean) => void
   title: string
-  price: number
-  priceLabel: string
+  availableDates?: AvailableDateSlot[] | null
   selectedDateValue: string
   guests: number
   maxGuests: number
@@ -49,8 +49,7 @@ export function BookingSheet({
   open,
   setOpen,
   title,
-  price,
-  priceLabel,
+  availableDates,
   selectedDateValue,
   guests,
   maxGuests,
@@ -131,7 +130,15 @@ export function BookingSheet({
               mode="single"
               selected={selectedDate}
               onSelect={handleDateSelect}
-              disabled={{ before: new Date() }}
+              disabled={(date) => {
+                if (date < new Date()) return true
+                if (!availableDates?.length) return false
+
+                const dateValue = formatDateToISO(date)
+                return !availableDates.some(
+                  (slot) => slot.date === dateValue && slot.spots > 0
+                )
+              }}
               className="w-full"
             />
           </div>

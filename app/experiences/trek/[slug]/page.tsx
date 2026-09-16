@@ -397,7 +397,7 @@ export default async function TrekPage({ params }: TrekPageProps) {
           title="Completed this trek?"
           description="Upload your photo, generate a badge, and share with your community."
           buttonText="Share your completion"
-          link="/experiences"
+          link={`/completion/${trek.slug}`}          
         />
       </Section>
 

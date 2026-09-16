@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import MetaTags from '@/components/seo/MetaTags'
 import { Geist } from 'next/font/google'
 
 import { ThemeProvider } from '@/components/providers/theme-provider'
@@ -13,6 +12,18 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'})
 
 import { siteConfig } from '@/config/site'
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}/logo.png`,
+  sameAs: [
+    'https://twitter.com/thetravelingmonk',
+    'https://www.facebook.com/thetravelingmonk',
+    'https://www.instagram.com/thetravelingmonk',
+  ],
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -21,6 +32,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
   keywords: ['travel', 'trek', 'adventure', 'getaway', 'the traveling monk'],
   openGraph: {
     type: 'website',
@@ -47,11 +61,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
-        <head>
-          {/* Global SEO meta tags */}
-          <MetaTags />
-        </head>
         <body className={`${geist.variable} font-sans antialiased`}>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(organizationJsonLd),
+            }}
+          />
           <ThemeProvider>
             <div className="relative flex min-h-screen flex-col bg-background">
               <Navbar />
