@@ -139,6 +139,15 @@ export interface BaseExperience {
   active: boolean
 }
 
+export interface TrekCoordinate {
+  latitude: number
+  longitude: number
+}
+
+export interface TrekRoute {
+  coordinates: TrekCoordinate[]
+}
+
 // ─────────────────────────────────────────────
 // TREK
 // ─────────────────────────────────────────────
@@ -164,6 +173,8 @@ export interface Trek extends BaseExperience {
   itinerary?: TrekTimelineItem[]
   season?: Season[]
   geoLocation?: string
+
+  route?: TrekRoute
 }
 
 // ─────────────────────────────────────────────

@@ -20,6 +20,7 @@ export interface SplitMateExpense {
   participants: string[]
   splitType: SplitType
   createdAt: string
+  updatedAt?: string
 }
 
 export interface SplitMateSettlement {

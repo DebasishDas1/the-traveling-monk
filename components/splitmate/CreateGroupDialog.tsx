@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, Plus, User, X } from 'lucide-react'
+import { ArrowRight, Plus, User, X, Loader } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
@@ -21,7 +21,8 @@ import {
 } from '@/components/ui/dialog'
 
 import { useSplitMateStore } from '@/store/splitmate.store'
-import type { SplitMateMember } from '@/types/splitmate'
+import { useFirebaseGroupOperations } from '@/hooks/useFirebaseSync'
+import type { SplitMateMember, SplitMateGroup } from '@/types/splitmate'
 
 export function CreateGroupDialog() {
   const [open, setOpen] = useState(false)
@@ -31,6 +32,7 @@ export function CreateGroupDialog() {
   const [memberName, setMemberName] = useState('')
 
   const setGroup = useSplitMateStore((state) => state.setGroup)
+  const { createGroup, isLoading } = useFirebaseGroupOperations()
 
   const canContinue =
     groupName.trim().length > 0 && creatorName.trim().length > 0
@@ -62,10 +64,10 @@ export function CreateGroupDialog() {
     setMemberName('')
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (!canContinue) return
 
-    setGroup({
+    const newGroup: SplitMateGroup = {
       id: crypto.randomUUID(),
       name: groupName.trim(),
       members: [
@@ -75,9 +77,20 @@ export function CreateGroupDialog() {
         },
         ...members,
       ],
-    })
+    }
 
-    setOpen(false)
+    try {
+      // Save to Firebase
+      await createGroup(newGroup)
+
+      // Update local state
+      setGroup(newGroup)
+
+      setOpen(false)
+      resetForm()
+    } catch (error) {
+      console.error('Failed to create group:', error)
+    }
   }
 
   const handleOpenChange = (nextOpen: boolean) => {
@@ -226,11 +239,12 @@ export function CreateGroupDialog() {
         <DialogFooter className="pt-2">
           <Button
             className="w-full rounded-xl sm:w-auto"
-            disabled={!canContinue}
+            disabled={!canContinue || isLoading}
             onClick={handleCreate}
           >
+            {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
             Continue
-            <ArrowRight />
+            {!isLoading && <ArrowRight />}
           </Button>
         </DialogFooter>
       </DialogContent>

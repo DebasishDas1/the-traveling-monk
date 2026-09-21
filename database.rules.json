@@ -1,0 +1,72 @@
+{
+  "rules": {
+    "groups": {
+      "$groupId": {
+        ".read": true,
+        ".write": true,
+        
+        ".validate": "newData.hasChildren(['id', 'name', 'members'])",
+        
+        "id": {
+          ".validate": "newData.isString()"
+        },
+        
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+        },
+        
+        "members": {
+          ".validate": "newData.isArray() && newData.val().length >= 1"
+        },
+        
+        "expenses": {
+          "$expenseId": {
+            ".validate": "newData.hasChildren(['id', 'description', 'amountPaise', 'paidBy', 'participants'])",
+            
+            "id": {
+              ".validate": "newData.isString()"
+            },
+            
+            "description": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+            },
+            
+            "amountPaise": {
+              ".validate": "newData.isNumber() && newData.val() > 0"
+            },
+            
+            "paidBy": {
+              ".validate": "newData.isString()"
+            },
+            
+            "participants": {
+              ".validate": "newData.isArray() && newData.val().length >= 1"
+            },
+            
+            "splitType": {
+              ".validate": "newData.isString() && (newData.val() === 'equal' || newData.val() === 'exact' || newData.val() === 'percentage' || newData.val() === 'shares')"
+            },
+            
+            "currency": {
+              ".validate": "newData.isString() && newData.val().length === 3"
+            }
+          }
+        },
+        
+        "settlements": {
+          "$settlementId": {
+            ".validate": "newData.hasChildren(['id', 'from', 'to', 'amountPaise'])",
+            
+            "amountPaise": {
+              ".validate": "newData.isNumber() && newData.val() > 0"
+            },
+            
+            "paid": {
+              ".validate": "newData.isBoolean()"
+            }
+          }
+        }
+      }
+    }
+  }
+}

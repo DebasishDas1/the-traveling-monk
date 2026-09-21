@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Backpack, CalendarDays, Wallet } from 'lucide-react'
+import { Backpack, CalendarDays, Wallet, Waypoints } from 'lucide-react'
 import { Metadata } from 'next'
 import { siteConfig } from '@/config/site'
 import { Container, Media, MediaHeading } from '@/components/common'
@@ -37,17 +37,24 @@ const toolList = [
     available: true,
   },
   {
-    title: 'PlanMate',
+    title: 'MonkPath',
+    description: 'Plan the trip together, without the chaos.',
+    icon: Waypoints,
+    href: '/tools/monkpath',
+    available: true,
+  },
+  {
+    title: 'MonkPlan',
     description: 'Plan the trip together, without the chaos.',
     icon: CalendarDays,
-    href: '/tools/planmate',
+    href: '/tools/monkplan',
     available: false,
   },
   {
-    title: 'PackMate',
+    title: 'MonkPack',
     description: 'Pack smarter. Travel lighter.',
     icon: Backpack,
-    href: '/tools/packmate',
+    href: '/tools/monkpack',
     available: false,
   },
 ]

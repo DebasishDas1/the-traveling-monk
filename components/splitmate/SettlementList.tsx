@@ -1,10 +1,11 @@
 'use client'
 
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, Loader } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 
 import { useSplitMateStore } from '@/store/splitmate.store'
+import { useFirebaseSettlementOperations } from '@/hooks/useFirebaseSync'
 
 import { calculateBalances } from './calculations'
 import { formatMoney } from './money'
@@ -12,23 +13,18 @@ import { simplifyDebts } from './splits'
 
 export function SettlementList() {
   const group = useSplitMateStore((state) => state.group)
-
   const expenses = useSplitMateStore((state) => state.expenses)
-
   const paidSettlementIds = useSplitMateStore(
     (state) => state.paidSettlementIds
   )
 
-  const markSettlementPaid = useSplitMateStore(
-    (state) => state.markSettlementPaid
-  )
+  const { markPaid, isLoading } = useFirebaseSettlementOperations()
 
   if (!group || expenses.length === 0) {
     return null
   }
 
   const balances = calculateBalances(group.members, expenses)
-
   const settlements = simplifyDebts(balances)
 
   const unpaidSettlements = settlements.filter(
@@ -77,6 +73,14 @@ export function SettlementList() {
             return null
           }
 
+          const handleMarkPaid = async () => {
+            try {
+              await markPaid(settlement.id)
+            } catch (error) {
+              console.error('Failed to mark settlement paid:', error)
+            }
+          }
+
           return (
             <div key={settlement.id} className="rounded-2xl bg-muted/50 p-4">
               <div className="flex items-center justify-between gap-4">
@@ -103,9 +107,11 @@ export function SettlementList() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="mt-3 h-8 px-2 text-muted-foreground"
-                onClick={() => markSettlementPaid(settlement.id)}
+                className="mt-3 h-8 px-2 text-muted-foreground disabled:opacity-50"
+                onClick={handleMarkPaid}
+                disabled={isLoading}
               >
+                {isLoading && <Loader className="mr-1 size-3 animate-spin" />}
                 Mark as paid
               </Button>
             </div>

@@ -1,8 +1,6 @@
 'use client'
 
 import { useState, memo, useCallback, useMemo } from 'react'
-// No shallow import needed
-
 import { AddExpenseDialog } from '@/components/splitmate/AddExpenseDialog'
 import { ExpenseItem } from '@/components/splitmate/ExpenseItem'
 import { SettlementList } from '@/components/splitmate/SettlementList'
@@ -16,7 +14,6 @@ import { calculateBalances } from './calculations'
 import { formatMoney } from './money'
 
 function SplitMateWorkspaceComponent() {
-  // Selectors – called unconditionally
   const group = useSplitMateStore((state: SplitMateState) => state.group)
   const expenses = useSplitMateStore((state: SplitMateState) => state.expenses)
   const removeExpense = useSplitMateStore(
@@ -27,13 +24,11 @@ function SplitMateWorkspaceComponent() {
     null
   )
 
-  // Memoised balances – safe even if group is undefined
   const balances = useMemo(
     () => (group ? calculateBalances(group.members, expenses) : []),
     [group, expenses]
   )
 
-  // Handlers – defined unconditionally
   const handleEdit = useCallback((expense: SplitMateExpense) => {
     setEditingExpense(expense)
   }, [])
@@ -45,12 +40,11 @@ function SplitMateWorkspaceComponent() {
     [removeExpense]
   )
 
-  // Early return after hooks are called
   if (!group) return null
 
   return (
-    <section className="pt-10 h-screen">
-      {/* Group */}
+    <section className="pt-10">
+      {/* Group Header */}
       <header>
         <p className="text-sm text-muted-foreground">Group</p>
         <div className="mt-1 flex items-baseline justify-between gap-4">
@@ -67,7 +61,7 @@ function SplitMateWorkspaceComponent() {
         </p>
       </header>
 
-      {/* Action */}
+      {/* Add Expense Action */}
       <div className="mt-8">
         <AddExpenseDialog />
       </div>
@@ -76,7 +70,7 @@ function SplitMateWorkspaceComponent() {
         <>
           <Separator className="my-12" />
 
-          {/* Balances */}
+          {/* Balances Section */}
           <section>
             <h3 className="text-lg font-semibold tracking-tight">Balances</h3>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -88,8 +82,10 @@ function SplitMateWorkspaceComponent() {
                   (m) => m.id === balance.memberId
                 )
                 if (!member) return null
+
                 const isPositive = balance.netPaise > 0
                 const isNegative = balance.netPaise < 0
+
                 return (
                   <div
                     key={balance.memberId}
@@ -99,9 +95,9 @@ function SplitMateWorkspaceComponent() {
                     <span
                       className={
                         isPositive
-                          ? 'text-sm font-medium tabular-nums'
+                          ? 'text-sm font-medium tabular-nums text-green-600'
                           : isNegative
-                            ? 'text-sm text-muted-foreground tabular-nums'
+                            ? 'text-sm font-medium tabular-nums text-red-600'
                             : 'text-sm text-muted-foreground'
                       }
                     >
@@ -117,12 +113,12 @@ function SplitMateWorkspaceComponent() {
             </div>
           </section>
 
-          {/* Settlements */}
+          {/* Settlements Section */}
           <SettlementList />
 
           <Separator className="my-12" />
 
-          {/* Expenses */}
+          {/* Expenses List */}
           <section>
             <div className="flex items-baseline justify-between">
               <h3 className="text-lg font-semibold tracking-tight">Expenses</h3>
@@ -130,7 +126,7 @@ function SplitMateWorkspaceComponent() {
                 {expenses.length}
               </span>
             </div>
-            <div className="mt-5">
+            <div className="mt-5 space-y-2">
               {expenses.map((expense) => {
                 const payer = group.members.find((m) => m.id === expense.paidBy)
                 return (

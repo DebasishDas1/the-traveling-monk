@@ -7,7 +7,7 @@ import {
   type DataSnapshot,
 } from 'firebase/database'
 
-import { db } from '@/lib/firebase/client'
+import { getFirebaseDb } from '@/lib/firebase/client'
 
 import type { Review } from '@/types/review'
 
@@ -35,12 +35,20 @@ export function subscribeToReviews(
   onData: (reviews: Review[]) => void,
   onError: (error: Error) => void
 ) {
-  if (!db) {
-    onError(new Error('Firebase database not initialized'))
-    return () => {} // Return dummy unsubscribe
+  let database
+
+  try {
+    database = getFirebaseDb()
+  } catch (error) {
+    onError(
+      error instanceof Error
+        ? error
+        : new Error('Firebase database not initialized')
+    )
+    return () => {}
   }
 
-  const reviewsRef = ref(db, 'reviews')
+  const reviewsRef = ref(database, 'reviews')
   const q = query(
     reviewsRef,
     orderByChild('experienceId'),

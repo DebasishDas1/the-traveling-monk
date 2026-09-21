@@ -1,17 +1,15 @@
 import { push, ref, set, serverTimestamp } from 'firebase/database'
 
-import { db } from '@/lib/firebase/client'
+import { getFirebaseDb } from '@/lib/firebase/client'
 
 import type { Review } from '@/types/review'
 
 type CreateReviewInput = Omit<Review, 'id' | 'timestamp'>
 
 export async function submitReview(review: CreateReviewInput) {
-  if (!db) {
-    throw new Error('Firebase database not initialized')
-  }
+  const database = getFirebaseDb()
 
-  const reviewsRef = ref(db, 'reviews')
+  const reviewsRef = ref(database, 'reviews')
   const reviewRef = push(reviewsRef)
 
   await set(reviewRef, {

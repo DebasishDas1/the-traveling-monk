@@ -10,7 +10,9 @@ export const metadata: Metadata = {
     description: 'Split bills with friends during trips using SplitMate tool.',
     url: `${siteConfig.url}/tools/splitmate`,
     siteName: siteConfig.name,
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: siteConfig.name }],
+    images: [
+      { url: '/og-image.jpg', width: 1200, height: 630, alt: siteConfig.name },
+    ],
     locale: 'en_IN',
     type: 'website',
   },
@@ -29,22 +31,22 @@ import { SplitMateWorkspace } from '@/components/splitmate/SplitMateWorkspace'
 export default function SplitMatePage() {
   return (
     <main>
-      <Container className="pt-10">
-        <div className="flex items-center">
-          <Wallet className="size-16 pr-4" strokeWidth={1.7} />
+      <Container className="pt-10 md:flex justify-between items-center gap-4">
+        <div>
+          <div className="flex items-center">
+            <Wallet className="size-16 pr-4" strokeWidth={1.7} />
 
-          <Heading title="SplitMate" size="h1" />
+            <Heading title="SplitMate" size="h1" />
+          </div>
+
+          <p className="text-lg text-muted-foreground">
+            Split the bill. Keep the trip moving.
+          </p>
         </div>
 
-        <p className="text-lg text-muted-foreground">
-          Split the bill. Keep the trip moving.
-        </p>
+        <CreateGroupDialog />
 
-        <div className="mt-10">
-          <CreateGroupDialog />
-        </div>
-
-        <SplitMateWorkspace />
+        {/* <SplitMateWorkspace /> */}
       </Container>
     </main>
   )

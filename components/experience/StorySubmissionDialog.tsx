@@ -163,7 +163,7 @@ export function StorySubmissionDialog({
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="deb@example.com"
                   value={formData.email}
                   onChange={handleChange}
                   disabled={isLoading}

@@ -62,7 +62,7 @@ export function BookingDetailsDialog({
             <Input
               id="dialog-name"
               type="text"
-              placeholder="John Doe"
+              placeholder="Debasish Das"
               value={name}
               onChange={(event) => onNameChange(event.target.value)}
               disabled={isLoading}

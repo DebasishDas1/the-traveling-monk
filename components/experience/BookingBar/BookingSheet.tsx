@@ -97,7 +97,7 @@ export function BookingSheet({
               </Label>
               <Input
                 id="name"
-                placeholder="John Doe"
+                placeholder="Debasish Das"
                 value={name}
                 onChange={(e) => onNameChange(e.target.value)}
                 disabled={isLoading}

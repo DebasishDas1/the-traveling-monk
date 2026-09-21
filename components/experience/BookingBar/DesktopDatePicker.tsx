@@ -74,15 +74,15 @@ export function DesktopDatePicker({
           mode="single"
           selected={selectedDate}
           onSelect={handleDateSelect}
-          disabled={(date) => {
-            if (date < new Date()) return true
-            if (!availableDates?.length) return false
+          // disabled={(date) => {
+          //   if (date < new Date()) return true
+          //   if (!availableDates?.length) return false
 
-            const dateValue = formatDateToISO(date)
-            return !availableDates.some(
-              (slot) => slot.date === dateValue && slot.spots > 0
-            )
-          }}
+          //   const dateValue = formatDateToISO(date)
+          //   return !availableDates.some(
+          //     (slot) => slot.date === dateValue && slot.spots > 0
+          //   )
+          // }}
           // initialFocus
         />
       </PopoverContent>
