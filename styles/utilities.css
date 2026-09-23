@@ -6,7 +6,7 @@
   ========================================== */
 
   .container-app {
-    @apply mx-auto w-full max-w-7xl px-6 lg:px-8;
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
   }
 
   .container-content {
@@ -14,11 +14,11 @@
   }
 
   .section {
-    @apply py-20 md:py-28;
+    @apply py-20 md:py-28 lg:py-32;
   }
 
   .section-sm {
-    @apply py-12 md:py-16;
+    @apply py-12 md:py-16 lg:py-20;
   }
 
   /* ==========================================
@@ -26,19 +26,19 @@
   ========================================== */
 
   .display {
-    @apply text-5xl font-bold tracking-[-0.04em] md:text-7xl;
+    @apply text-5xl font-semibold leading-[0.98] tracking-[-0.045em] md:text-7xl lg:text-[5rem];
   }
 
   .heading-1 {
-    @apply text-4xl font-bold tracking-[-0.03em] md:text-6xl;
+    @apply text-4xl font-semibold leading-[1.02] tracking-[-0.035em] md:text-6xl;
   }
 
   .heading-2 {
-    @apply text-3xl font-semibold tracking-[-0.03em] md:text-5xl;
+    @apply text-3xl font-semibold leading-[1.08] tracking-[-0.03em] md:text-5xl;
   }
 
   .heading-3 {
-    @apply text-2xl font-semibold tracking-[-0.02em];
+    @apply text-2xl font-semibold leading-[1.15] tracking-[-0.02em];
   }
 
   .body-lg {
@@ -50,7 +50,19 @@
   }
 
   .caption {
-    @apply text-sm text-muted-foreground;
+    @apply text-sm leading-6 text-muted-foreground;
+  }
+
+  /* Small editorial labels
+     Useful for trek difficulty, categories,
+     section eyebrows, metadata, etc. */
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground;
+  }
+
+  .eyebrow-accent {
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-accent;
   }
 
   /* ==========================================
@@ -58,11 +70,11 @@
   ========================================== */
 
   .glass {
-    @apply border border-border/60 bg-white/70 backdrop-blur-xl;
+    @apply border border-white/40 bg-white/60 backdrop-blur-xl;
   }
 
   .dark .glass {
-    background: rgba(23, 25, 24, 0.7);
+    @apply border-white/10 bg-white/[0.06];
   }
 
   /* ==========================================
@@ -73,6 +85,14 @@
     @apply rounded-3xl border border-border bg-surface shadow-sm;
   }
 
+  .card-hover {
+    @apply transition-[transform,box-shadow,border-color]
+      duration-300 ease-out
+      hover:-translate-y-1
+      hover:border-input
+      hover:shadow-md;
+  }
+
   /* ==========================================
      Image
   ========================================== */
@@ -81,12 +101,24 @@
     @apply overflow-hidden rounded-[28px];
   }
 
+  .image-rounded-sm {
+    @apply overflow-hidden rounded-2xl;
+  }
+
+  .image-rounded-lg {
+    @apply overflow-hidden rounded-[2rem];
+  }
+
   /* ==========================================
      Focus
   ========================================== */
 
   .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none
+      focus-visible:ring-2
+      focus-visible:ring-ring
+      focus-visible:ring-offset-2
+      focus-visible:ring-offset-background;
   }
 
   /* ==========================================
@@ -95,5 +127,37 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* ==========================================
+     Premium surfaces
+  ========================================== */
+
+  .surface-dark {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .surface-soft {
+    @apply bg-surface-secondary;
+  }
+
+  .surface-accent {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  /* ==========================================
+     Decorative details
+  ========================================== */
+
+  .accent-dot {
+    @apply inline-block size-2 rounded-full bg-accent;
+  }
+
+  .accent-line {
+    @apply h-px w-10 bg-accent;
   }
 }

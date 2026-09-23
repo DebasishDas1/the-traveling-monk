@@ -10,14 +10,13 @@ import {
 } from '@/components/common'
 
 import { feelings, destinations, gallery } from '@/lib/data/getaway-page'
-
 import { getawaysData } from '@/lib/data/getaway-data'
 import { GetawayCard } from '@/components/experience/GetawayCard'
 import { PageGallery } from '@/components/experience/PageGallery'
 
 /**
  * Maps are not part of the critical rendering path.
- * Load them separately so their JavaScript doesn't affect
+ * Load them separately so their JavaScript does not affect
  * the initial page load.
  */
 const LocationMap = dynamic(
@@ -28,7 +27,7 @@ const LocationMap = dynamic(
   {
     loading: () => (
       <div
-        className="aspect-4/3 w-full animate-pulse rounded-xl bg-muted"
+        className="aspect-4/3 w-full animate-pulse rounded-3xl bg-muted"
         aria-hidden="true"
       />
     ),
@@ -79,8 +78,9 @@ export default function GetawaysPage() {
               src="/illustrations/Alone-cuate.png"
               alt="Traveller enjoying a quiet moment during a Himalayan getaway"
               ratio="1/1"
+              radius="xl"
               priority
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 1023px) 100vw, 50vw"
             />
           }
         />
@@ -90,9 +90,16 @@ export default function GetawaysPage() {
           GETAWAYS
       ====================================================== */}
 
-      <Section>
+      <Section className="bg-surface-secondary">
         <Container>
-          <div className="grid gap-8 md:grid-cols-2 grid-cols-1">
+          <Heading
+            eyebrow="Choose your pace"
+            title="Places worth slowing down for."
+            description="Stay a little longer. Wake up without an alarm. Let the day figure itself out."
+            size="h2"
+          />
+
+          <div className="mt-3 grid gap-5 md:grid-cols-2 lg:gap-6 lg:gap-y-8 ">
             {getawaysData.map((getaway) => (
               <GetawayCard key={getaway.id} experience={getaway} />
             ))}
@@ -106,21 +113,31 @@ export default function GetawaysPage() {
 
       <Section>
         <Container>
-          <Heading
-            align="center"
-            eyebrow="The difference"
-            title="Don't just visit a place. Live in it for a while."
-            description="The best travel memories rarely come from checking something off a list. They're found over tea, around a shared table, and in the quiet moments between plans."
-            size="h2"
-          />
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+            <div className="lg:col-span-5">
+              <Heading
+                eyebrow="The difference"
+                title="Don't just visit a place. Live in it for a while."
+                description="The best travel memories rarely come from checking something off a list. They're found over tea, around a shared table, and in the quiet moments between plans."
+                size="h2"
+              />
 
-          <Media
-            src="/illustrations/Sunny-day-cuate.png"
-            alt="Traveller relaxing during a peaceful mountain stay"
-            ratio="16/9"
-            className="mt-12 md:mt-16"
-            sizes="(max-width: 768px) 100vw, 90vw"
-          />
+              <div className="mt-8 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+                <span className="h-px w-8 bg-accent" />
+                <span>Take it slow</span>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7">
+              <Media
+                src="/illustrations/Sunny-day-cuate.png"
+                alt="Traveller relaxing during a peaceful mountain stay"
+                ratio="16/9"
+                radius="xl"
+                sizes="(max-width: 1023px) 100vw, 58vw"
+              />
+            </div>
+          </div>
         </Container>
       </Section>
 
@@ -128,41 +145,69 @@ export default function GetawaysPage() {
           STAY FOR THE FEELING
       ====================================================== */}
 
-      <Section>
+      <Section className="bg-primary text-primary-foreground">
         <Container>
-          <Heading
-            align="center"
-            eyebrow="Stay for the feeling"
-            title="A little less doing. A little more being."
-            description="Because sometimes the best part of travelling is having nowhere else to be."
-            size="h2"
-          />
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground/60">
+                Stay for the feeling
+              </p>
 
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl bg-border md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
-            {feelings.map((item) => {
-              const Icon = item.icon
+              <h2 className="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-5xl">
+                A little less doing.
+                <span className="block text-primary-foreground/55">
+                  A little more being.
+                </span>
+              </h2>
 
-              return (
-                <div
-                  key={item.title}
-                  className="
-                    flex min-h-60 flex-col items-center justify-center
-                    bg-primary-hover p-7 text-center text-white
-                    md:min-h-64
-                  "
-                >
-                  <Icon aria-hidden="true" className="size-16 md:size-20" />
+              <p className="mt-5 text-base leading-7 text-primary-foreground/70">
+                Because sometimes the best part of traveling is having nowhere
+                else to be.
+              </p>
+            </div>
 
-                  <h3 className="mt-6 text-xl font-medium tracking-tight">
-                    {item.title}
-                  </h3>
+            <div className="grid gap-px overflow-hidden rounded-3xl bg-primary-foreground/10 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
+              {feelings.map((item, index) => {
+                const Icon = item.icon
 
-                  <p className="mt-2 text-sm leading-6 text-white/80">
-                    {item.description}
-                  </p>
-                </div>
-              )
-            })}
+                return (
+                  <div
+                    key={item.title}
+                    className="
+                      group
+                      flex min-h-56 flex-col
+                      justify-between
+                      bg-primary
+                      p-6
+                      transition-colors
+                      duration-300
+                      hover:bg-primary-hover
+                      sm:min-h-60
+                    "
+                  >
+                    <div className="flex flex-col items-start justify-between">
+                      <span className="text-3xl font-semibold tracking-tight text-primary-foreground/40">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+
+                      <span className="mt-5 text-primary-foreground/70 ">
+                        <Icon aria-hidden="true" className="size-16" />
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold tracking-tight">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-6 text-primary-foreground/60">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </Container>
       </Section>
@@ -171,25 +216,31 @@ export default function GetawaysPage() {
           DESTINATIONS
       ====================================================== */}
 
-      <Section>
+      <Section className="bg-surface-secondary">
         <Container>
-          <Heading
-            eyebrow="Places we call home"
-            title="Go where the pace is different."
-            description="Discover stays across landscapes that invite you to slow down."
-            size="h2"
-          />
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-4">
+              <div className="lg:sticky lg:top-28">
+                <Heading
+                  eyebrow="Places we call home"
+                  title="Go where the pace is different."
+                  description="Discover stays across landscapes that invite you to slow down."
+                  size="h2"
+                />
+              </div>
+            </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {destinations.map((destination) => (
-              <LocationMap
-                key={destination.name}
-                geoLocation={destination.geoLocation}
-                name={destination.name}
-                description={destination.description}
-                size="h3"
-              />
-            ))}
+            <div className="grid gap-5 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-2">
+              {destinations.map((destination) => (
+                <LocationMap
+                  key={destination.name}
+                  geoLocation={destination.geoLocation}
+                  name={destination.name}
+                  description={destination.description}
+                  size="h3"
+                />
+              ))}
+            </div>
           </div>
         </Container>
       </Section>
@@ -200,15 +251,18 @@ export default function GetawaysPage() {
 
       <Section>
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <Media
-              src="/illustrations/women-talking.png"
-              alt="Getaway host welcoming travellers"
-              ratio="3/2"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+            <div className="lg:col-span-7">
+              <Media
+                src="/illustrations/women-talking.png"
+                alt="Getaway host welcoming travellers"
+                ratio="3/2"
+                radius="xl"
+                sizes="(max-width: 1023px) 100vw, 58vw"
+              />
+            </div>
 
-            <div>
+            <div className="lg:col-span-5">
               <Heading
                 eyebrow="The people behind the homes"
                 title="Stay with people, not properties."
@@ -216,14 +270,16 @@ export default function GetawaysPage() {
                 size="h2"
               />
 
-              <blockquote className="mt-8 border-l border-primary/30 pl-5 text-lg leading-8 text-muted-foreground">
-                &quot;We&apos;ve lived here all our lives. Now we get to show
-                people why we never wanted to leave.&quot;
-              </blockquote>
+              <div className="mt-8 border-l-2 border-accent/40 pl-5">
+                <blockquote className="text-lg leading-8 tracking-[-0.01em] text-foreground">
+                  &quot;We&apos;ve lived here all our lives. Now we get to show
+                  people why we never wanted to leave.&quot;
+                </blockquote>
 
-              <p className="mt-3 text-sm font-medium">
-                A host from the Himalayas
-              </p>
+                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  A host from the Himalayas
+                </p>
+              </div>
             </div>
           </div>
         </Container>
@@ -232,8 +288,9 @@ export default function GetawaysPage() {
       {/* =====================================================
           GALLERY
       ====================================================== */}
+
       {gallery.length > 0 && (
-        <Section>
+        <Section className="bg-surface-secondary">
           <Container>
             <PageGallery
               images={gallery}

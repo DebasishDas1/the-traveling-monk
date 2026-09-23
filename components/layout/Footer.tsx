@@ -69,22 +69,35 @@ function FooterGroup({
   }[]
 }) {
   return (
-    <div className="space-y-6">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+    <div className="space-y-5">
+      <h3 className="eyebrow text-primary">
         {title}
       </h3>
 
-      <ul className="space-y-4">
+      <ul className="space-y-3.5">
         {links.map((link) => (
           <li key={link.name}>
             <Link
               href={link.href}
-              className="group inline-flex text-small text-foreground/65 transition-colors hover:text-foreground"
+              className="group inline-flex text-sm text-foreground/65 transition-colors duration-200 hover:text-foreground"
             >
               <span className="relative">
                 {link.name}
 
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+                <span
+                  className="
+                    absolute
+                    -bottom-1
+                    left-0
+                    h-px
+                    w-0
+                    bg-accent
+                    transition-[width]
+                    duration-300
+                    ease-out
+                    group-hover:w-full
+                  "
+                />
               </span>
             </Link>
           </li>
@@ -98,27 +111,40 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-primary/5">
+    <footer className="border-t border-border/60 bg-surface">
       <div className="container-app">
-        <div className="grid gap-24 py-24 lg:grid-cols-[2fr_1fr_1fr]">
+        {/* Main footer */}
+        <div className="grid gap-16 py-16 md:gap-20 md:py-20 lg:grid-cols-[2fr_1fr_1fr] lg:py-24">
           {/* Brand */}
 
-          <div className="space-y-10">
-            <div className="space-y-6">
+          <div className="space-y-8">
+            <div className="space-y-5">
               <Link
                 href="/"
-                className="inline-block text-4xl font-medium tracking-tight"
+                className="
+                  inline-block
+                  text-3xl
+                  font-semibold
+                  tracking-[-0.03em]
+                  text-foreground
+                  transition-opacity
+                  hover:opacity-75
+                  md:text-4xl
+                "
               >
                 The Traveling Monk
               </Link>
-              <div className="text-xl leading-relaxed text-foreground/65">
+
+              <p className="text-lg leading-8 text-muted-foreground">
                 Travel with old friends.
                 <br />
                 Return renewed.
-              </div>
+              </p>
             </div>
 
-            <div className="flex gap-3">
+            {/* Socials */}
+
+            <div className="flex gap-2.5">
               {socials.map(({ label, href, icon: Icon }) => (
                 <Link
                   key={label}
@@ -127,20 +153,31 @@ export function Footer() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   className="
+                    group
                     flex
-                    size-11
+                    size-10
                     items-center
                     justify-center
                     rounded-full
                     border
                     border-border
-                    transition-all
-                    duration-300
+                    bg-background
+                    transition-[background-color,border-color,transform]
+                    duration-200
+                    hover:-translate-y-0.5
                     hover:border-primary
-                    hover:bg-primary/5
+                    hover:bg-primary
                   "
                 >
-                  <Icon className="size-5 text-foreground/70" />
+                  <Icon
+                    className="
+                      size-4.5
+                      text-foreground/65
+                      transition-colors
+                      duration-200
+                      group-hover:text-primary-foreground
+                    "
+                  />
                 </Link>
               ))}
             </div>
@@ -159,8 +196,22 @@ export function Footer() {
 
         {/* Bottom */}
 
-        <div className="flex flex-col gap-6 border-t border-border/40 py-8 text-sm text-foreground/55 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-wrap items-center gap-6">
+        <div
+          className="
+            flex
+            flex-col
+            gap-5
+            border-t
+            border-border/60
+            py-7
+            text-sm
+            text-muted-foreground
+            md:flex-row
+            md:items-center
+            md:justify-between
+          "
+        >
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <span>© {year} The Traveling Monk</span>
 
             <Link
@@ -178,7 +229,9 @@ export function Footer() {
             </Link>
           </div>
 
-          <p className="tracking-wide">Made with purpose in the Himalayas.</p>
+          <p className="tracking-wide">
+            Made with purpose in the Himalayas.
+          </p>
         </div>
       </div>
     </footer>

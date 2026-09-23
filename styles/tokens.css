@@ -14,6 +14,7 @@
   --text-body: 1.125rem;
   --text-small: 0.9375rem;
 
+
   /* ==========================================
      Spacing
   ========================================== */
@@ -27,6 +28,7 @@
   --spacing-3xl: 6rem;
   --spacing-4xl: 8rem;
 
+
   /* ==========================================
      Radius
   ========================================== */
@@ -39,219 +41,223 @@
   --radius-2xl: 2rem;
   --radius-full: 9999px;
 
+
   /* ==========================================
      Shadows
   ========================================== */
 
-  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.04);
-  --shadow-sm: 0 6px 18px rgb(0 0 0 / 0.05);
-  --shadow-md: 0 18px 40px rgb(0 0 0 / 0.08);
-  --shadow-lg: 0 32px 80px rgb(0 0 0 / 0.1);
+  --shadow-xs: 0 1px 2px rgb(43 29 24 / 0.04);
+  --shadow-sm: 0 6px 18px rgb(43 29 24 / 0.06);
+  --shadow-md: 0 18px 40px rgb(43 29 24 / 0.09);
+  --shadow-lg: 0 32px 80px rgb(43 29 24 / 0.12);
+
 
   /* ==========================================
-     Core Semantic Colors
+     Colors
   ========================================== */
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Surfaces */
-
   --color-surface: var(--surface);
   --color-surface-secondary: var(--surface-secondary);
-
-  /* Card */
 
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
 
-  /* Popover / Dialog */
-
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
-  /* Input */
-
   --color-input: var(--input);
-
-  /* Primary */
 
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
 
-  /* Secondary */
-
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-
-  /* Accent */
 
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-foreground: var(--accent-foreground);
 
-  /* Muted */
-
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-
-  /* Border / Focus */
 
   --color-border: var(--border);
   --color-ring: var(--ring);
 
-  /* States */
-
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-destructive: var(--destructive);
-
-  /* State foregrounds */
 
   --color-success-foreground: var(--success-foreground);
   --color-warning-foreground: var(--warning-foreground);
   --color-destructive-foreground: var(--destructive-foreground);
 }
 
+
 /* ==========================================
    Light Theme
 ========================================== */
 
 :root {
-  /* Background */
 
-  --background: #faf8f5;
-  --foreground: #2a2622;
+  /* ------------------------------------------
+     Background
+  ------------------------------------------ */
 
-  /* Surfaces */
+  --background: #F7F0E5;
+  --foreground: #2B1D18;
 
-  --surface: #ffffff;
-  --surface-secondary: #f5f3f0;
 
-  /* Card */
+  /* ------------------------------------------
+     Surfaces
+  ------------------------------------------ */
 
-  --card: #ffffff;
-  --card-foreground: #2a2622;
+  --surface: #FFFFFF;
+  --surface-secondary: #EFE5D9;
 
-  /* Popover / Dialog */
 
-  --popover: #ffffff;
-  --popover-foreground: #2a2622;
+  /* ------------------------------------------
+     Card
+  ------------------------------------------ */
 
-  /* Input */
+  --card: #FFFFFF;
+  --card-foreground: #2B1D18;
 
-  --input: #e5dfd9;
 
-  /* Primary */
+  /* ------------------------------------------
+     Popover / Dialog
+  ------------------------------------------ */
 
-  --primary: #6b6359;
-  --primary-hover: #554d46;
-  --primary-foreground: #ffffff;
+  --popover: #FFFFFF;
+  --popover-foreground: #2B1D18;
 
-  /* Secondary */
 
-  --secondary: #e8e3de;
-  --secondary-foreground: #3a3530;
+  /* ------------------------------------------
+     Input
+  ------------------------------------------ */
 
-  /* Accent */
+  --input: #DCD0C5;
 
-  --accent: #a67c52;
-  --accent-hover: #956a42;
-  --accent-foreground: #ffffff;
 
-  /* Muted */
+  /* ------------------------------------------
+     Primary
+     
+     Deep Monk Brown
+  ------------------------------------------ */
 
-  --muted: #f7f5f2;
-  --muted-foreground: #9a9490;
+  --primary: #5A3828;
+  --primary-hover: #43291E;
+  --primary-foreground: #FFFFFF;
 
-  /* Border */
 
-  --border: #e5dfd9;
+  /* ------------------------------------------
+     Secondary
+     
+     Warm Clay
+  ------------------------------------------ */
 
-  /* States */
+  --secondary: #A86645;
+  --secondary-foreground: #FFFFFF;
 
-  --success: #7ba882;
-  --success-foreground: #ffffff;
 
-  --warning: #d4a366;
-  --warning-foreground: #2a2622;
+  /* ------------------------------------------
+     Accent
+     
+     Mountain Lilac
+  ------------------------------------------ */
 
-  --destructive: #c9656f;
-  --destructive-foreground: #ffffff;
+  --accent: black;
+  --accent-hover: #766283;
+  --accent-foreground: #FFFFFF;
 
-  /* Focus */
 
-  --ring: #a67c52;
+  /* ------------------------------------------
+     Muted
+  ------------------------------------------ */
+
+  --muted: #F0EAE2;
+  --muted-foreground: #776D67;
+
+
+  /* ------------------------------------------
+     Border
+  ------------------------------------------ */
+
+  --border: #DED4CA;
+
+
+  /* ------------------------------------------
+     States
+  ------------------------------------------ */
+
+  --success: #71866F;
+  --success-foreground: #FFFFFF;
+
+  --warning: #C28A5B;
+  --warning-foreground: #2B1D18;
+
+  --destructive: #B9625D;
+  --destructive-foreground: #FFFFFF;
+
+
+  /* ------------------------------------------
+     Focus
+  ------------------------------------------ */
+
+  --ring: #8D789B;
 }
+
 
 /* ==========================================
    Dark Theme
 ========================================== */
 
 .dark {
-  /* Background */
 
-  --background: #1d1b18;
-  --foreground: #f1efec;
+  --background: #211713;
+  --foreground: #F5EEE5;
 
-  /* Surfaces */
+  --surface: #2B1D18;
+  --surface-secondary: #36251E;
 
-  --surface: #262320;
-  --surface-secondary: #2f2c28;
+  --card: #30211B;
+  --card-foreground: #F5EEE5;
 
-  /* Card */
+  --popover: #30211B;
+  --popover-foreground: #F5EEE5;
 
-  --card: #262320;
-  --card-foreground: #f1efec;
-
-  /* Popover / Dialog */
-
-  --popover: #262320;
-  --popover-foreground: #f1efec;
-
-  /* Input */
-
-  --input: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.10);
 
   /* Primary */
-
-  --primary: #9b8f84;
-  --primary-hover: #aca199;
-  --primary-foreground: #1d1b18;
+  --primary: #C29A82;
+  --primary-hover: #D0AC98;
+  --primary-foreground: #211713;
 
   /* Secondary */
-
-  --secondary: #3a3530;
-  --secondary-foreground: #f1efec;
+  --secondary: #9A6247;
+  --secondary-foreground: #FFF7F0;
 
   /* Accent */
+  --accent: #A895B3;
+  --accent-hover: #B9A8C4;
+  --accent-foreground: #211713;
 
-  --accent: #b89968;
-  --accent-hover: #cab182;
-  --accent-foreground: #1d1b18;
+  --muted: #3A2A23;
+  --muted-foreground: #B9AAA1;
 
-  /* Muted */
+  --border: rgba(255, 244, 235, 0.10);
 
-  --muted: #363230;
-  --muted-foreground: #b5afa7;
+  --success: #8EA58A;
+  --success-foreground: #211713;
 
-  /* Border */
+  --warning: #D3A16F;
+  --warning-foreground: #211713;
 
-  --border: rgba(255, 255, 255, 0.08);
+  --destructive: #D07A73;
+  --destructive-foreground: #211713;
 
-  /* States */
-
-  --success: #8fbb9d;
-  --success-foreground: #1d1b18;
-
-  --warning: #e5b87d;
-  --warning-foreground: #1d1b18;
-
-  --destructive: #dd7a81;
-  --destructive-foreground: #1d1b18;
-
-  /* Focus */
-
-  --ring: #b89968;
+  --ring: #A895B3;
 }

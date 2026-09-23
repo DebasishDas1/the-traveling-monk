@@ -1,5 +1,11 @@
 import Link from 'next/link'
-import { Clock, Gauge, MapPin, Mountain } from 'lucide-react'
+import {
+  ArrowUpRight,
+  Clock,
+  Gauge,
+  MapPin,
+  Mountain,
+} from 'lucide-react'
 
 import { Media } from '@/components/common'
 import type { Trek } from '@/types/experience'
@@ -16,7 +22,7 @@ export function TrekCard({ experience }: TrekCardProps) {
   const altitudeFeet = Math.round(experience.altitude * 3.28084)
 
   return (
-    <article>
+    <article className="group/card">
       <Link
         href={`/experiences/trek/${experience.slug}`}
         aria-label={`View ${experience.title}`}
@@ -24,56 +30,86 @@ export function TrekCard({ experience }: TrekCardProps) {
           group block
           focus-visible:outline-none
           focus-visible:ring-2
-          focus-visible:ring-primary
+          focus-visible:ring-ring
           focus-visible:ring-offset-4
+          focus-visible:ring-offset-surface-secondary
         "
       >
         {/* Image */}
-        {image ? (
-          <Media
-            src={image.src}
-            alt={image.alt}
-            ratio="4/3"
-            sizes="
-              (max-width: 640px) 100vw,
-              (max-width: 1024px) 50vw,
-              50vw
-            "
+        <div className="relative overflow-hidden rounded-3xl bg-muted">
+          {image ? (
+            <Media
+              src={image.src}
+              alt={image.alt}
+              ratio="4/3"
+              radius="none"
+              sizes="
+                (max-width: 639px) 100vw,
+                (max-width: 1023px) 50vw,
+                42vw
+              "
+              className="
+                transition-transform
+                duration-700
+                ease-[cubic-bezier(0.22,0.61,0.36,1)]
+                group-hover:scale-[1.025]
+              "
+            />
+          ) : (
+            <div
+              className="aspect-4/3 bg-muted"
+              aria-hidden="true"
+            />
+          )}
+
+          {/* Image affordance */}
+          <span
             className="
-              rounded-xl
-              transition-transform
-              duration-500
-              ease-out
-              group-hover:scale-[1.015]
+              absolute right-4 top-4
+              flex size-10 items-center justify-center
+              rounded-full
+              border border-white/30
+              bg-black/20
+              text-white
+              opacity-0
+              backdrop-blur-md
+              transition-[opacity,transform]
+              duration-300
+              group-hover:opacity-100
+              group-hover:scale-100
+              scale-90
             "
-          />
-        ) : (
-          <div className="aspect-4/3 rounded-xl bg-muted" aria-hidden="true" />
-        )}
+            aria-hidden="true"
+          >
+            <ArrowUpRight className="size-4" />
+          </span>
+        </div>
 
         {/* Content */}
-        <div className="pt-4 sm:pt-5">
+        <div className="pt-5 sm:pt-6">
           {/* Location */}
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground sm:text-sm">
+          <div className="flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground sm:text-sm">
             <MapPin
               className="size-3.5 shrink-0"
               strokeWidth={1.75}
               aria-hidden="true"
             />
 
-            <span className="truncate">{experience.location}</span>
+            <span className="truncate">
+              {experience.location}
+            </span>
           </div>
 
           {/* Title */}
           <h3
             className="
-              mt-1.5
-              text-xl
-              font-semibold
-              leading-tight
+              mt-2
+              text-2xl
+              font-bold
+              leading-[1.08]
               tracking-[-0.035em]
+              text-foreground
               sm:text-2xl
-              lg:text-[1.65rem]
             "
           >
             {experience.title}
@@ -85,7 +121,7 @@ export function TrekCard({ experience }: TrekCardProps) {
               className="
                 mt-1
                 text-sm
-                leading-5
+                leading-6
                 text-muted-foreground
               "
             >
@@ -96,19 +132,25 @@ export function TrekCard({ experience }: TrekCardProps) {
           {/* Details */}
           <dl
             className="
-              mt-4
+              mt-2
               grid
               grid-cols-2
               gap-x-4
-              gap-y-2
+              gap-y-3
+              border-y
+              border-border/70
+              py-4
               text-xs
               text-muted-foreground
               sm:flex
               sm:flex-wrap
+              sm:items-center
               sm:gap-x-5
+              sm:gap-y-2
               sm:text-sm
             "
           >
+            {/* Elevation */}
             <div className="flex min-w-0 items-center gap-1.5">
               <Mountain
                 className="size-3.5 shrink-0"
@@ -127,6 +169,7 @@ export function TrekCard({ experience }: TrekCardProps) {
               </dd>
             </div>
 
+            {/* Difficulty */}
             <div className="flex min-w-0 items-center gap-1.5">
               <Gauge
                 className="size-3.5 shrink-0"
@@ -136,9 +179,12 @@ export function TrekCard({ experience }: TrekCardProps) {
 
               <dt className="sr-only">Difficulty</dt>
 
-              <dd className="truncate">{experience.difficulty}</dd>
+              <dd className="truncate">
+                {experience.difficulty}
+              </dd>
             </div>
 
+            {/* Duration */}
             <div className="flex min-w-0 items-center gap-1.5">
               <Clock
                 className="size-3.5 shrink-0"
@@ -148,20 +194,50 @@ export function TrekCard({ experience }: TrekCardProps) {
 
               <dt className="sr-only">Duration</dt>
 
-              <dd className="truncate">{experience.duration}</dd>
+              <dd className="truncate">
+                {experience.duration}
+              </dd>
             </div>
           </dl>
 
           {/* Price */}
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-xl font-semibold tracking-tight sm:text-2xl">
-              {formatPrice(experience.priceFrom)}
-              <span className="ml-3 text-2xl font-normal text-muted-foreground line-through">
-                {formatPrice(experience.priceFrom * 1.25)}
+          <div className="mt-5 flex items-baseline justify-between gap-4">
+            <div className="flex items-baseline gap-2">
+              <span className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+                {formatPrice(experience.priceFrom)}
               </span>
-            </span>
+               <span className="text-xl font-semibold tracking-tight text-muted-foreground line-through sm:text-2xl">
+                {formatPrice(experience.priceFrom * 1.2)}
+              </span>
 
-            <span className="text-xs text-muted-foreground">/ traveler</span>
+              <span className="text-xs text-muted-foreground">
+                / traveler
+              </span>
+            </div>
+
+            <span
+              className="
+                hidden
+                items-center
+                gap-1
+                text-sm
+                font-medium
+                text-foreground
+                sm:inline-flex
+              "
+            >
+              Explore
+              <ArrowUpRight
+                className="
+                  size-3.5
+                  transition-transform
+                  duration-200
+                  group-hover:-translate-y-0.5
+                  group-hover:translate-x-0.5
+                "
+                aria-hidden="true"
+              />
+            </span>
           </div>
         </div>
       </Link>

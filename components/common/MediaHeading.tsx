@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
+
 import { cn } from '@/lib/utils'
-import { Heading } from './Heading'
+import { Heading, type HeadingSize } from './Heading'
 
 type ImagePosition = 'left' | 'right' | 'bottom'
-type HeadingSize = 'display' | 'h1' | 'h2' | 'h3'
 
 interface MediaHeadingProps {
   eyebrow?: string
@@ -13,7 +13,7 @@ interface MediaHeadingProps {
   image?: ReactNode
 
   /**
-   * Controls the complete text/media composition.
+   * Controls the text/media composition.
    *
    * right  → text left, image right
    * left   → image left, text right
@@ -46,14 +46,14 @@ export function MediaHeading({
     return (
       <div
         className={cn(
-          'flex w-full flex-col items-center gap-12',
-          'md:gap-16 lg:gap-20',
+          'flex w-full flex-col items-center',
+          'gap-12 md:gap-16 lg:gap-20',
           className
         )}
       >
         <div
           className={cn(
-            'w-full max-w-3xl text-center',
+            'w-full max-w-3xl',
             contentClassName
           )}
         >
@@ -69,7 +69,7 @@ export function MediaHeading({
         {image && (
           <div
             className={cn(
-              'w-full overflow-hidden',
+              'w-full',
               mediaClassName
             )}
           >
@@ -101,7 +101,6 @@ export function MediaHeading({
           title={title}
           description={description}
           size={size}
-          align="left"
         />
       </div>
 
@@ -109,7 +108,7 @@ export function MediaHeading({
         <div
           className={cn(
             imageFirst && 'lg:order-1',
-            'w-full overflow-hidden',
+            'w-full',
             mediaClassName
           )}
         >

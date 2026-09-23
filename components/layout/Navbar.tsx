@@ -16,7 +16,9 @@ export function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [expandedNav, setExpandedNav] = useState<string | null>(null)
+
   const isExactActive = (href: string) => pathname === href
+
   const isSectionActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`)
 
@@ -38,6 +40,7 @@ export function Navbar() {
     Array.isArray(activeNavLink.subLinks)
       ? activeNavLink.subLinks
       : []
+
   const currentExpandedNav = expandedNav ?? activeNavLink?.href ?? null
 
   const closeSheet = () => {
@@ -54,60 +57,70 @@ export function Navbar() {
   const desktopNavLink = (active: boolean) =>
     cn(
       'relative inline-flex h-full items-center px-4',
-      'text-base font-semibold tracking-[-0.015em]',
+      'text-sm font-medium tracking-[-0.01em]',
       'transition-colors duration-200',
       'focus-visible:outline-none',
       'focus-visible:ring-2',
-      'focus-visible:ring-primary',
+      'focus-visible:ring-ring',
       'focus-visible:ring-inset',
       active ? 'text-foreground' : 'text-foreground/60 hover:text-foreground'
     )
 
   const mobileNavLink = (active: boolean) =>
     cn(
-      'flex min-h-14 items-center justify-between rounded-xl px-4',
+      'flex min-h-14 items-center justify-between rounded-2xl px-4',
       'text-lg font-semibold tracking-[-0.015em]',
       'transition-colors duration-200',
       'focus-visible:outline-none',
       'focus-visible:ring-2',
-      'focus-visible:ring-primary',
+      'focus-visible:ring-ring',
       active
-        ? 'text-foreground'
-        : 'text-foreground/65 hover:bg-foreground/[0.05] hover:text-foreground'
+        ? 'bg-muted text-foreground'
+        : 'text-foreground/65 hover:bg-muted hover:text-foreground'
     )
 
   const mobileSubLink = (active: boolean) =>
     cn(
       'flex min-h-12 items-center justify-between rounded-xl px-4',
-      'text-[17px] font-medium tracking-[-0.01em]',
+      'text-base font-medium tracking-[-0.01em]',
       'transition-colors duration-200',
       'focus-visible:outline-none',
       'focus-visible:ring-2',
-      'focus-visible:ring-primary',
+      'focus-visible:ring-ring',
       active
         ? 'text-foreground'
-        : 'text-foreground/60 hover:bg-foreground/[0.05] hover:text-foreground'
+        : 'text-foreground/60 hover:bg-muted hover:text-foreground'
     )
 
   return (
     <nav aria-label="Main navigation" className="w-full bg-background">
+      {/* ================================================================
+          PRIMARY NAVIGATION
+      ================================================================= */}
+
       <div className="h-18">
-        <div className="mx-auto flex h-full max-w-7xl items-center px-5 sm:px-6 lg:px-8">
+        <div className="container-app flex h-full items-center">
+          {/* Logo */}
+
           <Link
             href="/"
             aria-label={`${siteConfig.name} home`}
             className={cn(
               'shrink-0 rounded-full',
+              'transition-transform duration-200',
+              'hover:scale-[1.03]',
               'focus-visible:outline-none',
-              'focus-visible:ring-2 focus-visible:ring-primary',
-              'focus-visible:ring-offset-4'
+              'focus-visible:ring-2',
+              'focus-visible:ring-ring',
+              'focus-visible:ring-offset-4',
+              'focus-visible:ring-offset-background'
             )}
           >
             <Image
               src="/apple-touch-icon.png"
               alt={siteConfig.name}
-              width={42}
-              height={42}
+              width={44}
+              height={44}
               priority
               className="rounded-full"
             />
@@ -116,8 +129,9 @@ export function Navbar() {
           {/* ============================================================
               DESKTOP NAVIGATION
           ============================================================= */}
-          <div className="ml-10 hidden h-12 lg:block">
-            <ul className="flex h-full items-center gap-2">
+
+          <div className="ml-10 hidden h-12 md:block">
+            <ul className="flex h-full items-center gap-1">
               {siteConfig.navLinks.map((link) => {
                 const active = isSectionActive(link.href)
 
@@ -133,12 +147,15 @@ export function Navbar() {
                       {active && (
                         <span
                           aria-hidden="true"
-                          className={cn(
-                            'absolute bottom-0 left-3 right-3',
-                            'h-0.75',
-                            'rounded-t-full',
-                            'bg-foreground'
-                          )}
+                          className="
+                            absolute
+                            bottom-0
+                            left-3
+                            right-3
+                            h-0.5
+                            rounded-t-full
+                            bg-accent
+                          "
                         />
                       )}
                     </Link>
@@ -151,7 +168,8 @@ export function Navbar() {
           {/* ============================================================
               DESKTOP CTA
           ============================================================= */}
-          <div className="ml-auto hidden lg:block">
+
+          <div className="ml-auto hidden md:block">
             <Button>
               <Link href={siteConfig.cta.href}>{siteConfig.cta.label}</Link>
             </Button>
@@ -160,29 +178,20 @@ export function Navbar() {
           {/* ============================================================
               MOBILE MENU
           ============================================================= */}
-          <div className="ml-auto lg:hidden">
+
+          <div className="ml-auto md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger
                 render={
                   <button
                     type="button"
-                    aria-label="Open navigation menu"
-                    className={cn(
-                      'inline-flex size-11 items-center justify-center',
-                      'rounded-full bg-foreground/6',
-                      'text-foreground',
-                      'transition-colors duration-200',
-                      'hover:bg-foreground/10',
-                      'focus-visible:outline-none',
-                      'focus-visible:ring-2',
-                      'focus-visible:ring-primary',
-                      'focus-visible:ring-offset-2'
-                    )}
+                    aria-label="Open menu"
+                    className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
                   >
                     <Menu
                       aria-hidden="true"
-                      className="size-5"
-                      strokeWidth={2}
+                      className="mr-2 size-6"
+                      strokeWidth={1.8}
                     />
                   </button>
                 }
@@ -190,17 +199,25 @@ export function Navbar() {
 
               <SheetContent
                 side="right"
-                className="w-full bg-background p-0 sm:max-w-md border-none"
+                className="
+                  w-full
+                  border-l
+                  border-border
+                  bg-background
+                  p-0
+                  sm:max-w-md
+                "
               >
                 <div className="flex h-full flex-col px-5 pb-7 pt-10 sm:px-8">
                   {/* ======================================================
                       MOBILE NAVIGATION
                   ======================================================= */}
+
                   <nav
                     aria-label="Mobile navigation"
                     className="flex-1 overflow-y-auto"
                   >
-                    <div className="space-y-1">
+                    <div className="space-y-1.5">
                       {siteConfig.navLinks.map((link) => {
                         const active = isSectionActive(link.href)
 
@@ -216,11 +233,6 @@ export function Navbar() {
                           ''
                         )}`
 
-                        /*
-                         * --------------------------------------------------
-                         * Parent with children
-                         * --------------------------------------------------
-                         */
                         if (hasSubLinks) {
                           return (
                             <div key={link.href}>
@@ -248,11 +260,17 @@ export function Navbar() {
                                 />
                               </button>
 
-                              {/* Sub-navigation */}
                               <div
                                 id={submenuId}
                                 hidden={!expanded}
-                                className="ml-4 mt-1 space-y-1 border-l border-foreground/10 pl-2"
+                                className="
+                                  ml-4
+                                  mt-1
+                                  space-y-1
+                                  border-l
+                                  border-border
+                                  pl-2
+                                "
                               >
                                 {link.subLinks!.map((subLink) => {
                                   const activeSub = isSubLinkActive(
@@ -274,7 +292,11 @@ export function Navbar() {
                                       {activeSub && (
                                         <span
                                           aria-hidden="true"
-                                          className="size-2 rounded-full bg-foreground"
+                                          className="
+                                              size-1.5
+                                              rounded-full
+                                              bg-accent
+                                            "
                                         />
                                       )}
                                     </Link>
@@ -285,11 +307,6 @@ export function Navbar() {
                           )
                         }
 
-                        /*
-                         * --------------------------------------------------
-                         * Regular navigation item
-                         * --------------------------------------------------
-                         */
                         return (
                           <Link
                             key={link.href}
@@ -305,7 +322,11 @@ export function Navbar() {
                             {isExactActive(link.href) && (
                               <span
                                 aria-hidden="true"
-                                className="size-2 rounded-full bg-foreground"
+                                className="
+                                  size-1.5
+                                  rounded-full
+                                  bg-accent
+                                "
                               />
                             )}
                           </Link>
@@ -317,18 +338,12 @@ export function Navbar() {
                   {/* ======================================================
                       MOBILE CTA
                   ======================================================= */}
-                  <div className="pt-7">
+
+                  <div className="border-t border-border pt-6">
                     <Button
+                      // asChild
                       size="lg"
-                      className={cn(
-                        'h-13 w-full rounded-full',
-                        'bg-foreground text-background',
-                        'text-base font-semibold',
-                        'shadow-sm',
-                        'transition-all duration-200',
-                        'hover:bg-foreground/90',
-                        'active:scale-[0.99]'
-                      )}
+                      className="h-13 w-full text-base"
                     >
                       <Link href={siteConfig.cta.href} onClick={closeSheet}>
                         {siteConfig.cta.label}
@@ -345,10 +360,11 @@ export function Navbar() {
       {/* ================================================================
           DESKTOP SUB NAVIGATION
       ================================================================= */}
+
       {subLinks.length > 0 && (
-        <div className="hidden bg-primary/10 md:block">
-          <div className="mx-auto max-w-7xl overflow-x-auto px-5 sm:px-6 lg:px-8">
-            <ul className="flex h-14 items-center gap-2">
+        <div className="hidden border-y border-border/60 bg-surface-secondary md:block">
+          <div className="container-app overflow-x-auto">
+            <ul className="flex h-13 items-center gap-1">
               {subLinks.map((subLink) => {
                 const active = isSubLinkActive(subLink.href)
 
@@ -359,11 +375,11 @@ export function Navbar() {
                       aria-current={active ? 'page' : undefined}
                       className={cn(
                         'relative inline-flex h-full items-center px-4',
-                        'text-small font-semibold tracking-[-0.01em]',
+                        'text-sm font-medium tracking-[-0.01em]',
                         'transition-colors duration-200',
                         'focus-visible:outline-none',
                         'focus-visible:ring-2',
-                        'focus-visible:ring-primary',
+                        'focus-visible:ring-ring',
                         'focus-visible:ring-inset',
                         active
                           ? 'text-foreground'
@@ -376,14 +392,14 @@ export function Navbar() {
                         <span
                           aria-hidden="true"
                           className="
-              absolute
-              bottom-0
-              left-3
-              right-3
-              h-0.75
-              rounded-t-full
-              bg-foreground
-            "
+                            absolute
+                            bottom-0
+                            left-3
+                            right-3
+                            h-0.5
+                            rounded-t-full
+                            bg-accent
+                          "
                         />
                       )}
                     </Link>

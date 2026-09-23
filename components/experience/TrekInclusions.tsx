@@ -14,55 +14,140 @@ export function TrekInclusions({
   }
 
   return (
-    <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-      <div>
-        <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
-          Good to know
-        </p>
+    <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+      {/* Intro */}
+      <div className="lg:col-span-4">
+        <div className="lg:sticky lg:top-28">
+          <p className="eyebrow-accent">Good to know</p>
 
-        <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
-          Everything you need.
-          <br />
-          <span className="text-muted-foreground">Nothing you don&apos;t.</span>
-        </h2>
+          <h2 className="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-5xl">
+            What&apos;s covered.
+            <span className="block text-muted-foreground">
+              What isn&apos;t.
+            </span>
+          </h2>
+
+          <p className="mt-5 text-sm leading-6 text-muted-foreground">
+            No fine-print scavenger hunt. Here&apos;s exactly what comes with
+            the trip.
+          </p>
+        </div>
       </div>
 
-      <div className="grid gap-12 sm:grid-cols-2">
-        {inclusions.length > 0 && (
-          <div>
-            <h3 className="text-lg font-medium">What&apos;s included</h3>
-
-            <ul className="mt-6 space-y-4">
-              {inclusions.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 text-sm leading-6 text-muted-foreground"
+      {/* Lists */}
+      <div className="lg:col-span-8">
+        <div className="grid gap-10 sm:grid-cols-2 sm:gap-8">
+          {inclusions.length > 0 && (
+            <div>
+              <div className="flex items-center gap-3">
+                <span
+                  className="
+                    flex size-9 items-center justify-center
+                    rounded-full
+                    bg-primary
+                    text-primary-foreground
+                  "
                 >
-                  <Check className="mt-1 size-4 shrink-0 text-primary" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+                  <Check
+                    className="size-4"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </span>
 
-        {exclusions.length > 0 && (
-          <div>
-            <h3 className="text-lg font-medium">What&apos;s not included</h3>
+                <div>
+                  <h3 className="text-base font-semibold text-foreground">
+                    You&apos;re covered
+                  </h3>
 
-            <ul className="mt-6 space-y-4">
-              {exclusions.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 text-sm leading-6 text-muted-foreground"
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    Included in your trip
+                  </p>
+                </div>
+              </div>
+
+              <ul className="mt-6 divide-y divide-border">
+                {inclusions.map((item, index) => (
+                  <li
+                    key={`${item}-${index}`}
+                    className="
+                      flex gap-3
+                      py-4
+                      text-sm leading-6
+                      text-muted-foreground
+                      first:pt-0
+                    "
+                  >
+                    <span
+                      className="
+                        mt-2 size-1.5 shrink-0
+                        rounded-full
+                        bg-accent
+                      "
+                      aria-hidden="true"
+                    />
+
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {exclusions.length > 0 && (
+            <div>
+              <div className="flex items-center gap-3">
+                <span
+                  className="
+                    flex size-9 items-center justify-center
+                    rounded-full
+                    border border-border
+                    bg-muted
+                    text-muted-foreground
+                  "
                 >
-                  <X className="mt-1 size-4 shrink-0 text-muted-foreground/60" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+                  <X className="size-4" strokeWidth={2} aria-hidden="true" />
+                </span>
+
+                <div>
+                  <h3 className="text-base font-semibold text-foreground">
+                    You&apos;re on your own
+                  </h3>
+
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    Not included in your trip
+                  </p>
+                </div>
+              </div>
+
+              <ul className="mt-6 divide-y divide-border">
+                {exclusions.map((item, index) => (
+                  <li
+                    key={`${item}-${index}`}
+                    className="
+                      flex gap-3
+                      py-4
+                      text-sm leading-6
+                      text-muted-foreground
+                      first:pt-0
+                    "
+                  >
+                    <span
+                      className="
+                        mt-2 size-1.5 shrink-0
+                        rounded-full
+                        bg-muted-foreground/40
+                      "
+                      aria-hidden="true"
+                    />
+
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

@@ -39,7 +39,7 @@ function formatDateToISO(date: Date): string {
 export function DesktopDatePicker({
   value,
   onChange,
-  availableDates,
+  // availableDates,
 }: DesktopDatePickerProps) {
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {

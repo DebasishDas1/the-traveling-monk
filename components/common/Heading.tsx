@@ -31,14 +31,10 @@ interface HeadingProps {
 }
 
 const titleVariants: Record<HeadingSize, string> = {
-  display:
-    'text-5xl font-semibold tracking-[-0.06em] leading-[0.9] md:text-7xl lg:text-[5rem]',
-
-  h1: 'text-5xl font-semibold tracking-[-0.05em] leading-[0.92] md:text-6xl',
-
-  h2: 'text-4xl font-semibold tracking-[-0.05em] leading-[0.95] md:text-5xl',
-
-  h3: 'text-3xl font-semibold tracking-[-0.04em] leading-tight md:text-4xl',
+  display: 'display',
+  h1: 'heading-1',
+  h2: 'heading-2',
+  h3: 'heading-3',
 }
 
 const alignVariants: Record<HeadingAlign, string> = {
@@ -58,12 +54,13 @@ export function Heading({
   titleClassName,
   descriptionClassName,
 }: HeadingProps) {
-  const Component: ElementType = as ?? (size === 'display' ? 'h1' : 'h2')
+  const Component: ElementType =
+    as ?? (size === 'display' ? 'h1' : 'h2')
 
   return (
     <div className={cn(alignVariants[align], className)}>
       {eyebrow && (
-        <p className="mb-3 text-xs font-medium uppercase tracking-[0.32em] text-primary">
+        <p className="eyebrow-accent mb-3">
           {eyebrow}
         </p>
       )}
@@ -81,7 +78,8 @@ export function Heading({
       {description && (
         <p
           className={cn(
-            'mt-6 text-base leading-7 text-muted-foreground md:text-lg md:leading-8',
+            'text-pretty mt-5 text-base leading-7 text-muted-foreground md:mt-6 md:text-lg md:leading-8',
+            align === 'center' && 'mx-auto',
             descriptionClassName
           )}
         >

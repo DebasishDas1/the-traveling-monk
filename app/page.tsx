@@ -20,7 +20,7 @@ export default function HomePage() {
       <HomepageHero />
 
       {/* Modern Life */}
-      <Section className="py-24 md:py-32">
+      <Section>
         <Container>
           <MediaHeading
             eyebrow="Modern Life"
@@ -39,7 +39,7 @@ export default function HomePage() {
       </Section>
 
       {/* The Reset */}
-      <Section className="bg-muted/30">
+      <Section className="bg-surface-secondary">
         <Container className="max-w-5xl">
           <MediaHeading
             eyebrow="The Reset"
@@ -69,6 +69,8 @@ export default function HomePage() {
               href: '/experiences',
             }}
           />
+
+          {/* Featured experience cards will live here */}
         </Container>
       </Section>
 
@@ -106,6 +108,7 @@ export default function HomePage() {
               src="/illustrations/community.png"
               alt="Friends gathered together"
               ratio="1/1"
+              radius="xl"
             />
           </div>
         </Container>

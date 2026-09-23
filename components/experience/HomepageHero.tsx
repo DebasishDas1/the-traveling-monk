@@ -2,16 +2,17 @@
 
 import * as React from 'react'
 import Autoplay from 'embla-carousel-autoplay'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+
 import type { CarouselApi } from '@/components/ui/carousel'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel'
-import Image from 'next/image'
-import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 import { heroSlidesData } from '@/lib/data/hero-data'
 import type { HeroNavigationProps, HeroSlideProps } from '@/types/hero.types'
@@ -22,7 +23,7 @@ const CAROUSEL_OPTIONS = {
   align: 'center' as const,
 }
 
-const IMAGE_SIZES = '(max-width: 640px) 78vw, (max-width: 1024px) 76vw, 74vw'
+const IMAGE_SIZES = '(max-width: 639px) 88vw, (max-width: 1023px) 78vw, 74vw'
 
 export function HomepageHero() {
   const [api, setApi] = React.useState<CarouselApi>()
@@ -33,6 +34,7 @@ export function HomepageHero() {
       Autoplay({
         delay: 5000,
         stopOnInteraction: false,
+        stopOnMouseEnter: true,
       }),
     []
   )
@@ -60,24 +62,35 @@ export function HomepageHero() {
     api?.scrollNext()
   }, [api])
 
-  return (
-    <section className="pt-2">
-      {/* Section header */}
-      <Container className="my-4 md:my-10 flex flex-col items-center gap-6">
-        <Heading title="Go somewhere. Come back renewed." align="center" />
-        <div className="flex gap-4">
-          <Button>
-            <Link href="/experiences">Begin Your Reset</Link>
-          </Button>
+  const total = heroSlidesData.length
 
-          <Button variant="secondary">
-            <Link href="/contact">Explore Experiences</Link>
-          </Button>
+  return (
+    <section className="overflow-hidden pt-8 sm:pt-10 lg:pt-14">
+      {/* Intro */}
+      <Container>
+        <div className="flex flex-col items-center text-center">
+          <Heading
+            eyebrow="The Traveling Monk"
+            title="Go somewhere. Come back renewed."
+            description="Trips for curious people who want more than another place to tick off a list."
+            size="display"
+            align="center"
+          />
+
+          <div className="mt-7 flex gap-1 w-full justify-center">
+            <HeroLink href="/experiences" variant="primary">
+              Begin your reset
+            </HeroLink>
+
+            <HeroLink href="/experiences" variant="outline">
+              Explore
+            </HeroLink>
+          </div>
         </div>
       </Container>
 
       {/* Hero carousel */}
-      <div className="relative">
+      <div className="mt-10 sm:mt-12 md:mt-14 lg:mt-16">
         <Carousel
           setApi={setApi}
           opts={CAROUSEL_OPTIONS}
@@ -89,196 +102,250 @@ export function HomepageHero() {
               <CarouselItem
                 key={slide.id}
                 className="
-                  basis-[88%]
-                  pl-1
-                  md:basis-[75%]
-                  md:pl-2
+                  basis-[88%] pl-2
+                  sm:basis-[84%] sm:pl-3
+                  md:basis-[78%]
+                  lg:basis-[74%]
                 "
               >
-                <HeroSlide slide={slide} priority={index === 0} />
+                <HeroSlide
+                  slide={slide}
+                  priority={index === 0}
+                  current={current}
+                  total={total}
+                  onPrevious={handlePrevious}
+                  onNext={handleNext}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
         </Carousel>
 
-        {/* Navigation aligned with active slide */}
-        <div
-          className="
-            absolute
-            bottom-4
-            right-[11%]
-            z-20
-            sm:bottom-5
-            sm:right-[12%]
-            lg:right-[14%]
-            hidden
-            md:block
-          "
-        >
-          <HeroNavigation
-            current={current}
-            total={heroSlidesData.length}
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-          />
-        </div>
+        {/* Mobile progress */}
+        <MobileProgress current={current} total={total} />
       </div>
     </section>
   )
 }
 
-function HeroSlide({ slide, priority = false }: HeroSlideProps) {
+/* -------------------------------------------------------------------------- */
+/* Hero slide                                                                 */
+/* -------------------------------------------------------------------------- */
+
+interface HeroSlideWithNavigationProps extends HeroSlideProps {
+  current: number
+  total: number
+  onPrevious: () => void
+  onNext: () => void
+}
+
+function HeroSlide({
+  slide,
+  priority = false,
+  current,
+  total,
+  onPrevious,
+  onNext,
+}: HeroSlideWithNavigationProps) {
   return (
     <article
       className="
-        relative
-        h-[52vh]
-        min-h-100
-        max-h-170
+        group relative
+        h-[60vh]
+        min-h-107.5
+        max-h-180
         w-full
         overflow-hidden
-        rounded-xl
-        md:h-[62vh]
-        md:min-h-125
-        md:rounded-2xl
+        rounded-[28px]
+        bg-primary
+        sm:h-[62vh]
+        sm:min-h-115
+        sm:rounded-[32px]
+        md:h-[64vh]
+        lg:h-[66vh]
       "
     >
+      {/* Image */}
       <Image
         src={slide.image}
         alt={slide.title}
         fill
         priority={priority}
-        quality={80}
+        quality={85}
         sizes={IMAGE_SIZES}
-        className="object-cover"
+        className="
+          object-cover
+          transition-transform
+          duration-1000
+          ease-[cubic-bezier(0.22,0.61,0.36,1)]
+          group-hover:scale-[1.02]
+        "
       />
 
-      {/* ================================================================
-          LEFT-SIDE TEXT GRADIENT
-          Keeps the image bright while improving text readability.
-      ================================================================= */}
+      {/* Readability overlay */}
       <div
         aria-hidden="true"
         className="
-          absolute
-          inset-0
+          absolute inset-0
           bg-linear-to-r
-          from-black/70
-          via-black/40
+          from-black/75
+          via-black/35
           to-transparent
-          md:from-black/65
-          md:via-black/30
-          md:to-transparent
+          sm:from-black/70
+          md:from-black/60
+          md:via-black/25
         "
       />
 
-      {/* Subtle bottom fade for additional readability */}
+      {/* Bottom gradient */}
       <div
         aria-hidden="true"
         className="
-          absolute
-          inset-x-0
-          bottom-0
-          h-1/2
+          absolute inset-x-0 bottom-0 h-3/4
           bg-linear-to-t
-          from-black/35
+          from-black/60
+          via-black/15
           to-transparent
-          md:hidden
+          md:h-1/2
+          md:from-black/35
         "
       />
 
-      {/* ================================================================
-          CONTENT
-      ================================================================= */}
+      {/* Content */}
       <div className="absolute inset-0 flex items-end">
         <div
           className="
             w-full
-            max-w-155
-            px-7
-            pb-9
-            sm:px-8
-            md:px-14
-            md:pb-14
+            px-5 pb-7
+            sm:px-8 sm:pb-10
+            md:px-12 md:pb-14
+            lg:px-16 lg:pb-16
             xl:px-20
-            xl:pb-16
           "
         >
-          <div className="space-y-5">
-            <div className="space-y-2">
-              <p
-                className="
-                  text-xs
-                  font-medium
-                  uppercase
-                  tracking-[0.3em]
-                  text-white/70
-                "
-              >
-                The Traveling Monk
-              </p>
+          <div className="space-y-4 sm:space-y-5">
+            {/* Category */}
+            <div className="flex items-center gap-3">
+              <span
+                className="h-px w-7 bg-white/60 sm:w-9"
+                aria-hidden="true"
+              />
 
               <p
                 className="
-                  text-xs
-                  font-medium
+                  text-[10px]
+                  font-semibold
                   uppercase
-                  tracking-[0.2em]
-                  text-white/85
-                  sm:text-sm
+                  tracking-[0.18em]
+                  text-white/80
+                  sm:text-[11px]
                 "
               >
                 {slide.category}
               </p>
             </div>
 
+            {/* Title */}
             <h2
               className="
-                max-w-[10ch]
-                text-4xl
+                text-[2.5rem]
                 font-semibold
-                leading-[0.95]
-                tracking-tight
+                leading-[0.94]
+                tracking-[-0.045em]
                 text-white
                 sm:text-5xl
                 md:text-6xl
-                xl:text-7xl
+                lg:text-7xl
               "
             >
               {slide.title}
             </h2>
 
+            {/* Description */}
             <p
               className="
-                max-w-[44ch]
                 text-sm
                 leading-6
                 text-white/80
                 sm:text-base
+                sm:leading-7
                 md:text-lg
-                md:leading-7
               "
             >
               {slide.description}
             </p>
 
-            <Button
-              size="lg"
+            {/* CTA */}
+            <Link
+              href={slide.href}
               className="
-                h-11
-                rounded-full
-                px-6
-                font-medium
+                inline-flex h-11 items-center justify-center gap-2
+                rounded-full bg-white px-5
+                text-sm font-medium text-primary
+                shadow-sm
+                transition-[background-color,box-shadow,transform]
+                duration-200
+                hover:bg-white/90 hover:shadow-md
+                active:scale-[0.98]
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-white
+                focus-visible:ring-offset-2
+                focus-visible:ring-offset-black/20
+                sm:h-12 sm:px-6
               "
             >
-              <Link href={slide.href}>{slide.cta}</Link>
-            </Button>
+              {slide.cta}
+
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
           </div>
         </div>
+      </div>
+
+      {/* Slide navigation */}
+      <div
+        className="
+          absolute bottom-5 right-5 z-20
+          hidden md:block
+          sm:bottom-6 sm:right-6
+          lg:bottom-7 lg:right-7
+        "
+      >
+        <HeroNavigation
+          current={current}
+          total={total}
+          onPrevious={onPrevious}
+          onNext={onNext}
+        />
+      </div>
+
+      {/* Decorative label */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute left-5 top-5
+          hidden
+          select-none
+          text-[10px]
+          font-semibold
+          uppercase
+          tracking-[0.18em]
+          text-white/50
+          sm:block
+          md:left-8 md:top-8
+        "
+      >
+        Explore
       </div>
     </article>
   )
 }
+
+/* -------------------------------------------------------------------------- */
+/* Hero navigation                                                            */
+/* -------------------------------------------------------------------------- */
 
 function HeroNavigation({
   current,
@@ -290,29 +357,49 @@ function HeroNavigation({
     <nav
       aria-label="Hero carousel navigation"
       className="
-        flex
-        items-center
-        gap-1
+        flex items-center gap-1
         rounded-full
-        border
-        bg-white
+        border border-white/20
+        bg-black/25
         p-1
-        shadow-sm
+        text-white
+        shadow-lg
+        backdrop-blur-xl
       "
     >
       <Button
         type="button"
         size="icon"
         variant="ghost"
-        className="size-8 rounded-full"
+        className="
+          size-8 rounded-full
+          text-white
+          hover:bg-white/10
+          hover:text-white
+        "
         onClick={onPrevious}
         aria-label="Previous slide"
       >
-        <ArrowLeft className="size-3.5" />
+        <ArrowLeft className="size-3.5" aria-hidden="true" />
       </Button>
 
-      <span className="min-w-12 text-center text-[11px] tabular-nums text-muted-foreground">
-        {String(current + 1).padStart(2, '0')} /{' '}
+      <span
+        aria-live="polite"
+        aria-atomic="true"
+        className="
+          min-w-12
+          px-1
+          text-center
+          text-[11px]
+          font-medium
+          tabular-nums
+          text-white/80
+        "
+      >
+        {String(current + 1).padStart(2, '0')}
+
+        <span className="mx-1 text-white/30">/</span>
+
         {String(total).padStart(2, '0')}
       </span>
 
@@ -320,12 +407,91 @@ function HeroNavigation({
         type="button"
         size="icon"
         variant="ghost"
-        className="size-8 rounded-full"
+        className="
+          size-8 rounded-full
+          text-white
+          hover:bg-white/10
+          hover:text-white
+        "
         onClick={onNext}
         aria-label="Next slide"
       >
-        <ArrowRight className="size-3.5" />
+        <ArrowRight className="size-3.5" aria-hidden="true" />
       </Button>
     </nav>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile progress                                                            */
+/* -------------------------------------------------------------------------- */
+
+interface MobileProgressProps {
+  current: number
+  total: number
+}
+
+function MobileProgress({ current, total }: MobileProgressProps) {
+  const progress = total > 0 ? ((current + 1) / total) * 100 : 0
+
+  return (
+    <div className="mt-4 flex items-center justify-center gap-2 md:hidden">
+      <span className="text-[11px] font-semibold tabular-nums text-muted-foreground">
+        {String(current + 1).padStart(2, '0')}
+      </span>
+
+      <div
+        className="
+          h-px w-14 overflow-hidden
+          bg-border
+        "
+        aria-hidden="true"
+      >
+        <div
+          className="
+            h-full bg-primary
+            transition-[width]
+            duration-500
+            ease-out
+          "
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      <span className="text-[11px] font-semibold tabular-nums text-muted-foreground">
+        {String(total).padStart(2, '0')}
+      </span>
+    </div>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/* Intro links                                                                */
+/* -------------------------------------------------------------------------- */
+
+interface HeroLinkProps {
+  href: string
+  variant: 'primary' | 'outline'
+  children: React.ReactNode
+}
+
+function HeroLink({ href, variant, children }: HeroLinkProps) {
+  const base =
+    'inline-flex h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-[background-color,border-color,box-shadow,transform] duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto'
+
+  const variants = {
+    primary:
+      'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover hover:shadow-md',
+
+    outline:
+      'border border-border bg-transparent text-foreground hover:border-input hover:bg-muted',
+  }
+
+  return (
+    <Link href={href} className={`${base} ${variants[variant]}`}>
+      {children}
+
+      <ArrowRight className="size-4" aria-hidden="true" />
+    </Link>
   )
 }

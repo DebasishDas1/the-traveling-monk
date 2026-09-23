@@ -1,4 +1,3 @@
-    
 import { Coffee, Heart, Leaf, Moon } from 'lucide-react'
 
 export const feelings = [
@@ -23,8 +22,7 @@ export const feelings = [
   {
     icon: Moon,
     title: 'A different rhythm',
-    description:
-      'Stay long enough for a place to stop feeling unfamiliar.',
+    description: 'Stay long enough for a place to stop feeling unfamiliar.',
   },
 ]
 
@@ -49,14 +47,13 @@ export const destinations = [
   },
 ]
 
-
 export const gallery = [
   {
-    src: '/map-location/mountain-getaway-surrounded-by-nature.jpg',
+    src: '/map-location/breakfast-homestay.jpg',
     alt: 'Mountain getaway surrounded by nature',
   },
   {
-    src: '/map-location/breakfast-getaway.jpg',
+    src: '/map-location/mountain-homestay-surrounded-by-nature.jpg',
     alt: 'Breakfast at a Himalayan getaway',
   },
   {

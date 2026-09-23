@@ -7,7 +7,8 @@ const buttonVariants = cva(
     'group/button inline-flex shrink-0 items-center justify-center',
     'h-11 rounded-full',
     'text-sm font-medium whitespace-nowrap',
-    'transition-[background-color,color,transform,opacity] duration-150 ease-out',
+    'transition-[background-color,color,border-color,transform,opacity,box-shadow]',
+    'duration-200 ease-out',
     'outline-none select-none',
     'focus-visible:ring-4 focus-visible:ring-ring/15',
     'active:not-aria-[haspopup]:scale-[0.98]',
@@ -19,41 +20,87 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        // Signature Monk CTA
         default:
-          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/85',
+          [
+            'bg-primary text-primary-foreground',
+            'hover:bg-primary-hover',
+            'active:bg-primary-hover',
+            'shadow-sm hover:shadow-md',
+          ].join(' '),
 
-        outline:
-          'bg-background text-foreground hover:bg-muted active:bg-muted/80',
-
+        // Soft, premium secondary action
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70',
+          [
+            'bg-secondary text-secondary-foreground',
+            'hover:bg-secondary/90',
+            'active:bg-secondary/80',
+          ].join(' '),
 
+        // Premium outlined action
+        outline:
+          [
+            'border border-border',
+            'bg-transparent text-foreground',
+            'hover:bg-muted hover:border-input',
+            'active:bg-muted/80',
+          ].join(' '),
+
+        // Quiet action
         ghost:
-          'bg-transparent text-foreground hover:bg-muted active:bg-muted/80',
+          [
+            'bg-transparent text-foreground',
+            'hover:bg-muted',
+            'active:bg-muted/80',
+          ].join(' '),
 
+        // Destructive action
         destructive:
-          'bg-destructive/10 text-destructive hover:bg-destructive/15 active:bg-destructive/20',
+          [
+            'bg-destructive/10 text-destructive',
+            'hover:bg-destructive/15',
+            'active:bg-destructive/20',
+          ].join(' '),
 
-        link: 'h-auto rounded-none bg-transparent p-0 text-primary underline-offset-4 hover:underline',
+        // Text-only action
+        link:
+          [
+            'h-auto rounded-none',
+            'bg-transparent p-0',
+            'text-primary',
+            'underline-offset-4',
+            'hover:underline',
+          ].join(' '),
       },
 
       size: {
         default:
-          'gap-2 px-5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4',
+          [
+            'gap-2 px-5',
+            'has-data-[icon=inline-end]:pr-4',
+            'has-data-[icon=inline-start]:pl-4',
+          ].join(' '),
 
-        xs: 'h-8 gap-1.5 px-3 text-xs',
+        xs:
+          'h-8 gap-1.5 px-3 text-xs',
 
-        sm: 'h-9 gap-1.5 px-4 text-[0.8rem]',
+        sm:
+          'h-9 gap-1.5 px-4 text-[0.8rem]',
 
-        lg: 'h-12 gap-2 px-6 text-[0.95rem]',
+        lg:
+          'h-12 gap-2 px-6 text-[0.95rem]',
 
-        icon: 'size-11',
+        icon:
+          'size-11',
 
-        'icon-xs': "size-8 [&_svg:not([class*='size-'])]:size-3",
+        'icon-xs':
+          "size-8 [&_svg:not([class*='size-'])]:size-3",
 
-        'icon-sm': "size-9 [&_svg:not([class*='size-'])]:size-3.5",
+        'icon-sm':
+          "size-9 [&_svg:not([class*='size-'])]:size-3.5",
 
-        'icon-lg': 'size-12',
+        'icon-lg':
+          'size-12',
       },
     },
 

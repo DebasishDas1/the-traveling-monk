@@ -1,19 +1,19 @@
 // components/experience/BookingBar/BookingBar.tsx
 'use client'
 
-import { useCallback, useMemo, useState, memo } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
+import { Loader2 } from 'lucide-react'
+
 import type { AvailableDateSlot } from '@/types/experience'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import { formatPrice } from '@/lib/utils'
-import { Loader2 } from 'lucide-react'
+
 import { DesktopDatePicker } from '@/components/experience/BookingBar/DesktopDatePicker'
 import { GuestPicker } from '@/components/experience/BookingBar/GuestPicker'
-import { PriceBlock } from '@/components/experience/BookingBar/PriceBlock'
 import { BookingSheet } from '@/components/experience/BookingBar/BookingSheet'
 import { BookingDetailsDialog } from '@/components/experience/BookingBar/BookingDetailsDialog'
 import { BookingDialog } from '@/components/experience/BookingBar/BookingDialog'
+
 import {
   submitBooking,
   validateBookingPayload,
@@ -33,7 +33,6 @@ export function BookingBar({
   slug,
   title,
   price,
-  priceLabel,
   availableDates,
   maxGuests,
 }: BookingBarProps) {
@@ -41,11 +40,15 @@ export function BookingBar({
 
   const [selectedDate, setSelectedDate] = useState('')
   const [guests, setGuests] = useState(1)
+
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+
   const [sheetOpen, setSheetOpen] = useState(false)
   const [detailsDialogOpen, setDetailsDialogOpen] = useState(false)
+
   const [isLoading, setIsLoading] = useState(false)
+
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogResponse, setDialogResponse] = useState<BookingResponse | null>(
     null
@@ -67,11 +70,14 @@ export function BookingBar({
 
   const handleDesktopBook = useCallback(() => {
     if (!selectedDate) return
+
     setDetailsDialogOpen(true)
   }, [selectedDate])
 
   const handleConfirmBooking = useCallback(async () => {
-    if (!selectedDate || !name || !phone || isLoading) return
+    if (!selectedDate || !name || !phone || isLoading) {
+      return
+    }
 
     const validationError = validateBookingPayload({
       slug,
@@ -87,8 +93,10 @@ export function BookingBar({
         success: false,
         message: validationError,
       })
+
       setDialogOpen(true)
       setDetailsDialogOpen(false)
+
       return
     }
 
@@ -117,81 +125,165 @@ export function BookingBar({
       }
     } catch (error) {
       console.error('Booking error:', error)
+
       setDialogResponse({
         success: false,
         message: 'Unable to complete booking. Please try again.',
       })
+
       setDialogOpen(true)
     } finally {
       setIsLoading(false)
     }
   }, [slug, selectedDate, guests, total, name, phone, isLoading])
 
-  const isDesktopBookingDisabled = !selectedDate
+  const isBookingDisabled = !selectedDate || isLoading
 
   return (
     <>
-      {/* Desktop */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Desktop booking dock                                             */}
+      {/* ---------------------------------------------------------------- */}
+
       <div className="fixed inset-x-0 bottom-0 z-50 hidden px-4 pb-4 md:block">
-        <Card className="mx-auto max-w-5xl rounded-2xl shadow-lg bg-white">
-          <CardContent className="flex min-h-16 items-center gap-2 p-3">
+        <div
+          className="
+            mx-auto max-w-6xl
+            overflow-hidden
+            rounded-3xl
+            border border-border
+            bg-surface/95
+            shadow-lg
+            backdrop-blur-xl
+          "
+        >
+          <div className="flex min-h-19 items-center gap-4 p-3">
+            {/* Trek */}
             <div className="min-w-0 flex-1 px-3">
-              <p className="truncate text-lg font-semibold">{title}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Your next adventure
+              </p>
+
+              <p className="mt-1 truncate text-sm font-semibold text-foreground">
+                {title}
+              </p>
             </div>
-            <Separator orientation="vertical" className="h-8" />
-            <DesktopDatePicker
-              value={selectedDate}
-              onChange={handleDateChange}
-              availableDates={availableDates}
-            />
-            <Separator orientation="vertical" className="h-8" />
+
+            {/* Date */}
+            <div className="flex shrink-0 items-center gap-2 rounded-2xl bg-muted px-3">
+              <DesktopDatePicker
+                value={selectedDate}
+                onChange={handleDateChange}
+                availableDates={availableDates}
+              />
+            </div>
+
+            {/* Guests */}
             <GuestPicker
               value={guests}
               max={maxGuests}
               onDecrease={decreaseGuests}
               onIncrease={increaseGuests}
             />
-            <Separator orientation="vertical" className="h-8" />
-            <PriceBlock label={priceLabel} value={price} />
-            <PriceBlock label="Total" value={total} />
+
+            {/* Price */}
+            <div className="shrink-0 px-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                From
+              </p>
+
+              <p className="mt-0.5 text-lg font-semibold tracking-tight text-foreground">
+                {priceFormatted}
+                <span className="ml-1 text-xs font-normal text-muted-foreground">
+                  / person
+                </span>
+              </p>
+            </div>
+
+            {/* Book */}
             <Button
               type="button"
-              className="h-10 shrink-0 rounded-xl px-5"
-              disabled={isDesktopBookingDisabled || isLoading}
+              size="lg"
+              className="h-12 shrink-0 rounded-2xl px-6"
+              disabled={isBookingDisabled}
               onClick={handleDesktopBook}
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2
+                    className="mr-2 size-4 animate-spin"
+                    aria-hidden="true"
+                  />
                   Booking...
                 </>
               ) : (
-                'Book now'
+                'Book this trek'
               )}
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* Selected trip summary */}
+          {selectedDate && (
+            <div
+              className="
+                border-t border-border
+                bg-muted/50
+                px-6 py-2.5
+                text-right
+                text-xs text-muted-foreground
+              "
+            >
+              {guests} {guests === 1 ? 'traveller' : 'travellers'}
+              <span className="mx-2 text-border">•</span>
+              Total {formatPrice(total)}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Mobile bottom bar */}
-      <div className="fixed inset-x-0 bottom-0 z-50 bg-background/80 backdrop-blur-xl md:hidden">
+      {/* ---------------------------------------------------------------- */}
+      {/* Mobile booking dock                                               */}
+      {/* ---------------------------------------------------------------- */}
+
+      <div
+        className="
+          fixed inset-x-0 bottom-0 z-50
+          border-t border-border
+          bg-background/90
+          backdrop-blur-xl
+          md:hidden
+        "
+      >
         <div className="flex items-center gap-4 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
           <div className="min-w-0 flex-1">
-            <p className="text-xs text-muted-foreground">From</p>
-            <p className="text-lg font-semibold tracking-tight">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              From
+            </p>
+
+            <p className="mt-0.5 text-lg font-semibold tracking-tight text-foreground">
               {priceFormatted}
+
               <span className="ml-1 text-xs font-normal text-muted-foreground">
                 / person
               </span>
             </p>
           </div>
-          <Button type="button" onClick={() => setSheetOpen(true)}>
-            Book now
+
+          <Button
+            type="button"
+            size="lg"
+            className="h-11 shrink-0 rounded-full px-5"
+            onClick={() => setSheetOpen(true)}
+          >
+            Book this trek
           </Button>
         </div>
       </div>
 
-      {/* Mobile booking sheet */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Mobile booking sheet                                              */}
+      {/* ---------------------------------------------------------------- */}
+
       <BookingSheet
         open={sheetOpen}
         setOpen={setSheetOpen}
@@ -212,7 +304,10 @@ export function BookingBar({
         isLoading={isLoading}
       />
 
-      {/* Desktop details dialog */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Desktop booking details                                           */}
+      {/* ---------------------------------------------------------------- */}
+
       <BookingDetailsDialog
         open={detailsDialogOpen}
         onOpenChange={setDetailsDialogOpen}
@@ -224,7 +319,10 @@ export function BookingBar({
         isLoading={isLoading}
       />
 
-      {/* Booking Result Dialog */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Booking result                                                    */}
+      {/* ---------------------------------------------------------------- */}
+
       <BookingDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}

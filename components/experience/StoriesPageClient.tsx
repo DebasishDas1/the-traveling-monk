@@ -101,7 +101,7 @@ export function StoriesPageClient({ quoteList }: StoriesPageClientProps) {
                   <Button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    variant={isActive ? 'default' : 'secondary'}
+                    variant={isActive ? 'default' : 'outline'}
                   >
                     {category}
                   </Button>

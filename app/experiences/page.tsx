@@ -8,6 +8,7 @@ import {
   Heading,
   Media,
   MediaHeading,
+  Page,
   Section,
 } from '@/components/common'
 
@@ -55,7 +56,7 @@ const categories = [
     image: '/illustrations/country-side.svg',
   },
   {
-    label: 'International Trips',
+    label: 'International',
     description: 'Go somewhere unfamiliar. Come back different.',
     href: '/experiences/international',
     image: '/illustrations/Around the world-amico.png',
@@ -75,83 +76,117 @@ const featuredInternational = internationalData
   .filter((experience) => experience.featured)
   .slice(0, 2)
 
+interface ExploreLinkProps {
+  href: string
+  children: React.ReactNode
+}
+
+function ExploreLink({ href, children }: ExploreLinkProps) {
+  return (
+    <Link
+      href={href}
+      className="
+        group
+        inline-flex
+        w-fit
+        items-center
+        gap-2
+        text-sm
+        font-medium
+        text-foreground
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-ring
+        focus-visible:ring-offset-4
+      "
+    >
+      <span className="underline decoration-border underline-offset-8 transition-colors group-hover:decoration-foreground">
+        {children}
+      </span>
+
+      <ArrowRight
+        aria-hidden="true"
+        className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+      />
+    </Link>
+  )
+}
+
 export default function ExperiencesPage() {
   return (
-    <main className="overflow-hidden">
-      {/* =====================================================
-          HERO
-      ====================================================== */}
-
-      <Container>
-        <MediaHeading
-          eyebrow="Experiences"
-          title="Choose your way out of the ordinary."
-          description="Treks, stays, and journeys designed to slow you down, bring you closer to people, and leave you feeling renewed."
-          size="display"
-          image={
-            <Media
-              src="/illustrations/choose.png"
-              alt="Traveller sitting beside the sea"
-              ratio="1/1"
-              priority
-            />
-          }
-        />
-      </Container>
-
-      {/* =====================================================
-          CATEGORIES
-      ====================================================== */}
-
-      <Section aria-labelledby="experience-categories">
+    <Page>
+      {/* Hero */}
+      <Section className="pt-10 sm:pt-12 lg:pt-16">
         <Container>
-          <div className="space-y-10">
+          <MediaHeading
+            eyebrow="Experiences"
+            title="Choose your way out of the ordinary."
+            description="Treks, stays, and journeys designed to slow you down, bring you closer to people, and leave you feeling renewed."
+            size="display"
+            image={
+              <Media
+                src="/illustrations/choose.png"
+                alt="Traveller sitting beside the sea"
+                ratio="1/1"
+                radius="xl"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            }
+          />
+        </Container>
+      </Section>
+
+      {/* Categories */}
+      <Section className="pt-4 sm:pt-8 lg:pt-0">
+        <Container>
+          <div className="mb-8 sm:mb-10 lg:mb-12">
             <Heading
               eyebrow="Find your reset"
-              title="Where do you want to go?"
+              title="Three ways to get away."
+              description="Different kinds of journeys. The same reason for going."
               size="h2"
             />
+          </div>
 
-            <div className="grid gap-5 md:grid-cols-3">
-              {categories.map((category) => (
-                <CategoryCard key={category.href} {...category} />
-              ))}
-            </div>
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+            {categories.map((category) => (
+              <CategoryCard key={category.href} {...category} />
+            ))}
           </div>
         </Container>
       </Section>
 
-      {/* =====================================================
-          FEATURED TREKS
-      ====================================================== */}
-
+      {/* Treks */}
       {featuredTreks.length > 0 && (
-        <Section aria-labelledby="featured-treks">
+        <Section className="bg-surface-secondary">
           <Container>
-            <div className="space-y-10">
-              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                <Heading
-                  eyebrow="Treks"
-                  title="Start somewhere beautiful."
-                  description="Walk deeper into the mountains and a little farther from the noise."
-                  size="h2"
-                />
-
-                <Link
-                  href="/experiences/trek"
-                  className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
-                >
-                  Explore treks
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="size-4 transition-transform group-hover:translate-x-1"
+            <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+              {/* Intro */}
+              <div className="lg:col-span-4">
+                <div className="lg:sticky lg:top-24">
+                  <Heading
+                    eyebrow="01 / Treks"
+                    title="Start somewhere beautiful."
+                    description="Walk deeper into the mountains and a little farther from the noise."
+                    size="h2"
                   />
-                </Link>
+
+                  <div className="mt-6 sm:mt-8">
+                    <ExploreLink href="/experiences/trek">
+                      Explore treks
+                    </ExploreLink>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-2">
+              {/* Cards */}
+              <div className="grid gap-5 sm:gap-6 lg:col-span-8">
                 {featuredTreks.map((experience) => (
-                  <TrekCard key={experience.id} experience={experience} />
+                  <TrekCard
+                    key={experience.id}
+                    experience={experience}
+                  />
                 ))}
               </div>
             </div>
@@ -159,37 +194,36 @@ export default function ExperiencesPage() {
         </Section>
       )}
 
-      {/* =====================================================
-          FEATURED GETAWAYS
-      ====================================================== */}
-
+      {/* Getaways */}
       {featuredGetaways.length > 0 && (
-        <Section aria-labelledby="featured-getaways">
+        <Section>
           <Container>
-            <div className="space-y-10">
-              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                <Heading
-                  eyebrow="Getaways"
-                  title="Stay somewhere that feels lived in."
-                  description="Slow down, share a meal, and experience a place through the people who call it home."
-                  size="h2"
-                />
-
-                <Link
-                  href="/getaways"
-                  className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
-                >
-                  Explore getaways
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="size-4 transition-transform group-hover:translate-x-1"
+            <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+              {/* Intro */}
+              <div className="lg:col-span-4">
+                <div className="lg:sticky lg:top-24">
+                  <Heading
+                    eyebrow="02 / Getaways"
+                    title="Stay somewhere that feels lived in."
+                    description="Slow down, share a meal, and experience a place through the people who call it home."
+                    size="h2"
                   />
-                </Link>
+
+                  <div className="mt-6 sm:mt-8">
+                    <ExploreLink href="/experiences/getaway">
+                      Explore getaways
+                    </ExploreLink>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid gap-8 md:grid-cols-2">
+              {/* Cards */}
+              <div className="grid gap-5 sm:gap-6 lg:col-span-8">
                 {featuredGetaways.map((experience) => (
-                  <GetawayCard key={experience.id} experience={experience} />
+                  <GetawayCard
+                    key={experience.id}
+                    experience={experience}
+                  />
                 ))}
               </div>
             </div>
@@ -197,35 +231,31 @@ export default function ExperiencesPage() {
         </Section>
       )}
 
-      {/* =====================================================
-          INTERNATIONAL
-      ====================================================== */}
-
+      {/* International */}
       {featuredInternational.length > 0 && (
-        <Section aria-labelledby="featured-international">
+        <Section className="bg-surface-secondary">
           <Container>
-            <div className="space-y-10">
-              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                <Heading
-                  eyebrow="International"
-                  title="Go somewhere unfamiliar."
-                  description="Curated journeys beyond the familiar, designed to give you a different perspective."
-                  size="h2"
-                />
-
-                <Link
-                  href="/international"
-                  className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
-                >
-                  Explore international
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="size-4 transition-transform group-hover:translate-x-1"
+            <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+              {/* Intro */}
+              <div className="lg:col-span-4">
+                <div className="lg:sticky lg:top-24">
+                  <Heading
+                    eyebrow="03 / International"
+                    title="Go somewhere unfamiliar."
+                    description="Curated journeys beyond the familiar, designed to give you a different perspective."
+                    size="h2"
                   />
-                </Link>
+
+                  <div className="mt-6 sm:mt-8">
+                    <ExploreLink href="/experiences/international">
+                      Explore international
+                    </ExploreLink>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid gap-8 md:grid-cols-2">
+              {/* Cards */}
+              <div className="grid gap-5 sm:gap-6 lg:col-span-8">
                 {featuredInternational.map((experience) => (
                   <InternationalTripCard
                     key={experience.id}
@@ -238,12 +268,9 @@ export default function ExperiencesPage() {
         </Section>
       )}
 
-      {/* =====================================================
-          THE RESET
-      ====================================================== */}
-
-      <Section className="bg-muted/30">
-        <Container className="max-w-5xl">
+      {/* The Reset */}
+      <Section>
+        <Container>
           <MediaHeading
             eyebrow="The Reset"
             title="You don't need another vacation."
@@ -254,12 +281,15 @@ export default function ExperiencesPage() {
                 src="/illustrations/not-vacation.png"
                 alt="Traveller taking a quiet moment"
                 ratio="1/1"
+                radius="xl"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             }
           />
         </Container>
       </Section>
 
+      {/* CTA */}
       <CtaSection
         eyebrow="Ready?"
         title="Begin your reset."
@@ -267,6 +297,6 @@ export default function ExperiencesPage() {
         buttonText="Explore experiences"
         link="/experiences"
       />
-    </main>
+    </Page>
   )
 }

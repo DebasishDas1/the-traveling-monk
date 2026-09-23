@@ -1,10 +1,14 @@
 /* styles/animations.css */
 
 @theme inline {
+  /* ==========================================
+     Fade Up
+  ========================================== */
+
   @keyframes fade-up {
     from {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(20px);
     }
 
     to {
@@ -12,6 +16,10 @@
       transform: translateY(0);
     }
   }
+
+  /* ==========================================
+     Fade
+  ========================================== */
 
   @keyframes fade {
     from {
@@ -23,10 +31,14 @@
     }
   }
 
+  /* ==========================================
+     Soft Scale
+  ========================================== */
+
   @keyframes scale {
     from {
       opacity: 0;
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
 
     to {
@@ -35,9 +47,157 @@
     }
   }
 
-  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* ==========================================
+     Image Reveal
+  ========================================== */
 
-  --animate-fade: fade 0.4s ease;
+  @keyframes image-reveal {
+    from {
+      opacity: 0;
+      transform: scale(1.04);
+    }
 
-  --animate-scale: scale 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* ==========================================
+     Gentle Float
+  ========================================== */
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  /* ==========================================
+     Shimmer
+  ========================================== */
+
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  /* ==========================================
+     Animations
+  ========================================== */
+
+  --animate-fade-up:
+    fade-up 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --animate-fade:
+    fade 0.5s ease-out;
+
+  --animate-scale:
+    scale 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --animate-image-reveal:
+    image-reveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --animate-float:
+    float 4s ease-in-out infinite;
+
+  --animate-shimmer:
+    shimmer 1.8s ease-in-out infinite;
+}
+
+
+/* ==========================================
+   Animation Utilities
+========================================== */
+
+@layer utilities {
+  .animate-delay-75 {
+    animation-delay: 75ms;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-150 {
+    animation-delay: 150ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .animate-delay-700 {
+    animation-delay: 700ms;
+  }
+
+  /* Keep delayed elements invisible until animation starts */
+  .animate-fill-both {
+    animation-fill-mode: both;
+  }
+
+  /* ==========================================
+     Stagger
+  ========================================== */
+
+  .stagger > * {
+    animation-fill-mode: both;
+  }
+
+  .stagger > :nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  .stagger > :nth-child(2) {
+    animation-delay: 100ms;
+  }
+
+  .stagger > :nth-child(3) {
+    animation-delay: 200ms;
+  }
+
+  .stagger > :nth-child(4) {
+    animation-delay: 300ms;
+  }
+
+  .stagger > :nth-child(5) {
+    animation-delay: 400ms;
+  }
+
+  .stagger > :nth-child(6) {
+    animation-delay: 500ms;
+  }
+
+  /* ==========================================
+     Reduced Motion
+  ========================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }

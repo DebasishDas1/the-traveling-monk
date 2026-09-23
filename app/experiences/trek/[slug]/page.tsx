@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-import { Clock3, Mountain, Users, Zap } from 'lucide-react'
+import { ArrowUpRight, Clock3, Mountain, Users, Zap } from 'lucide-react'
 
 import { trekData } from '@/lib/data/trek-data'
 import { OfferingType, type Trek } from '@/types/experience'
@@ -12,12 +12,13 @@ import { GalleryHero } from '@/components/experience/GalleryHero'
 import { ItineraryCard } from '@/components/experience/ItineraryCard'
 import { TrekInclusions } from '@/components/experience/TrekInclusions'
 import { RelatedTreks } from '@/components/experience/RelatedTreks'
-import { Card, CardDescription, CardHeader } from '@/components/ui/card'
+
 /*
  * Non-critical components.
  *
- * These are good candidates for deferred loading if they contain
- * client-side JavaScript / maps / animations.
+ * These are good candidates for deferred loading because
+ * they contain client-side JavaScript, maps, galleries,
+ * reviews or booking interactions.
  */
 const PageGallery = dynamic(() =>
   import('@/components/experience/PageGallery').then((m) => m.PageGallery)
@@ -28,7 +29,10 @@ const LocationMap = dynamic(
     import('@/components/experience/LocationMap').then((m) => m.LocationMap),
   {
     loading: () => (
-      <div className="aspect-16/7 w-full animate-pulse rounded-2xl bg-muted" />
+      <div
+        className="aspect-16/7 w-full animate-pulse rounded-3xl bg-muted"
+        aria-label="Loading map"
+      />
     ),
   }
 )
@@ -40,6 +44,7 @@ const BookingBar = dynamic(() =>
 const ReviewsSection = dynamic(() =>
   import('@/components/experience/ReviewsSection').then((m) => m.ReviewsSection)
 )
+
 /* -------------------------------------------------------------------------- */
 /* Data                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -182,10 +187,6 @@ export default async function TrekPage({ params }: TrekPageProps) {
     },
   ]
 
-  /*
-   * JSON-LD helps search engines understand this page
-   * as a travel experience.
-   */
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TouristTrip',
@@ -198,7 +199,6 @@ export default async function TrekPage({ params }: TrekPageProps) {
       '@type': 'Offer',
       price: trek.priceFrom,
       priceCurrency: 'INR',
-      availability: 'https://schema.org/InStock',
       url: `https://thetravelingmonk.com/experiences/trek/${trek.slug}`,
     },
   }
@@ -206,7 +206,10 @@ export default async function TrekPage({ params }: TrekPageProps) {
   return (
     <>
       <main>
-        {/* Structured data */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Structured data                                                  */}
+        {/* ---------------------------------------------------------------- */}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -214,139 +217,208 @@ export default async function TrekPage({ params }: TrekPageProps) {
           }}
         />
 
-        {/* Hero */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Hero                                                             */}
+        {/* ---------------------------------------------------------------- */}
+
         <GalleryHero
           images={heroImages}
           title={trek.title}
           length={trek.gallery.length}
         />
 
-        {/* Facts */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Quick stats                                                      */}
+        {/* ---------------------------------------------------------------- */}
+
         <Container>
-          <div className="grid grid-cols-2 gap-4 py-4 md:grid-cols-4">
+          <div className="grid grid-cols-2 divide-x divide-border border-x border-border md:grid-cols-4">
             {facts.map((fact) => (
               <Fact key={fact.label} {...fact} />
             ))}
           </div>
         </Container>
 
-        {/* Introduction */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Introduction                                                     */}
+        {/* ---------------------------------------------------------------- */}
+
         <Section>
           <Container>
-            <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-              <div className="lg:sticky lg:top-32 lg:self-start">
-                <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
-                  The experience
-                </p>
+            <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+              <div className="lg:col-span-4">
+                <div className="lg:sticky lg:top-28">
+                  <p className="eyebrow-accent">Okay, here&apos;s the deal</p>
 
-                <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
-                  Come for the mountains.
-                  <span className="block text-muted-foreground">
-                    Stay for what they leave behind.
-                  </span>
-                </h2>
+                  <h2 className="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-5xl">
+                    Come for the mountains.
+                    <span className="mt-1 block text-muted-foreground">
+                      Stay for what they do to your brain.
+                    </span>
+                  </h2>
+
+                  <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="accent-dot" />
+                    <span>Worth the early wake-up.</span>
+                  </div>
+                </div>
               </div>
 
-              <Card className="border-0 bg-white shadow-none">
-                <CardHeader className="p-0">
-                  <CardDescription className="text-lg font-normal leading-relaxed p-4">
-                    {trek.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <div className="lg:col-span-8">
+                <p className="text-xl leading-9 text-muted-foreground sm:text-2xl sm:leading-10">
+                  {trek.description}
+                </p>
+              </div>
             </div>
           </Container>
         </Section>
 
-        {/* Highlights */}
-        {trek.highlights.length > 0 && (
-          <section className="bg-muted/40">
-            <Container>
-              <div className="grid gap-12 py-20 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-                <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
-                    Along the way
-                  </p>
+        {/* ---------------------------------------------------------------- */}
+        {/* Highlights                                                       */}
+        {/* ---------------------------------------------------------------- */}
 
-                  <h2 className="mt-5 max-w-sm text-4xl font-semibold leading-none tracking-tighter md:text-5xl">
-                    The moments you&apos;ll remember.
+        {trek.highlights.length > 0 && (
+          <Section className="bg-surface-secondary">
+            <Container>
+              <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+                <div className="lg:col-span-4">
+                  <p className="eyebrow-accent">The good stuff</p>
+
+                  <h2 className="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-5xl">
+                    Things you&apos;ll probably talk about later.
                   </h2>
+
+                  <p className="mt-5 text-sm leading-6 text-muted-foreground">
+                    The views, the random conversations, the tiny moments that
+                    somehow become the whole point of the trip.
+                  </p>
                 </div>
 
-                <div className="divide-y divide-border/70">
-                  {trek.highlights.map((highlight, index) => (
-                    <div
-                      key={`${highlight}-${index}`}
-                      className="flex items-center gap-4 py-4 text-xl md:text-2xl"
-                    >
-                      <span className="text-primary">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
+                <div className="lg:col-span-8">
+                  <div className="divide-y divide-border">
+                    {trek.highlights.map((highlight, index) => (
+                      <div
+                        key={`${highlight}-${index}`}
+                        className="
+                          group
+                          flex items-center gap-5
+                          py-5
+                          sm:py-6
+                        "
+                      >
+                        <span
+                          className="
+                            flex size-9 shrink-0 items-center justify-center
+                            rounded-full
+                            bg-primary
+                            text-xs font-medium
+                            text-primary-foreground
+                            transition-transform
+                            duration-300
+                            group-hover:scale-110
+                          "
+                        >
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
 
-                      <span>{highlight}</span>
-                    </div>
-                  ))}
+                        <span className="flex-1 text-xl font-medium leading-tight tracking-[-0.02em] sm:text-2xl">
+                          {highlight}
+                        </span>
+
+                        <ArrowUpRight
+                          className="
+                            size-5 shrink-0
+                            text-muted-foreground
+                            opacity-0
+                            transition-[opacity,transform]
+                            duration-300
+                            group-hover:translate-x-0.5
+                            group-hover:-translate-y-0.5
+                            group-hover:opacity-100
+                          "
+                          aria-hidden="true"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Container>
-          </section>
+          </Section>
         )}
 
-        {/* Itinerary */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Itinerary                                                        */}
+        {/* ---------------------------------------------------------------- */}
+
         {itinerary.length > 0 && (
           <Section>
             <Container>
-              <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-                <div className="lg:sticky lg:top-32 lg:self-start">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-primary">
-                    The journey
-                  </p>
+              <div className="grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+                <div className="lg:col-span-4">
+                  <div className="lg:sticky lg:top-28">
+                    <p className="eyebrow-accent">How this thing goes</p>
 
-                  <h2 className="mt-5 text-4xl font-semibold leading-[0.98] tracking-tighter md:text-5xl">
-                    Take it one day at a time.
-                  </h2>
+                    <h2 className="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-5xl">
+                      One day at a time.
+                    </h2>
 
-                  <p className="mt-5 text-base leading-7 text-muted-foreground">
-                    No rushing. No checklist. Just a trail, a few good people,
-                    and enough time to notice where you are.
-                  </p>
+                    <p className="mt-5 text-base leading-7 text-muted-foreground">
+                      No speed-running the mountains. No checking boxes just
+                      because they&apos;re there.
+                    </p>
 
-                  <div className="mt-8 hidden lg:block">
-                    <div className="h-px w-12 bg-primary" />
+                    <p className="mt-4 text-base leading-7 text-muted-foreground">
+                      Just a trail, good people, questionable amounts of chai,
+                      and enough time to actually be there.
+                    </p>
+
+                    <div className="mt-8 hidden items-center gap-3 lg:flex">
+                      <span className="h-px w-10 bg-accent" />
+                      <span className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                        Take your time
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-8">
-                  {itinerary.map((item, index) => (
-                    <ItineraryCard
-                      key={`${item.day}-${item.title}-${index}`}
-                      day={item.day}
-                      image={getImage(item.imageUrl, item.title)}
-                      title={item.title}
-                      description={item.description}
-                      altitude={item.altitude}
-                      time={item.duration}
-                      from={item.from}
-                      to={item.to}
-                    />
-                  ))}
+                <div className="lg:col-span-8">
+                  <div className="space-y-5 sm:space-y-6">
+                    {itinerary.map((item, index) => (
+                      <ItineraryCard
+                        key={`${item.day}-${item.title}-${index}`}
+                        day={item.day}
+                        image={getImage(item.imageUrl, item.title)}
+                        title={item.title}
+                        description={item.description}
+                        altitude={item.altitude}
+                        time={item.duration}
+                        from={item.from}
+                        to={item.to}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </Container>
           </Section>
         )}
 
-        {/* Gallery */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Gallery                                                          */}
+        {/* ---------------------------------------------------------------- */}
+
         {trek.gallery.length > 0 && (
-          <Section>
-            <Container>
-              <PageGallery images={trek.gallery} title={trek.title} />
-            </Container>
-          </Section>
+          <Container>
+            <PageGallery images={trek.gallery} title={trek.title} />
+          </Container>
         )}
 
-        {/* Inclusions */}
-        <Section>
+        {/* ---------------------------------------------------------------- */}
+        {/* Inclusions                                                       */}
+        {/* ---------------------------------------------------------------- */}
+
+        <Section className="bg-surface-secondary">
           <Container>
             <TrekInclusions
               inclusions={trek.inclusions}
@@ -355,7 +427,10 @@ export default async function TrekPage({ params }: TrekPageProps) {
           </Container>
         </Section>
 
-        {/* Location */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Location                                                         */}
+        {/* ---------------------------------------------------------------- */}
+
         {trek.geoLocation && (
           <Section>
             <Container>
@@ -368,7 +443,25 @@ export default async function TrekPage({ params }: TrekPageProps) {
           </Section>
         )}
 
-        {/* Related */}
+        {/* ---------------------------------------------------------------- */}
+        {/* Reviews                                                          */}
+        {/* ---------------------------------------------------------------- */}
+
+        <Section className="bg-surface-secondary">
+          <Container>
+            <ReviewsSection
+              experienceId={trek.id}
+              eyebrow="From the trail"
+              title="People who actually went."
+              description="Real experiences from people who have walked this trail."
+            />
+          </Container>
+        </Section>
+
+        {/* ---------------------------------------------------------------- */}
+        {/* Related treks                                                    */}
+        {/* ---------------------------------------------------------------- */}
+
         {relatedTreks.length > 0 && (
           <Section>
             <Container>
@@ -376,32 +469,28 @@ export default async function TrekPage({ params }: TrekPageProps) {
             </Container>
           </Section>
         )}
+
+        {/* ---------------------------------------------------------------- */}
+        {/* Completion                                                       */}
+        {/* ---------------------------------------------------------------- */}
+
+        <Section>
+          <Container>
+            <CtaSection
+              eyebrow="After the trek"
+              title="You made it. Now make it a memory."
+              description="Share your trek completion with the community and keep the journey going."
+              buttonText="Share your completion"
+              link={`/completion/${trek.slug}`}
+            />
+          </Container>
+        </Section>
       </main>
 
-      {/* Reviews */}
-      <Section>
-        <Container>
-          <ReviewsSection
-            experienceId={trek.id}
-            eyebrow="Social proof"
-            title="What travelers say."
-            description="Step away from everyday distractions and into journeys that help you discover yourself."
-          />
-        </Container>
-      </Section>
+      {/* ------------------------------------------------------------------ */}
+      {/* Booking                                                            */}
+      {/* ------------------------------------------------------------------ */}
 
-      {/* Completion CTA */}
-      <Section>
-        <CtaSection
-          eyebrow="Share your achievement"
-          title="Completed this trek?"
-          description="Upload your photo, generate a badge, and share with your community."
-          buttonText="Share your completion"
-          link={`/completion/${trek.slug}`}          
-        />
-      </Section>
-
-      {/* Booking */}
       <BookingBar
         slug={trek.slug}
         title={trek.title}

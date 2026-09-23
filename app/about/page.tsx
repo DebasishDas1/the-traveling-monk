@@ -1,14 +1,13 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-
 import {
   Container,
   CtaSection,
   Heading,
   Media,
   MediaHeading,
+  Page,
   Section,
+  SectionHeader,
 } from '@/components/common'
 
 import { CategoryCard } from '@/components/experience/CategoryCard'
@@ -17,7 +16,7 @@ import { categories, principles, founders } from '@/lib/data/about-page'
 export const metadata: Metadata = {
   title: 'About The Traveling Monk | Meaningful Travel & Himalayan Journeys',
   description:
-    'Discover The Traveling Monk — journeys, Himalayan treks, getaways, and international experiences designed to slow down, reconnect, and return renewed.',
+    'Discover The Traveling Monk, journeys, Himalayan treks, getaways, and international experiences designed to slow down, reconnect, and return renewed.',
   alternates: {
     canonical: '/about',
   },
@@ -46,33 +45,31 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="overflow-hidden">
-      {/* =====================================================
-          HERO
-      ====================================================== */}
-      <Container className="pt-12">
-        <Heading
-          eyebrow="About The Traveling Monk"
-          title="Travel was never just about going somewhere."
-          description="Sometimes you leave home because you need to find your way back to yourself."
-          size="display"
-          align="center"
-        />
-
-        <div className="mt-6">
-          <Media
-            src="/images/about/about-hero-2.png"
-            alt="Travellers walking through a mountain landscape"
-            ratio="16/9"
-            priority
-            sizes="(max-width: 768px) 100vw, 1200px"
+    <Page>
+      {/* Hero */}
+        <Container className="pt-12 md:pt-16">
+          <Heading
+            eyebrow="About The Traveling Monk"
+            title="Travel was never just about going somewhere."
+            description="Sometimes you leave home because you need to find your way back to yourself."
+            size="display"
+            align="center"
+            className="mx-auto max-w-5xl"
           />
-        </div>
-      </Container>
 
-      {/* =====================================================
-          FOUNDERS
-      ====================================================== */}
+          <div className="mt-10 md:mt-14">
+            <Media
+              src="/images/about/about-hero-2.png"
+              alt="Travellers walking through a mountain landscape"
+              ratio="16/9"
+              radius="xl"
+              priority
+              sizes="(max-width: 768px) 100vw, 1200px"
+            />
+          </div>
+        </Container>
+
+      {/* Founders */}
       <Section>
         <Container>
           <Heading
@@ -91,41 +88,42 @@ export default function AboutPage() {
                   key={founder.name}
                   className="grid items-center gap-10 md:grid-cols-2 md:gap-16 lg:gap-24"
                 >
-                  {/* Image */}
-                  <div className={reverse ? 'md:order-2' : 'md:order-1'}>
-                    <div className="overflow-hidden rounded-[1.5rem] md:rounded-[2rem]">
-                      <Media
-                        src={founder.image}
-                        alt={`${founder.name}, ${founder.role}`}
-                        ratio="4/5"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                      />
-                    </div>
+                  <div
+                    className={reverse ? 'md:order-2' : 'md:order-1'}
+                  >
+                    <Media
+                      src={founder.image}
+                      alt={`${founder.name}, ${founder.role}`}
+                      ratio="4/5"
+                      radius="xl"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
                   </div>
 
-                  {/* Content */}
-                  <div className={reverse ? 'md:order-1' : 'md:order-2'}>
-                    <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+                  <div
+                    className={reverse ? 'md:order-1' : 'md:order-2'}
+                  >
+                    <p className="eyebrow">
                       {founder.role}
                     </p>
 
-                    <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-primary md:text-5xl">
+                    <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.035em] text-foreground md:text-5xl">
                       {founder.name}
                     </h2>
 
-                    <p className="mt-6 text-sm leading-7 text-foreground/70 md:text-base md:leading-8">
+                    <p className="mt-6 text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
                       {founder.intro}
                     </p>
 
-                    <p className="mt-4 text-xs leading-5 text-muted-foreground">
-                      <span className="font-medium text-foreground/70">
+                    <p className="mt-5 text-sm leading-6 text-muted-foreground">
+                      <span className="font-medium text-foreground">
                         Responsible for
                       </span>{' '}
-                      — {founder.responsibility}
+                      {founder.responsibility}
                     </p>
 
                     <div
-                      className="my-6 h-px w-10 bg-primary/25"
+                      className="my-7 h-px w-10 bg-accent"
                       aria-hidden="true"
                     />
 
@@ -137,7 +135,7 @@ export default function AboutPage() {
                         (item) => (
                           <li
                             key={item}
-                            className="rounded-full bg-primary/5 px-3 py-1.5 text-[10px] font-medium text-muted-foreground"
+                            className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted-foreground"
                           >
                             {item}
                           </li>
@@ -152,21 +150,20 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* =====================================================
-          PHILOSOPHY
-      ====================================================== */}
-      <Section>
+      {/* Philosophy */}
+      <Section className="bg-surface-secondary">
         <Container>
           <MediaHeading
             eyebrow="Why we exist"
             title="We believe travel should change something."
-            description="Modern life is full of noise — notifications, deadlines, screens, routines, and an endless feeling of being somewhere else."
+            description="Modern life is full of noise, notifications, deadlines, screens, routines, and an endless feeling of being somewhere else."
             imagePosition="right"
             image={
               <Media
                 src="/illustrations/baby-birth.png"
                 alt="Traveller sitting quietly in the mountains"
                 ratio="1/1"
+                radius="xl"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             }
@@ -174,9 +171,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* =====================================================
-          THE RESET
-      ====================================================== */}
+      {/* The Reset */}
       <Section>
         <Container>
           <MediaHeading
@@ -189,6 +184,7 @@ export default function AboutPage() {
                 src="/illustrations/children.png"
                 alt="Traveller sitting quietly in the mountains"
                 ratio="4/5"
+                radius="xl"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             }
@@ -196,9 +192,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* =====================================================
-          PRINCIPLES
-      ====================================================== */}
+      {/* Principles */}
       <Section>
         <Container>
           <Heading
@@ -208,13 +202,13 @@ export default function AboutPage() {
             size="h2"
           />
 
-          <div className="mt-10 grid border-y md:grid-cols-3">
-            {principles.map(({ number, title, description, icon: Icon }) => (
-              <article
-                key={number}
-                className="
-                    border-b
-                    px-0
+          <div className="mt-12 grid border-y border-border md:grid-cols-3">
+            {principles.map(
+              ({ number, title, description, icon: Icon }) => (
+                <article
+                  key={number}
+                  className="
+                    border-b border-border
                     py-8
                     last:border-b-0
                     md:border-b-0
@@ -225,84 +219,58 @@ export default function AboutPage() {
                     md:last:border-r-0
                     md:last:pr-0
                   "
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium tracking-[0.2em] text-primary">
-                    {number}
-                  </span>
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold tracking-[0.2em] text-accent">
+                      {number}
+                    </span>
 
-                  <Icon
-                    aria-hidden="true"
-                    className="size-5 text-muted-foreground"
-                    strokeWidth={1.5}
-                  />
-                </div>
+                    <Icon
+                      aria-hidden="true"
+                      className="size-5 text-muted-foreground"
+                      strokeWidth={1.5}
+                    />
+                  </div>
 
-                <h3 className="mt-7 text-2xl font-medium tracking-[-0.04em] md:text-3xl">
-                  {title}
-                </h3>
+                  <h3 className="mt-7 text-2xl font-semibold leading-tight tracking-[-0.03em] md:text-3xl">
+                    {title}
+                  </h3>
 
-                <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
-                  {description}
-                </p>
-              </article>
-            ))}
+                  <p className="mt-4 text-sm leading-6 text-muted-foreground md:text-base">
+                    {description}
+                  </p>
+                </article>
+              )
+            )}
           </div>
         </Container>
       </Section>
 
-      {/* =====================================================
-          EXPERIENCES
-      ====================================================== */}
+      {/* Experiences */}
       <Section>
         <Container>
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <Heading
-              eyebrow="What we create"
-              title="Different places. One philosophy."
-              description="From Himalayan trails to quiet homes and unfamiliar cities, every experience begins with the same idea."
-              size="h2"
-            />
+          <SectionHeader
+            eyebrow="What we create"
+            title="Different places. One philosophy."
+            description="From Himalayan trails to quiet homes and unfamiliar cities, every experience begins with the same idea."
+            action={{
+              label: 'Explore everything',
+              href: '/experiences',
+            }}
+          />
 
-            <Link
-              href="/experiences"
-              className="
-                inline-flex
-                shrink-0
-                items-center
-                gap-2
-                text-sm
-                font-medium
-                underline
-                decoration-border
-                underline-offset-8
-                transition-colors
-                hover:decoration-foreground
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-primary
-                focus-visible:ring-offset-4
-              "
-            >
-              Explore everything
-              <ArrowRight
-                aria-hidden="true"
-                className="size-4 transition-transform duration-200 group-hover:translate-x-1"
-              />
-            </Link>
-          </div>
-
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
             {categories.map((category) => (
-              <CategoryCard key={category.href} {...category} />
+              <CategoryCard
+                key={category.href}
+                {...category}
+              />
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* =====================================================
-          COMMUNITY
-      ====================================================== */}
+      {/* Community */}
       <Section>
         <Container>
           <MediaHeading
@@ -315,6 +283,7 @@ export default function AboutPage() {
                 src="/images/about/IMG_5470.png"
                 alt="Travellers sharing a moment during a journey"
                 ratio="1/1"
+                radius="xl"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             }
@@ -322,9 +291,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* =====================================================
-          CTA
-      ====================================================== */}
+      {/* CTA */}
       <CtaSection
         eyebrow="Your journey starts here"
         title="Maybe you don't need another holiday."
@@ -332,6 +299,6 @@ export default function AboutPage() {
         buttonText="Begin Your Reset"
         link="/experiences"
       />
-    </main>
+    </Page>
   )
 }
