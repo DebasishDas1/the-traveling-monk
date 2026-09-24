@@ -60,24 +60,24 @@ export function TreksPageClient() {
     <main>
       {/* Hero */}
       {/* <Section className="pt-10 sm:pt-12 md:pt-16 lg:pt-20"> */}
-        <Container>
-          <MediaHeading
-            eyebrow="Himalayan Treks"
-            title="Find your way into the mountains."
-            description="Journeys that take you away from the noise and closer to what matters."
-            size="display"
-            image={
-              <Media
-                src="/illustrations/mountain-journey.png"
-                alt="Traveller beginning a journey through the Himalayan mountains"
-                ratio="1/1"
-                radius="xl"
-                priority
-                sizes="(max-width: 1023px) 100vw, 50vw"
-              />
-            }
-          />
-        </Container>
+      <Container className="mt-6">
+        <MediaHeading
+          eyebrow="Himalayan Treks"
+          title="Find your way into the mountains."
+          description="Journeys that take you away from the noise and closer to what matters."
+          size="display"
+          image={
+            <Media
+              src="/illustrations/mountain-journey.png"
+              alt="Traveller beginning a journey through the Himalayan mountains"
+              ratio="1/1"
+              radius="xl"
+              priority
+              sizes="(max-width: 1023px) 100vw, 50vw"
+            />
+          }
+        />
+      </Container>
       {/* </Section> */}
 
       {/* Treks + filters */}
@@ -115,29 +115,29 @@ export function TreksPageClient() {
                     </p>
 
                     <div className="space-y-3">
-                      {FILTERS.filter(
-                        (filter) => filter.value !== 'all'
-                      ).map((filter) => {
-                        const difficulty = filter.value as DifficultyLevel
+                      {FILTERS.filter((filter) => filter.value !== 'all').map(
+                        (filter) => {
+                          const difficulty = filter.value as DifficultyLevel
 
-                        return (
-                          <label
-                            key={difficulty}
-                            className="flex cursor-pointer items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                          >
-                            <Checkbox
-                              checked={selectedDifficulties.includes(
-                                difficulty
-                              )}
-                              onCheckedChange={() =>
-                                toggleDifficulty(difficulty)
-                              }
-                            />
+                          return (
+                            <label
+                              key={difficulty}
+                              className="flex cursor-pointer items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                            >
+                              <Checkbox
+                                checked={selectedDifficulties.includes(
+                                  difficulty
+                                )}
+                                onCheckedChange={() =>
+                                  toggleDifficulty(difficulty)
+                                }
+                              />
 
-                            <span>{filter.label}</span>
-                          </label>
-                        )
-                      })}
+                              <span>{filter.label}</span>
+                            </label>
+                          )
+                        }
+                      )}
                     </div>
                   </div>
 

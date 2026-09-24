@@ -31,6 +31,7 @@ interface BookingSheetProps {
   total: number
   onBook: () => void
   isLoading?: boolean
+  errors?: { name?: string; phone?: string }
 }
 
 function formatDateToISO(date: Date): string {

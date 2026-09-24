@@ -116,26 +116,24 @@ export default function ExperiencesPage() {
   return (
     <Page>
       {/* Hero */}
-      <Section className="pt-10 sm:pt-12 lg:pt-16">
-        <Container>
-          <MediaHeading
-            eyebrow="Experiences"
-            title="Choose your way out of the ordinary."
-            description="Treks, stays, and journeys designed to slow you down, bring you closer to people, and leave you feeling renewed."
-            size="display"
-            image={
-              <Media
-                src="/illustrations/choose.png"
-                alt="Traveller sitting beside the sea"
-                ratio="1/1"
-                radius="xl"
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            }
-          />
-        </Container>
-      </Section>
+      <Container className="mt-6">
+        <MediaHeading
+          eyebrow="Experiences"
+          title="Choose your way out of the ordinary."
+          description="Treks, stays, and journeys designed to slow you down, bring you closer to people, and leave you feeling renewed."
+          size="display"
+          image={
+            <Media
+              src="/illustrations/choose.png"
+              alt="Traveller sitting beside the sea"
+              ratio="1/1"
+              radius="xl"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          }
+        />
+      </Container>
 
       {/* Categories */}
       <Section className="pt-4 sm:pt-8 lg:pt-0">
@@ -183,10 +181,7 @@ export default function ExperiencesPage() {
               {/* Cards */}
               <div className="grid gap-5 sm:gap-6 lg:col-span-8">
                 {featuredTreks.map((experience) => (
-                  <TrekCard
-                    key={experience.id}
-                    experience={experience}
-                  />
+                  <TrekCard key={experience.id} experience={experience} />
                 ))}
               </div>
             </div>
@@ -220,10 +215,7 @@ export default function ExperiencesPage() {
               {/* Cards */}
               <div className="grid gap-5 sm:gap-6 lg:col-span-8">
                 {featuredGetaways.map((experience) => (
-                  <GetawayCard
-                    key={experience.id}
-                    experience={experience}
-                  />
+                  <GetawayCard key={experience.id} experience={experience} />
                 ))}
               </div>
             </div>

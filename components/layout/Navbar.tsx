@@ -11,6 +11,7 @@ import { siteConfig } from '@/config/site'
 
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { GlobalSearch } from './GlobalSearch'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -113,7 +114,8 @@ export function Navbar() {
               'focus-visible:ring-2',
               'focus-visible:ring-ring',
               'focus-visible:ring-offset-4',
-              'focus-visible:ring-offset-background'
+              'focus-visible:ring-offset-background',
+              'flex justify-center items-center'
             )}
           >
             <Image
@@ -124,6 +126,9 @@ export function Navbar() {
               priority
               className="rounded-full"
             />
+            <span className="text-2xl font-bold tracking-[-0.01em]">
+              The Traveling Monk
+            </span>
           </Link>
 
           {/* ============================================================
@@ -169,7 +174,8 @@ export function Navbar() {
               DESKTOP CTA
           ============================================================= */}
 
-          <div className="ml-auto hidden md:block">
+          <div className="ml-auto hidden items-center gap-2 md:flex">
+            <GlobalSearch />
             <Button>
               <Link href={siteConfig.cta.href}>{siteConfig.cta.label}</Link>
             </Button>
@@ -179,7 +185,8 @@ export function Navbar() {
               MOBILE MENU
           ============================================================= */}
 
-          <div className="ml-auto md:hidden">
+          <div className="ml-auto flex items-center gap-1 md:hidden">
+            <GlobalSearch compact />
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger
                 render={

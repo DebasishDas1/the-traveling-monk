@@ -66,7 +66,7 @@ export default function GetawaysPage() {
           HERO
       ====================================================== */}
 
-      <Container>
+      <Container className="mt-6">
         <MediaHeading
           eyebrow="Himalayan Getaways"
           title="Stay somewhere that feels lived in."

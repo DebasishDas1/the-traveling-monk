@@ -20,7 +20,7 @@ export const heroSlidesData: HeroSlide[] = [
     image: convertGoogleDriveLink(
       'https://drive.google.com/file/d/1hhrLuila_DgtMz38JsyKUrnIFhWBQ9u-/view?usp=drive_link'
     ),
-    href: '/getaways/kasol-manali',
+    href: '/experiences/getaway/kasol-manali',
     cta: 'Begin Your Reset',
   },
   {
@@ -32,7 +32,7 @@ export const heroSlidesData: HeroSlide[] = [
     image: convertGoogleDriveLink(
       'https://drive.google.com/file/d/1UUjhYRQIF8sAtEy3lpeWR6Fi7Hfiyetu/view?usp=drive_link'
     ),
-    href: '/international/bhutan-cultural-adventure',
+    href: '/experiences/international/bhutan-cultural-adventure',
     cta: 'Begin Your Reset',
   },
 ]

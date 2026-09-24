@@ -21,22 +21,23 @@ import {
 } from '@/components/ui/select'
 import { enquiryTypes } from '@/lib/data/contact-page'
 
-const fieldClass = 'h-16 rounded-full border-0 bg-primary/10 shadow-none'
+const controlClass = 'h-16 rounded-full border-0 bg-primary/10 shadow-none'
 
 const inputClass =
-  'h-16 border-0 bg-transparent text-base shadow-none outline-none focus-visible:border-0 focus-visible:ring-0'
-
-const selectClass =
-  'h-16 min-h-16 w-full rounded-full border-0 bg-primary/10 px-5 text-base shadow-none outline-none focus:border-0 focus:ring-0 focus-visible:border-0 focus-visible:ring-0'
+  'h-16 border-0 bg-transparent text-base shadow-none outline-none ' +
+  'focus-visible:border-0 focus-visible:ring-0'
 
 const textareaGroupClass =
   'min-h-36 rounded-2xl border-0 bg-primary/10 shadow-none'
 
 const textareaClass =
-  'min-h-36 resize-none border-0 bg-transparent px-3 py-3 text-base shadow-none outline-none focus-visible:border-0 focus-visible:ring-0'
+  'min-h-36 resize-none border-0 bg-transparent px-4 py-4 text-base ' +
+  'leading-7 shadow-none outline-none focus-visible:border-0 ' +
+  'focus-visible:ring-0'
 
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null)
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [enquiry, setEnquiry] = useState('')
 
@@ -59,18 +60,41 @@ export function ContactForm() {
     try {
       const formData = new FormData(form)
 
-      console.log(Object.fromEntries(formData))
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          enquiry: formData.get('enquiry'),
+          message: formData.get('message'),
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message)
+      }
 
       form.reset()
       setEnquiry('')
 
       toast.success('Message sent.', {
         description: "Thanks for reaching out. We'll be in touch soon.",
-        icon: <Check className="size-4" />,
+        icon: <Check className="size-4" aria-hidden="true" />,
       })
-    } catch {
+    } catch (error) {
+      console.error('Contact form error:', error)
+
       toast.error('Something went wrong.', {
-        description: 'Please try again in a moment.',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'Please try again in a moment.',
       })
     } finally {
       setIsSubmitting(false)
@@ -90,14 +114,22 @@ export function ContactForm() {
       id="contact-form"
       onSubmit={handleSubmit}
       aria-busy={isSubmitting}
-      className="w-full rounded-2xl border p-5 sm:p-7 bg-white"
+      className="
+        w-full
+        rounded-3xl
+        border border-border
+        bg-surface
+        p-5
+        shadow-sm
+        sm:p-7
+      "
     >
       <FieldGroup className="gap-3">
         {/* Name */}
         <Field>
-          <InputGroup className={fieldClass}>
+          <InputGroup className={controlClass}>
             <InputGroupAddon className="pl-5 text-muted-foreground">
-              <User className="size-4" aria-hidden="true" />
+              <User className="size-4" strokeWidth={1.8} aria-hidden="true" />
             </InputGroupAddon>
 
             <InputGroupInput
@@ -114,9 +146,9 @@ export function ContactForm() {
 
         {/* Email */}
         <Field>
-          <InputGroup className={fieldClass}>
+          <InputGroup className={controlClass}>
             <InputGroupAddon className="pl-5 text-muted-foreground">
-              <Mail className="size-4" aria-hidden="true" />
+              <Mail className="size-4" strokeWidth={1.8} aria-hidden="true" />
             </InputGroupAddon>
 
             <InputGroupInput
@@ -133,16 +165,16 @@ export function ContactForm() {
 
         {/* Phone */}
         <Field>
-          <InputGroup className={fieldClass}>
+          <InputGroup className={controlClass}>
             <InputGroupAddon className="pl-5 text-muted-foreground">
-              <Phone className="size-4" aria-hidden="true" />
+              <Phone className="size-4" strokeWidth={1.8} aria-hidden="true" />
             </InputGroupAddon>
 
             <InputGroupInput
               id="phone"
               name="phone"
               type="tel"
-              placeholder="Phone"
+              placeholder="Phone (optional)"
               autoComplete="tel"
               inputMode="tel"
               className={inputClass}
@@ -157,15 +189,27 @@ export function ContactForm() {
             onValueChange={(value) => setEnquiry(value ?? '')}
           >
             <SelectTrigger
+              id="enquiry"
               aria-label="What can we help with?"
-              className={selectClass}
+              className={controlClass}
             >
               <SelectValue placeholder="What can we help with?" />
             </SelectTrigger>
 
-            <SelectContent className="bg-background p-1">
+            <SelectContent className="rounded-2xl border-border bg-surface p-1.5 shadow-lg">
               {enquiryTypes.map(({ value, label }) => (
-                <SelectItem key={value} value={value} className="p-2">
+                <SelectItem
+                  key={value}
+                  value={value}
+                  className="
+                    rounded-xl
+                    px-3 py-3
+                    text-sm
+                    outline-none
+                    data-highlighted:bg-muted
+                    data-highlighted:text-foreground
+                  "
+                >
                   {label}
                 </SelectItem>
               ))}
@@ -189,11 +233,20 @@ export function ContactForm() {
         </Field>
 
         {/* Actions */}
-        <div className="flex items-center gap-2 pt-2">
+        <div className="flex flex-wrap items-center gap-2 pt-2">
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="h-12 rounded-full px-6 text-base font-medium shadow-none hover:bg-primary focus-visible:ring-0"
+            className="
+              h-12
+              rounded-full
+              px-6
+              text-base
+              font-medium
+              shadow-sm
+              hover:bg-primary-hover
+              focus-visible:ring-2
+            "
           >
             {isSubmitting ? (
               <>
@@ -213,13 +266,21 @@ export function ContactForm() {
             variant="outline"
             onClick={handleClear}
             disabled={isSubmitting}
-            className="h-12 rounded-full px-5 text-base text-muted-foreground shadow-none hover:bg-transparent hover:text-muted-foreground focus-visible:ring-0"
+            className="
+              h-12
+              rounded-full
+              px-5
+              text-base
+              shadow-none
+              hover:bg-muted
+              focus-visible:ring-2
+            "
           >
             Clear
           </Button>
         </div>
 
-        <p className="pt-1 text-xs text-muted-foreground">
+        <p className="pt-1 text-xs leading-5 text-muted-foreground">
           Usually replies within one working day.
         </p>
       </FieldGroup>

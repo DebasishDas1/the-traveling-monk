@@ -221,18 +221,14 @@ export default async function TrekPage({ params }: TrekPageProps) {
         {/* Hero                                                             */}
         {/* ---------------------------------------------------------------- */}
 
-        <GalleryHero
-          images={heroImages}
-          title={trek.title}
-          length={trek.gallery.length}
-        />
+        <GalleryHero images={heroImages} title={trek.title} />
 
         {/* ---------------------------------------------------------------- */}
         {/* Quick stats                                                      */}
         {/* ---------------------------------------------------------------- */}
 
         <Container>
-          <div className="grid grid-cols-2 divide-x divide-border border-x border-border md:grid-cols-4">
+          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {facts.map((fact) => (
               <Fact key={fact.label} {...fact} />
             ))}

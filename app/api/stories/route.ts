@@ -47,7 +47,7 @@ async function appendToSheet(
   await sheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
-    range: `${sheetName}!A:L`,
+    range: `'${sheetName}'!A:L`,
     valueInputOption: 'RAW',
     requestBody: { values },
   })
@@ -61,7 +61,7 @@ async function getStoriesFromSheet(
   const response = await sheets.spreadsheets.values.get({
     auth,
     spreadsheetId,
-    range: `${sheetName}!A:L`,
+    range: `'${sheetName}'!A:L`,
   })
 
   return response.data.values || []

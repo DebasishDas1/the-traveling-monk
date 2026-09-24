@@ -18,6 +18,7 @@ interface BookingDetailsDialogProps {
   onOpenChange: (open: boolean) => void
   name: string
   phone: string
+  errors?: { name?: string; phone?: string }
   onNameChange: (name: string) => void
   onPhoneChange: (phone: string) => void
   onSubmit: () => void
@@ -29,12 +30,13 @@ export function BookingDetailsDialog({
   onOpenChange,
   name,
   phone,
+  errors,
   onNameChange,
   onPhoneChange,
   onSubmit,
   isLoading = false,
 }: BookingDetailsDialogProps) {
-  const isValid = name.trim().length > 0 && phone.trim().length > 0
+  const isValid = name.trim().length > 0 && phone.trim().length > 0 && !errors?.name && !errors?.phone
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -68,8 +70,15 @@ export function BookingDetailsDialog({
               disabled={isLoading}
               autoFocus
               autoComplete="name"
-              className="h-12 rounded-xl bg-background px-4 text-base"
+              className={`h-12 rounded-xl bg-background px-4 text-base ${
+                errors?.name ? 'border-destructive/50 ring-destructive/20 focus-visible:ring-destructive' : ''
+              }`}
             />
+            {errors?.name && (
+              <p className="text-sm font-medium text-destructive">
+                {errors.name}
+              </p>
+            )}
           </div>
 
           {/* Phone */}
@@ -89,8 +98,15 @@ export function BookingDetailsDialog({
               onChange={(event) => onPhoneChange(event.target.value)}
               disabled={isLoading}
               autoComplete="tel"
-              className="h-12 rounded-xl bg-background px-4 text-base"
+              className={`h-12 rounded-xl bg-background px-4 text-base ${
+                errors?.phone ? 'border-destructive/50 ring-destructive/20 focus-visible:ring-destructive' : ''
+              }`}
             />
+            {errors?.phone && (
+              <p className="text-sm font-medium text-destructive">
+                {errors.phone}
+              </p>
+            )}
           </div>
         </div>
 

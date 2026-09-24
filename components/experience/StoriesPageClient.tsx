@@ -67,7 +67,7 @@ export function StoriesPageClient({ quoteList }: StoriesPageClientProps) {
       {/* ============================================================
           JOURNAL
       ============================================================ */}
-      <Container>
+      <Container className="mt-6">
         <MediaHeading
           eyebrow="Stories from the road"
           title="The places we go. The people we meet. The things that stay with us."

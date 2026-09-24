@@ -41,7 +41,7 @@ export default function InternationalPage() {
       ====================================================== */}
 
       {/* <Section className="pt-10 sm:pt-12 lg:pt-16"> */}
-      <Container>
+      <Container className="mt-6">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16 xl:gap-20">
           <div className="lg:col-span-6">
             <Heading
@@ -131,7 +131,7 @@ export default function InternationalPage() {
               </Link>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            <div className="grid gap-5 sm:grid-cols-2">
               {trips.map((trip) => (
                 <InternationalTripCard key={trip.id} experience={trip} />
               ))}

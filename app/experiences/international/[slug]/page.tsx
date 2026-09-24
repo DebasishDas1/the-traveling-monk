@@ -173,26 +173,14 @@ export default async function InternationalPage({
       {/* HERO                                                               */}
       {/* ------------------------------------------------------------------ */}
 
-      <GalleryHero
-        images={images}
-        title={trip.name}
-        length={trip.gallery.length}
-      />
+      <GalleryHero images={images} title={trip.name} />
 
       {/* ------------------------------------------------------------------ */}
       {/* QUICK FACTS                                                        */}
       {/* ------------------------------------------------------------------ */}
 
       <Container>
-        <div
-          className="
-              grid grid-cols-2
-              divide-x divide-y divide-border
-              border-x border-border
-              md:grid-cols-4
-              md:divide-y-0
-            "
-        >
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {facts.map((fact) => (
             <Fact key={fact.label} {...fact} />
           ))}

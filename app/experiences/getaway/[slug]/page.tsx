@@ -185,18 +185,14 @@ export default async function GetawayPage({ params }: GetawayPageProps) {
       {/* HERO                                                               */}
       {/* ------------------------------------------------------------------ */}
 
-      <GalleryHero
-        images={gallery}
-        title={getaway.name}
-        length={getaway.gallery.length}
-      />
+      <GalleryHero images={gallery} title={getaway.name} />
 
       {/* ------------------------------------------------------------------ */}
       {/* QUICK FACTS                                                        */}
       {/* ------------------------------------------------------------------ */}
 
       <Container>
-        <div className="grid grid-cols-2 divide-x divide-y divide-border border-x border-border md:grid-cols-4 md:divide-y-0">
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {facts.map((fact) => (
             <Fact key={fact.label} {...fact} />
           ))}
