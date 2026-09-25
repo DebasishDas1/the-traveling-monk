@@ -33,7 +33,7 @@ const toolList = [
     title: 'SplitMate',
     description: 'Split the bill. Keep the trip moving.',
     icon: Wallet,
-    href: '/tools/splitmate',
+    href: '/tools/monkmoney',
     available: true,
   },
   {

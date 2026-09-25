@@ -21,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import type { SplitMateExpense, SplitMateMember } from '@/types/splitmate'
+import type { SplitMateExpense, SplitMateMember } from '@/types/monk-money'
 
 import { formatMoney } from './money'
 

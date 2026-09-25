@@ -8,7 +8,7 @@ import {
   Unsubscribe,
 } from 'firebase/database'
 import { ensureFirebaseAuth, getFirebaseDb } from './client'
-import type { SplitMateExpense, SplitMateGroup } from '@/types/splitmate'
+import type { SplitMateExpense, SplitMateGroup } from '@/types/monk-money'
 
 export class FirebaseService {
   private get db() {

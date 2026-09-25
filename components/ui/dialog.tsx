@@ -64,7 +64,7 @@ function DialogContent({
 
           // IMPORTANT: explicit width
           'w-[calc(100vw-2rem)]',
-          'max-w-[32rem]',
+          'max-w-128',
 
           // Surface
           'rounded-3xl',
@@ -155,7 +155,7 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn('text-xl font-semibold tracking-[-0.025em]', className)}
+      className={cn('text-xl font-semibold tracking-tight', className)}
       {...props}
     />
   )

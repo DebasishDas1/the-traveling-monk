@@ -70,21 +70,24 @@ export function HomepageHero() {
       <Container>
         <div className="flex flex-col items-center text-center">
           <Heading
-            eyebrow="The Traveling Monk"
+            eyebrow=""
             title="Go somewhere. Come back renewed."
             description="Trips for curious people who want more than another place to tick off a list."
             size="display"
             align="center"
           />
 
-          <div className="mt-7 flex gap-1 w-full justify-center">
-            <HeroLink href="/experiences" variant="primary">
-              Begin your reset
-            </HeroLink>
+          <div className="mt-7 flex gap-2 w-full justify-center">
+            <Link href="/experiences">
+              <Button>Begin your reset</Button>
+            </Link>
 
-            <HeroLink href="/experiences" variant="outline">
-              Explore
-            </HeroLink>
+            <Link href="/experiences">
+              <Button variant="outline">
+                Explore
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Button>
+            </Link>
           </div>
         </div>
       </Container>
@@ -462,36 +465,5 @@ function MobileProgress({ current, total }: MobileProgressProps) {
         {String(total).padStart(2, '0')}
       </span>
     </div>
-  )
-}
-
-/* -------------------------------------------------------------------------- */
-/* Intro links                                                                */
-/* -------------------------------------------------------------------------- */
-
-interface HeroLinkProps {
-  href: string
-  variant: 'primary' | 'outline'
-  children: React.ReactNode
-}
-
-function HeroLink({ href, variant, children }: HeroLinkProps) {
-  const base =
-    'inline-flex h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-[background-color,border-color,box-shadow,transform] duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto'
-
-  const variants = {
-    primary:
-      'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover hover:shadow-md',
-
-    outline:
-      'border border-border bg-transparent text-foreground hover:border-input hover:bg-muted',
-  }
-
-  return (
-    <Link href={href} className={`${base} ${variants[variant]}`}>
-      {children}
-
-      <ArrowRight className="size-4" aria-hidden="true" />
-    </Link>
   )
 }

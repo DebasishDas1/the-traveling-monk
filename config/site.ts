@@ -31,6 +31,16 @@ export const siteConfig = {
     {
       label: 'Tools',
       href: '/tools',
+      subLinks: [
+        {
+          label: 'All Tools',
+          href: '/tools',
+        },
+        // {
+        //   label: 'Monk Money',
+        //   href: '/tools/monkmoney',
+        // },
+      ],
     },
     {
       label: 'Stories',

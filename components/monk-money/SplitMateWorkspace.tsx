@@ -3,13 +3,13 @@
 import { useState, memo, useCallback, useMemo } from 'react'
 import { ArrowDownLeft, ArrowUpRight, ReceiptText, Users } from 'lucide-react'
 
-import { AddExpenseDialog } from '@/components/splitmate/AddExpenseDialog'
-import { ExpenseItem } from '@/components/splitmate/ExpenseItem'
-import { SettlementList } from '@/components/splitmate/SettlementList'
+import { AddExpenseDialog } from '@/components/monk-money/AddExpenseDialog'
+import { ExpenseItem } from '@/components/monk-money/ExpenseItem'
+import { SettlementList } from '@/components/monk-money/SettlementList'
 
-import { useSplitMateStore } from '@/store/splitmate.store'
-import type { SplitMateState } from '@/store/splitmate.store'
-import type { SplitMateExpense } from '@/types/splitmate'
+import { useSplitMateStore } from '@/store/monk-money.store'
+import type { SplitMateState } from '@/store/monk-money.store'
+import type { SplitMateExpense } from '@/types/monk-money'
 
 import { calculateBalances } from './calculations'
 import { formatMoney } from './money'

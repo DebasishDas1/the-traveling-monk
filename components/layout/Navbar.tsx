@@ -35,11 +35,11 @@ export function Navbar() {
     return pathname === href || pathname.startsWith(`${href}/`)
   }
 
-  const subLinks =
+  const subLinks: { label: string; href: string }[] =
     activeNavLink &&
     'subLinks' in activeNavLink &&
     Array.isArray(activeNavLink.subLinks)
-      ? activeNavLink.subLinks
+      ? (activeNavLink.subLinks as { label: string; href: string }[])
       : []
 
   const currentExpandedNav = expandedNav ?? activeNavLink?.href ?? null
@@ -121,14 +121,12 @@ export function Navbar() {
             <Image
               src="/apple-touch-icon.png"
               alt={siteConfig.name}
-              width={44}
-              height={44}
+              width={40}
+              height={40}
               priority
               className="rounded-full"
             />
-            <span className="text-2xl font-bold tracking-[-0.01em]">
-              The Traveling Monk
-            </span>
+            <span className="text-xl font-bold">The Traveling Monk</span>
           </Link>
 
           {/* ============================================================
@@ -279,36 +277,46 @@ export function Navbar() {
                                   pl-2
                                 "
                               >
-                                {link.subLinks!.map((subLink) => {
-                                  const activeSub = isSubLinkActive(
-                                    subLink.href
-                                  )
+                                {(
+                                  (link.subLinks as {
+                                    label: string
+                                    href: string
+                                  }[]) || []
+                                ).map(
+                                  (subLink: {
+                                    label: string
+                                    href: string
+                                  }) => {
+                                    const activeSub = isSubLinkActive(
+                                      subLink.href
+                                    )
 
-                                  return (
-                                    <Link
-                                      key={subLink.href}
-                                      href={subLink.href}
-                                      aria-current={
-                                        activeSub ? 'page' : undefined
-                                      }
-                                      onClick={closeSheet}
-                                      className={mobileSubLink(activeSub)}
-                                    >
-                                      <span>{subLink.label}</span>
+                                    return (
+                                      <Link
+                                        key={subLink.href}
+                                        href={subLink.href}
+                                        aria-current={
+                                          activeSub ? 'page' : undefined
+                                        }
+                                        onClick={closeSheet}
+                                        className={mobileSubLink(activeSub)}
+                                      >
+                                        <span>{subLink.label}</span>
 
-                                      {activeSub && (
-                                        <span
-                                          aria-hidden="true"
-                                          className="
+                                        {activeSub && (
+                                          <span
+                                            aria-hidden="true"
+                                            className="
                                               size-1.5
                                               rounded-full
                                               bg-accent
                                             "
-                                        />
-                                      )}
-                                    </Link>
-                                  )
-                                })}
+                                          />
+                                        )}
+                                      </Link>
+                                    )
+                                  }
+                                )}
                               </div>
                             </div>
                           )
@@ -372,7 +380,7 @@ export function Navbar() {
         <div className="hidden border-y border-border/60 bg-surface-secondary md:block">
           <div className="container-app overflow-x-auto">
             <ul className="flex h-13 items-center gap-1">
-              {subLinks.map((subLink) => {
+              {subLinks.map((subLink: { label: string; href: string }) => {
                 const active = isSubLinkActive(subLink.href)
 
                 return (

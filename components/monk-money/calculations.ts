@@ -1,4 +1,4 @@
-import type { SplitMateExpense, SplitMateMember } from '@/types/splitmate'
+import type { SplitMateExpense, SplitMateMember } from '@/types/monk-money'
 
 export interface SplitMateBalance {
   memberId: string

@@ -22,11 +22,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import { useSplitMateStore } from '@/store/splitmate.store'
+import { useSplitMateStore } from '@/store/monk-money.store'
 import { useFirebaseExpenseOperations } from '@/hooks/useFirebaseSync'
 import { validateExpense } from '@/lib/validators'
 import { formatMoney, rupeesToPaise } from './money'
-import type { SplitMateExpense } from '@/types/splitmate'
+import type { SplitMateExpense } from '@/types/monk-money'
 
 interface AddExpenseDialogProps {
   expense?: SplitMateExpense

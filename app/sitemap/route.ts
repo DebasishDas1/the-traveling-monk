@@ -100,7 +100,7 @@ export async function GET() {
       priority: '0.5',
     },
     {
-      path: 'tools/splitmate',
+      path: 'tools/monkmoney',
       changefreq: 'monthly',
       priority: '0.5',
     },

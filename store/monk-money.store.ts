@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import type { SplitMateExpense, SplitMateGroup } from '@/types/splitmate'
+import type { SplitMateExpense, SplitMateGroup } from '@/types/monk-money'
 
 export interface SplitMateState {
   group: SplitMateGroup | null

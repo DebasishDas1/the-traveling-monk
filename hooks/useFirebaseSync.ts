@@ -2,9 +2,9 @@
 
 import { useEffect, useCallback, useRef, useState } from 'react'
 import { firebaseService } from '@/lib/firebase/service'
-import { useSplitMateStore } from '@/store/splitmate.store'
+import { useSplitMateStore } from '@/store/monk-money.store'
 import { useNotificationStore } from '@/store/notifications'
-import type { SplitMateExpense, SplitMateGroup } from '@/types/splitmate'
+import type { SplitMateExpense, SplitMateGroup } from '@/types/monk-money'
 
 // === REAL-TIME SYNC HOOK ===
 
@@ -19,7 +19,6 @@ export function useFirebaseSync(groupId: string | null) {
   const addToast = useNotificationStore((state) => state.addToast)
   const [isConnected, setIsConnected] = useState(true)
   const [syncError, setSyncError] = useState<Error | null>(null)
-
 
   // Listen to group changes
   useEffect(() => {
@@ -41,7 +40,7 @@ export function useFirebaseSync(groupId: string | null) {
       return () => unsubscribe()
     } catch (error) {
       console.error('Failed to sync group:', error)
-      setSyncError(error as Error)
+      setTimeout(() => setSyncError(error as Error), 0)
     }
   }, [groupId, setGroup, addToast])
 
@@ -84,22 +83,20 @@ export function useFirebaseSync(groupId: string | null) {
       return () => unsubscribe()
     } catch (error) {
       console.error('Failed to sync expenses:', error)
-      setSyncError(error as Error)
+      setTimeout(() => setSyncError(error as Error), 0)
     }
   }, [groupId, expenses, addExpense, updateExpense, removeExpense])
 
-
-
-   // Handle sync errors and update connection state
-   useEffect(() => {
-     if (syncError) {
-       setIsConnected(false)
-       addToast({
-         message: 'Sync disconnected - working offline',
-         type: 'warning',
-       })
-     }
-   }, [syncError, addToast])
+  // Handle sync errors and update connection state
+  useEffect(() => {
+    if (syncError) {
+      setIsConnected(false)
+      addToast({
+        message: 'Sync disconnected - working offline',
+        type: 'warning',
+      })
+    }
+  }, [syncError, addToast])
 
   useEffect(() => {
     return () => {

@@ -1,4 +1,4 @@
-import type { SplitMateSettlement } from '@/types/splitmate'
+import type { SplitMateSettlement } from '@/types/monk-money'
 
 interface Balance {
   memberId: string

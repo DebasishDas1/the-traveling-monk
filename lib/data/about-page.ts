@@ -80,11 +80,11 @@ export const founders = [
     responsibility: 'Group comfort and mental well-being',
   },
   {
-    name: 'Saikat Saha',
+    name: 'Mr Saha',
     role: 'Safety Lead',
     intro:
       '10+ years in high-altitude trekking. Handles safety, terrain decisions, and emergency response.',
-    image: '/images/about/founder-4.jpeg',
+    image: '/images/about/founder-5.jpeg',
     exp: '12+ Years Experience',
     certs: 'HMI Advanced, Rescue',
     treks: '200+ Treks Led',

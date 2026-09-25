@@ -3,7 +3,7 @@
 import React from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useSplitMateStore } from '@/store/splitmate.store'
+import { useSplitMateStore } from '@/store/monk-money.store'
 
 interface Props {
   children: React.ReactNode

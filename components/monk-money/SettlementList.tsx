@@ -4,7 +4,7 @@ import { ArrowRight, Check, Loader } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 
-import { useSplitMateStore } from '@/store/splitmate.store'
+import { useSplitMateStore } from '@/store/monk-money.store'
 import { useFirebaseSettlementOperations } from '@/hooks/useFirebaseSync'
 
 import { calculateBalances } from './calculations'

@@ -20,9 +20,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { useSplitMateStore } from '@/store/splitmate.store'
+import { useSplitMateStore } from '@/store/monk-money.store'
 import { useFirebaseGroupOperations } from '@/hooks/useFirebaseSync'
-import type { SplitMateMember, SplitMateGroup } from '@/types/splitmate'
+import type { SplitMateMember, SplitMateGroup } from '@/types/monk-money'
 
 export function CreateGroupDialog() {
   const [open, setOpen] = useState(false)

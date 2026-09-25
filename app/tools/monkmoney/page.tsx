@@ -3,8 +3,8 @@ import { Wallet } from 'lucide-react'
 
 import { siteConfig } from '@/config/site'
 import { Container, Heading } from '@/components/common'
-import { CreateGroupDialog } from '@/components/splitmate/CreateGroupDialog'
-import { SplitMateWorkspace } from '@/components/splitmate/SplitMateWorkspace'
+import { CreateGroupDialog } from '@/components/monk-money/CreateGroupDialog'
+import { SplitMateWorkspace } from '@/components/monk-money/SplitMateWorkspace'
 
 export const metadata: Metadata = {
   title: `SplitMate – Tools – ${siteConfig.name}`,
