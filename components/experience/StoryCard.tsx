@@ -43,7 +43,7 @@ export function StoryCard({ story }: StoryCardProps) {
               "
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
+            <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-primary/10 to-primary/5">
               <span className="text-muted-foreground text-sm">No image</span>
             </div>
           )}

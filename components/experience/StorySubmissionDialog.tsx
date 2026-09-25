@@ -30,6 +30,10 @@ const CATEGORIES = [
   'Slow Travel',
 ] as const
 
+const inputClass =
+  'h-16 border-0 bg-transparent text-base shadow-none outline-none ' +
+  'focus-visible:border-0 focus-visible:ring-0'
+
 interface StorySubmissionDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -155,6 +159,7 @@ export function StorySubmissionDialog({
                   onChange={handleChange}
                   disabled={isLoading}
                   required
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">

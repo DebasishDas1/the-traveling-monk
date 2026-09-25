@@ -79,15 +79,15 @@ export const founders = [
     treks: '120+ Treks Led',
     responsibility: 'Group comfort and mental well-being',
   },
-  {
-    name: 'Mr Saha',
-    role: 'Safety Lead',
-    intro:
-      '10+ years in high-altitude trekking. Handles safety, terrain decisions, and emergency response.',
-    image: '/images/about/founder-5.jpeg',
-    exp: '12+ Years Experience',
-    certs: 'HMI Advanced, Rescue',
-    treks: '200+ Treks Led',
-    responsibility: 'On-ground safety and emergency decisions',
-  },
+  // {
+  //   name: 'Mr Saha',
+  //   role: 'Safety Lead',
+  //   intro:
+  //     '10+ years in high-altitude trekking. Handles safety, terrain decisions, and emergency response.',
+  //   image: '/images/about/founder-5.jpeg',
+  //   exp: '12+ Years Experience',
+  //   certs: 'HMI Advanced, Rescue',
+  //   treks: '200+ Treks Led',
+  //   responsibility: 'On-ground safety and emergency decisions',
+  // },
 ]
