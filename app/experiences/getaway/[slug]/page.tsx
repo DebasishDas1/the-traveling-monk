@@ -40,9 +40,12 @@ interface GetawayPageProps {
 /* -------------------------------------------------------------------------- */
 
 function getGetaway(slug: string): Getaway | undefined {
+  const cleanSlug = decodeURIComponent(slug).trim().toLowerCase()
   return getawaysData.find(
     (experience) =>
-      isGetaway(experience) && experience.slug === slug && experience.active
+      isGetaway(experience) &&
+      experience.slug.toLowerCase() === cleanSlug &&
+      experience.active
   )
 }
 

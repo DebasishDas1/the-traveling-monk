@@ -10,7 +10,8 @@ interface GetawayCardProps {
 }
 
 export function GetawayCard({ experience }: GetawayCardProps) {
-  const image = getImage(experience.gallery?.[0], experience.name)
+  const firstImage = experience.gallery?.[0] || '/images/about/about-hero.jpg'
+  const image = getImage(firstImage, experience.name)
 
   const price = experience.pricing?.perNight ?? experience.priceFrom
 
@@ -130,14 +131,22 @@ export function GetawayCard({ experience }: GetawayCardProps) {
 
           {/* Price */}
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-xl font-semibold tracking-tight sm:text-2xl">
-              {formatPrice(price)}
-              <span className="ml-3 text-2xl font-normal text-muted-foreground line-through">
-                {formatPrice(price * 1.25)}
-              </span>
-            </span>
+            {price > 0 ? (
+              <>
+                <span className="text-xl font-semibold tracking-tight sm:text-2xl">
+                  {formatPrice(price)}
+                  <span className="ml-3 text-2xl font-normal text-muted-foreground line-through">
+                    {formatPrice(price * 1.25)}
+                  </span>
+                </span>
 
-            <span className="text-xs text-muted-foreground">/ traveler</span>
+                <span className="text-xs text-muted-foreground">/ traveler</span>
+              </>
+            ) : (
+              <span className="text-sm font-medium text-accent">
+                Inquire for pricing
+              </span>
+            )}
           </div>
         </div>
       </Link>

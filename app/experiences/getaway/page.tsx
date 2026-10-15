@@ -3,16 +3,20 @@ import dynamic from 'next/dynamic'
 
 import {
   Container,
+  CtaSection,
   Heading,
   Media,
   MediaHeading,
+  Page,
   Section,
 } from '@/components/common'
 
 import { feelings, destinations, gallery } from '@/lib/data/getaway-page'
 import { getawaysData } from '@/lib/data/getaway-data'
+import { isGetaway } from '@/types/experience'
 import { GetawayCard } from '@/components/experience/GetawayCard'
 import { PageGallery } from '@/components/experience/PageGallery'
+import { siteConfig } from '@/config/site'
 
 /**
  * Maps are not part of the critical rendering path.
@@ -35,33 +39,86 @@ const LocationMap = dynamic(
 )
 
 export const metadata: Metadata = {
-  title: 'Himalayan Getaways | The Traveling Monk',
+  title: 'Himalayan Getaways',
   description:
     'Stay with local hosts in the Himalayas. Discover peaceful getaways, local food, mountain culture, and slower journeys with The Traveling Monk.',
 
   alternates: {
-    canonical: '/getaways',
+    canonical: '/experiences/getaway',
   },
 
   openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: `${siteConfig.url}/experiences/getaway`,
+    siteName: siteConfig.name,
     title: 'Himalayan Getaways | The Traveling Monk',
     description:
-      'Stay with local hosts in the Himalayas and experience the mountains at a slower pace.',
-    type: 'website',
-    url: '/getaways',
+      'Stay with local hosts in the Himalayas. Discover peaceful getaways, local food, mountain culture, and slower journeys with The Traveling Monk.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        type: 'image/jpeg',
+        alt: 'Himalayan Getaways - The Traveling Monk',
+      },
+    ],
   },
 
   twitter: {
     card: 'summary_large_image',
     title: 'Himalayan Getaways | The Traveling Monk',
     description:
-      'Stay with local hosts in the Himalayas and experience the mountains at a slower pace.',
+      'Stay with local hosts in the Himalayas. Discover peaceful getaways, local food, mountain culture, and slower journeys with The Traveling Monk.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Himalayan Getaways - The Traveling Monk',
+      },
+    ],
   },
 }
 
 export default function GetawaysPage() {
+  const activeGetaways = getawaysData.filter(
+    (experience) => isGetaway(experience) && experience.active
+  )
+
+  const getawaysJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Himalayan Getaways by The Traveling Monk',
+    description:
+      'Stay with local hosts in the Himalayas. Discover peaceful getaways, local food, and slower journeys.',
+    itemListElement: activeGetaways.map((getaway, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'TouristTrip',
+        name: getaway.name,
+        description: getaway.description,
+        url: `${siteConfig.url}/experiences/getaway/${getaway.slug}`,
+        offers: {
+          '@type': 'Offer',
+          price: getaway.priceFrom,
+          priceCurrency: 'INR',
+          availability: 'https://schema.org/InStock',
+        },
+      },
+    })),
+  }
+
   return (
-    <main>
+    <Page>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getawaysJsonLd),
+        }}
+      />
       {/* =====================================================
           HERO
       ====================================================== */}
@@ -99,8 +156,8 @@ export default function GetawaysPage() {
             size="h2"
           />
 
-          <div className="mt-3 grid gap-5 md:grid-cols-2 lg:gap-6 lg:gap-y-8 ">
-            {getawaysData.map((getaway) => (
+          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:gap-8">
+            {activeGetaways.map((getaway) => (
               <GetawayCard key={getaway.id} experience={getaway} />
             ))}
           </div>
@@ -299,6 +356,18 @@ export default function GetawaysPage() {
           </Container>
         </Section>
       )}
-    </main>
+
+      {/* =====================================================
+          CTA
+      ====================================================== */}
+
+      <CtaSection
+        eyebrow="Your Next Reset"
+        title="Ready to disconnect from the noise?"
+        description="The mountains are waiting. Reserve your mountain stay and rediscover slow mornings."
+        buttonText="Begin Your Reset"
+        link="/contact"
+      />
+    </Page>
   )
 }

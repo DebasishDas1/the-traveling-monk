@@ -559,4 +559,369 @@ export const getawaysData: Getaway[] = [
       },
     ],
   },
+
+  {
+    id: 4,
+    type: OfferingType.GETAWAY,
+    slug: 'darjeeling-kalimpong-offbeat',
+    name: 'Darjeeling & Kalimpong Offbeat Getaway',
+    tagline:
+      'Hidden Himalayan villages, misty tea gardens, and peaceful mountain escapes.',
+    location: 'Darjeeling & Kalimpong, West Bengal, India',
+    region: 'Eastern Himalayas',
+    duration: '4 Nights / 5 Days',
+
+    priceFrom: 14999,
+    pricing: {
+      perNight: 14999,
+      currency: 'INR',
+    },
+
+    featured: true,
+    active: true,
+
+    gallery: [
+      convertGoogleDriveLink(
+        'https://drive.google.com/file/d/1z292kDa_EqAMUVfOwm3UChBDILuGitvQ/view?usp=drive_link'
+      ),
+      convertGoogleDriveLink(
+        'https://drive.google.com/file/d/1yplWdlBDAjRGBbp3hjoipwjX0BZIhRdD/view?usp=drive_link'
+      ),
+      convertGoogleDriveLink(
+        'https://drive.google.com/file/d/1fmPBw-g1-6dSoSmyLas1PbT9HedDr52c/view?usp=drive_link'
+      ),
+    ],
+
+    description:
+      'Discover the quieter side of the Eastern Himalayas on this 4-night journey through Rishop, Takdah, Darjeeling, and the scenic landscapes of Kalimpong. Experience peaceful mountain villages, panoramic viewpoints, historic monasteries, lush tea gardens, and the timeless charm of Darjeeling. From sunrise at Tiger Hill to the tranquil waters of Mirik Lake, this journey combines offbeat destinations with iconic Himalayan experiences.',
+
+    highlights: [
+      'Explore the peaceful mountain village of Rishop',
+      'Visit Lava Monastery and Lava View Point',
+      'Discover Kalimpong and its scenic viewpoints',
+      'Explore Deolo Park and Morgan House',
+      'Visit Pine View Nursery and Kalimpong Monastery',
+      'Enjoy the scenic Peshok Tea Garden',
+      'Stay in the tranquil surroundings of Takdah',
+      'Explore Lamahatta Eco Park and Gumbadara View Point',
+      'Witness sunrise at Tiger Hill',
+      'Visit Batasia Loop and Ghoom Monastery',
+      'Explore Padmaja Naidu Himalayan Zoological Park and Himalayan Mountaineering Institute',
+      'Visit Peace Pagoda and Japanese Temple',
+      'Enjoy the scenic route through Lepchajagat and Mirik',
+      'Visit Simana View Point and Gopaldhara Tea Estate',
+      'Experience the beauty of Mirik Lake',
+    ],
+
+    roomDescription:
+      'Enjoy comfortable hotel and homestay accommodation across Rishop, Takdah, and Darjeeling. Experience peaceful mountain surroundings, welcoming hospitality, and relaxing stays throughout your Himalayan journey.',
+
+    availableDates: [
+      {
+        date: '2026-10-10',
+        spots: 8,
+      },
+      {
+        date: '2026-11-05',
+        spots: 6,
+      },
+      {
+        date: '2026-12-18',
+        spots: 10,
+      },
+    ],
+
+    inclusions: [
+      'Hotel and homestay accommodation for 4 nights',
+      'NJP pickup and drop-off',
+      'Private vehicle for transfers and sightseeing',
+      'All meals from Day 1 lunch through Day 5 breakfast',
+      'Sightseeing as specified in the itinerary',
+    ],
+
+    exclusions: [
+      'Food and beverages outside the included meal plan',
+      'Entry fees at sightseeing attractions',
+      'Personal expenses',
+      'Optional activities not mentioned in the inclusions',
+      'Any services not specifically mentioned under inclusions',
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        from: 'NJP',
+        to: 'Rishop',
+        title: 'NJP Pickup & Transfer to Rishop',
+        description:
+          'Meet your driver at NJP Railway Station and begin your journey into the Eastern Himalayas. Travel towards the peaceful village of Rishop and explore its natural surroundings, visiting Lava Monastery and Lava View Point before settling into your mountain stay.',
+        pointers: [
+          'Pickup from NJP Railway Station',
+          'Scenic drive towards Rishop',
+          'Visit Lava Monastery',
+          'Explore Lava View Point',
+          'Check in to your hotel or homestay',
+          'Dinner and overnight stay in Rishop',
+        ],
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1lHarDK_B3yX8Fwd4ggl5HbQaSexIfOge/view?usp=drive_link'
+        ),
+      },
+      {
+        day: 2,
+        from: 'Rishop',
+        to: 'Takdah',
+        title: 'Rishop to Takdah via Kalimpong',
+        description:
+          'After breakfast, travel towards Takdah via Kalimpong and Teesta Bazaar. Discover Kalimpong’s viewpoints, colonial heritage, monasteries, and beautiful nurseries before continuing through the scenic Peshok Tea Garden to Takdah.',
+        pointers: [
+          'Breakfast and departure from Rishop',
+          'Visit Deolo Park',
+          'Explore Morgan House',
+          'Visit Pine View Nursery',
+          'Visit Kalimpong Monastery',
+          'Stop at Lovers Meet View Point',
+          'Pass through Teesta Bazaar',
+          'Enjoy the scenery at Peshok Tea Garden',
+          'Check in and overnight stay in Takdah',
+        ],
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1wyUD5tDiCQhXRrlVn7YRZJzLR_qLFZZl/view?usp=drive_link'
+        ),
+      },
+      {
+        day: 3,
+        from: 'Takdah',
+        to: 'Darjeeling',
+        title: 'Takdah to Darjeeling via Scenic Viewpoints',
+        description:
+          'Enjoy the peaceful atmosphere of Takdah before heading towards Darjeeling. En route, stop at Gumbadara View Point and Lamahatta Eco Park to admire the mountain scenery and forest surroundings. Continue to Darjeeling for check-in and a relaxed evening.',
+        pointers: [
+          'Breakfast at the accommodation',
+          'Depart from Takdah',
+          'Stop at Gumbadara View Point',
+          'Explore Lamahatta Eco Park',
+          'Drive to Darjeeling',
+          'Hotel check-in',
+          'Evening at leisure',
+          'Overnight stay in Darjeeling',
+        ],
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1fmPBw-g1-6dSoSmyLas1PbT9HedDr52c/view?usp=drive_link'
+        ),
+      },
+      {
+        day: 4,
+        from: 'Darjeeling',
+        to: 'Darjeeling',
+        title: 'Tiger Hill Sunrise & Darjeeling Sightseeing',
+        description:
+          'Start early with a sunrise excursion to Tiger Hill, followed by visits to Batasia Loop and Ghoom Monastery. After breakfast, explore Darjeeling’s famous zoo, Himalayan Mountaineering Institute, Peace Pagoda, Japanese Temple, and tea garden, subject to opening hours and local conditions.',
+        pointers: [
+          'Early morning visit to Tiger Hill',
+          'Visit Batasia Loop',
+          'Explore Ghoom Monastery',
+          'Return for breakfast',
+          'Visit Padmaja Naidu Himalayan Zoological Park',
+          'Visit Himalayan Mountaineering Institute',
+          'Explore Peace Pagoda',
+          'Visit Japanese Temple',
+          'Explore a local tea garden',
+          'Overnight stay in Darjeeling',
+        ],
+        imageUrl:
+          'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+      },
+      {
+        day: 5,
+        from: 'Darjeeling',
+        to: 'NJP',
+        title: 'Darjeeling to NJP via Mirik',
+        description:
+          'After breakfast, check out and begin your return journey to NJP via the scenic Mirik route. Enjoy stops around Lepchajagat, Simana View Point, the India–Nepal border area near Pashupati, Gopaldhara Tea Estate, and Mirik Lake before your drop-off.',
+        pointers: [
+          'Breakfast and hotel check-out',
+          'Depart from Darjeeling',
+          'Visit Lepchajagat',
+          'Stop at Simana View Point',
+          'Visit the Pashupati border area, subject to access restrictions',
+          'Explore Gopaldhara Tea Estate',
+          'Visit Mirik Lake',
+          'Drop-off at NJP Railway Station',
+        ],
+        imageUrl: convertGoogleDriveLink(
+          'https://drive.google.com/file/d/1qiXT4KiQ_JHopzr6dMBQMLJSWch1u9Jz/view?usp=drive_link'
+        ),
+      },
+    ],
+  },
+
+  {
+    id: 5,
+    type: OfferingType.GETAWAY,
+    slug: 'gangtok-sikkim-tour',
+    name: 'Sikkim & Gangtok Mountain Getaway',
+    tagline: 'Sacred lakes, Himalayan views, and the vibrant charm of Gangtok.',
+    location: 'Gangtok, Sikkim, India',
+    region: 'Eastern Himalayas',
+    duration: '3 Nights / 4 Days',
+
+    priceFrom: 12499,
+    pricing: {
+      perNight: 12499,
+      currency: 'INR',
+    },
+
+    featured: true,
+    active: true,
+
+    gallery: [
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3',
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b',
+      'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+      'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+    ],
+
+    description:
+      'Experience the beauty of Sikkim on this 3-night Gangtok getaway, combining Himalayan landscapes, sacred monasteries, peaceful lakes, and lively local markets. Travel along the scenic Teesta Valley, explore the highlights of Gangtok, and take an excursion to Tsomgo Lake and Baba Harbhajan Singh Mandir, with an optional visit to Nathula Pass subject to permits, weather, and road conditions.',
+
+    highlights: [
+      'Enjoy a scenic drive from NJP or Bagdogra to Gangtok',
+      'Explore MG Marg and Gangtok’s local markets',
+      'Visit the beautiful high-altitude Tsomgo Lake',
+      'Explore Baba Harbhajan Singh Mandir',
+      'Optional excursion to Nathula Pass, subject to permits',
+      'Enjoy panoramic views from Tashi View Point',
+      'Visit Ganesh Tok and Hanuman Tok',
+      'Explore Enchey Monastery',
+      'Discover Banjhakri Falls',
+      'Visit Namgyal Institute of Tibetology',
+      'Explore Do Drul Chorten',
+      'Visit the Flower Exhibition Centre',
+      'Enjoy an optional Gangtok ropeway ride',
+      'Experience the scenic Teesta Valley',
+    ],
+
+    roomDescription:
+      'Stay in a comfortable hotel in Gangtok with convenient access to local sightseeing and MG Marg. Enjoy a relaxing base for exploring Sikkim’s mountain landscapes, monasteries, and cultural attractions.',
+
+    availableDates: [
+      {
+        date: '2026-10-18',
+        spots: 8,
+      },
+      {
+        date: '2026-11-12',
+        spots: 6,
+      },
+      {
+        date: '2026-12-22',
+        spots: 10,
+      },
+    ],
+
+    inclusions: [
+      'Hotel accommodation for 3 nights in Gangtok',
+      'Pickup from NJP Railway Station or Bagdogra Airport',
+      'Drop-off at NJP Railway Station or Bagdogra Airport',
+      'Private vehicle for transfers and sightseeing as arranged',
+      'Tsomgo Lake and Baba Mandir excursion, subject to permits and operating conditions',
+      'Gangtok local sightseeing as specified in the itinerary',
+    ],
+
+    exclusions: [
+      'Meals unless specifically included in the confirmed package',
+      'Entry fees and activity charges',
+      'Optional ropeway tickets',
+      'Nathula Pass excursion charges, if not included in the package',
+      'Permit-related charges, if not included in the package',
+      'Personal expenses',
+      'Any services not specifically mentioned under inclusions',
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        from: 'NJP / Bagdogra',
+        to: 'Gangtok',
+        title: 'Arrival & Transfer to Gangtok',
+        description:
+          'Meet your driver at NJP Railway Station or Bagdogra Airport and begin your scenic journey to Gangtok. Travel through the beautiful Teesta Valley, enjoying mountain and river views along the way. After checking in, spend the evening exploring MG Marg and the local market.',
+        pointers: [
+          'Pickup from NJP Railway Station or Bagdogra Airport',
+          'Scenic drive to Gangtok',
+          'Enjoy views of the Teesta River and surrounding hills',
+          'Hotel check-in',
+          'Visit MG Marg',
+          'Explore local shops and cafés',
+          'Overnight stay in Gangtok',
+        ],
+        imageUrl:
+          'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277',
+      },
+      {
+        day: 2,
+        from: 'Gangtok',
+        to: 'Gangtok',
+        title: 'Tsomgo Lake, Baba Mandir & Optional Nathula Pass',
+        description:
+          'Depart early for the spectacular Himalayan landscapes around Tsomgo Lake. Continue to Baba Harbhajan Singh Mandir and, if arranged and approved, Nathula Pass. All high-altitude excursions are subject to permits, weather, road conditions, and local authority restrictions. Return to Gangtok in the evening.',
+        pointers: [
+          'Early morning departure from Gangtok',
+          'Visit Tsomgo (Changu) Lake',
+          'Visit Baba Harbhajan Singh Mandir',
+          'Optional visit to Nathula Pass, subject to permit approval',
+          'Enjoy Himalayan mountain scenery',
+          'Return to Gangtok',
+          'Evening at MG Marg',
+          'Overnight stay in Gangtok',
+        ],
+        imageUrl:
+          'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23',
+      },
+      {
+        day: 3,
+        from: 'Gangtok',
+        to: 'Gangtok',
+        title: 'Gangtok Local Sightseeing',
+        description:
+          'Explore Gangtok’s cultural attractions, monasteries, viewpoints, and natural surroundings. Visit Tashi View Point, Ganesh Tok, Hanuman Tok, Enchey Monastery, Banjhakri Falls, Namgyal Institute of Tibetology, Do Drul Chorten, and the Flower Exhibition Centre. Finish the day with free time at MG Marg.',
+        pointers: [
+          'Visit Tashi View Point',
+          'Explore Ganesh Tok',
+          'Visit Hanuman Tok',
+          'Explore Enchey Monastery',
+          'Visit Banjhakri Falls',
+          'Discover Namgyal Institute of Tibetology',
+          'Visit Do Drul Chorten',
+          'Explore the Flower Exhibition Centre',
+          'Optional Gangtok ropeway ride',
+          'Evening at MG Marg',
+          'Overnight stay in Gangtok',
+        ],
+        imageUrl:
+          'https://images.unsplash.com/photo-1589308078059-be1415eab4c3',
+      },
+      {
+        day: 4,
+        from: 'Gangtok',
+        to: 'NJP / Bagdogra',
+        title: 'Departure from Gangtok',
+        description:
+          'Enjoy breakfast and check out from your hotel before beginning the return drive to NJP Railway Station or Bagdogra Airport. Travel through the scenic Teesta Valley, with brief photo stops where time and road conditions permit.',
+        pointers: [
+          'Breakfast at the hotel',
+          'Hotel check-out',
+          'Drive from Gangtok to NJP or Bagdogra',
+          'Enjoy scenic Teesta Valley views',
+          'Photo stops en route, subject to schedule',
+          'Drop-off at NJP Railway Station or Bagdogra Airport',
+        ],
+        imageUrl:
+          'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b',
+      },
+    ],
+  },
 ]

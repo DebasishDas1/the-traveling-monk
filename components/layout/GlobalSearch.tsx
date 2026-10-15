@@ -226,8 +226,7 @@ export function GlobalSearch({ compact = false }: GlobalSearchProps) {
         className={cn('rounded-full h-11 mr-2', !compact && 'border-border')}
       >
         <Search aria-hidden="true" className="size-6" strokeWidth={1.8} />
-
-        {!compact && <span className="font-semibold">Search</span>}
+        {!compact && <span className="font-semibold"> Start your search</span>}
       </Button>
 
       <DialogContent

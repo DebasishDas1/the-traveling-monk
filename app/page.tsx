@@ -1,3 +1,6 @@
+import type { Metadata } from 'next'
+
+import { siteConfig } from '@/config/site'
 import { HomepageHero } from '@/components/experience/HomepageHero'
 
 import {
@@ -13,6 +16,47 @@ import {
 } from '@/components/common'
 
 import { faqItems } from '@/lib/data/home-page'
+
+export const metadata: Metadata = {
+  title: `${siteConfig.name} | Travel with old friends. Return renewed.`,
+  description:
+    'Handpicked Himalayan treks, peaceful getaways, and immersive travel experiences designed for stillness, adventure, and genuine connection.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} | Travel with old friends. Return renewed.`,
+    description:
+      'Handpicked Himalayan treks, peaceful getaways, and immersive travel experiences designed for stillness, adventure, and genuine connection.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        type: 'image/jpeg',
+        alt: `${siteConfig.name} - Travel with old friends. Return renewed.`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${siteConfig.name} | Travel with old friends. Return renewed.`,
+    description:
+      'Handpicked Himalayan treks, peaceful getaways, and immersive travel experiences designed for stillness, adventure, and genuine connection.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} - Travel with old friends. Return renewed.`,
+      },
+    ],
+  },
+}
 
 export default function HomePage() {
   return (

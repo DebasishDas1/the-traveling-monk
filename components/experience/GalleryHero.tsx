@@ -39,7 +39,12 @@ export function GalleryHero({
   parentHref = '/experiences',
   parentLabel = 'Experiences',
 }: GalleryHeroProps) {
-  const [heroImage, secondaryImage, tertiaryImage] = images
+  const displayImages =
+    images.length > 0
+      ? images
+      : [{ src: '/images/about/about-hero.jpg', alt: title }]
+
+  const [heroImage, secondaryImage, tertiaryImage] = displayImages
 
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -59,8 +64,6 @@ export function GalleryHero({
       api.off('select', handleSelect)
     }
   }, [api])
-
-  if (!images.length) return null
 
   const openGallery = (index: number) => {
     setActiveIndex(index)

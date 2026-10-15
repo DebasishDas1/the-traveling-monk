@@ -64,7 +64,8 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: siteConfig.name,
+        type: 'image/jpeg',
+        alt: `${siteConfig.name} - ${siteConfig.description}`,
       },
     ],
   },
@@ -73,12 +74,22 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.name,
     description: siteConfig.description,
-    images: ['/og-image.jpg'],
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} - ${siteConfig.description}`,
+      },
+    ],
   },
 
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-icon.png',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 }
 

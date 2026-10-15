@@ -69,8 +69,8 @@ const featuredTreks = trekData
   .slice(0, 2)
 
 const featuredGetaways = getawaysData
-  .filter((experience) => experience.featured)
-  .slice(0, 2)
+  .filter((experience) => experience.featured && experience.active)
+  .slice(0, 4)
 
 const featuredInternational = internationalData
   .filter((experience) => experience.featured)

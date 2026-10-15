@@ -66,8 +66,8 @@ export default function FAQPage() {
               </h2>
 
               <p className="mt-5 text-base leading-7 text-primary-foreground/70 md:text-lg">
-                If you couldn't find what you were looking for, just ask.
-                We're humans. We talk to humans.
+                If you couldn&apos;t find what you were looking for, just ask.
+                We&apos;re humans. We talk to humans.
               </p>
 
               <a

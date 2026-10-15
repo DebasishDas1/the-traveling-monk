@@ -121,8 +121,8 @@ export function Navbar() {
             <Image
               src="/apple-touch-icon.png"
               alt={siteConfig.name}
-              width={40}
-              height={40}
+              width={35}
+              height={35}
               priority
               className="rounded-full"
             />

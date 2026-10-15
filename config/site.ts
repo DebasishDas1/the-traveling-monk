@@ -36,10 +36,14 @@ export const siteConfig = {
           label: 'All Tools',
           href: '/tools',
         },
-        // {
-        //   label: 'Monk Money',
-        //   href: '/tools/monkmoney',
-        // },
+        {
+          label: 'Monk Money',
+          href: '/tools/monkmoney',
+        },
+        {
+          label: 'Monk Path',
+          href: '/tools/monkpath',
+        },
       ],
     },
     {
